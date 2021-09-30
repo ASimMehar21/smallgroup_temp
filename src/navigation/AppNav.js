@@ -8,6 +8,7 @@ import SignupScreen from '../screens/SignupScreen';
 // import BottomTab from './src/navigation/BottomTab';
 import Signin from '../screens/Signin';
 import Splash from '../screens/Splash';
+import AuthenticationStack from './AuthenticationStack';
 
 //redux
 // import {connect} from 'react-redux';
@@ -15,7 +16,7 @@ import Splash from '../screens/Splash';
 const Stack = createStackNavigator();
 
 function AppNav({}) {
-  let initial = 'Splash';
+  let initial = 'Auth';
 
   useEffect(() => {}, []);
 
@@ -23,23 +24,10 @@ function AppNav({}) {
     <NavigationContainer>
       <Stack.Navigator initialRouteName={initial}>
         <Stack.Screen
-          name="Splash"
-          component={Splash}
-          options={{headerShown: false, animationEnabled: true}}
-        />
-
-        <Stack.Screen
-          name="Signin"
-          component={Signin}
-          options={{headerShown: false, animationEnabled: true}}
-        />
-
-        <Stack.Screen
-          name="Signup"
-          component={SignupScreen}
+          name="Auth"
+          component={AuthenticationStack}
           options={{
             headerShown: false,
-            animationEnabled: true,
           }}
         />
 

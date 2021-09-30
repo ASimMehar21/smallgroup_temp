@@ -22,6 +22,7 @@ import {
   responsiveScreenHeight,
   responsiveScreenWidth,
 } from 'react-native-responsive-dimensions';
+import LinearGradient from 'react-native-linear-gradient';
 const SignupScreen = props => {
   const [loading, setLoading] = useState(false);
   const [password, setPassword] = useState('');
@@ -37,6 +38,7 @@ const SignupScreen = props => {
       // contentContainerStyle={{flexGrow: 1, flex: 1}}
     >
       <ScrollView
+        showsVerticalScrollIndicator={false}
         style={styles.container}
         contentContainerStyle={{justifyContent: 'center'}}
         keyboardShouldPersistTaps="handled">
@@ -118,38 +120,58 @@ const SignupScreen = props => {
         </View>
 
         <View>
-          <TouchableOpacity
-            activeOpacity={0.7}
-            disabled={loading}
+          <LinearGradient
+            colors={
+              email !== '' &&
+              password !== '' &&
+              confirmpassword !== '' &&
+              lName !== '' &&
+              fName !== ''
+                ? ['#6989FE', '#3C64F4']
+                : ['#6989FE', '#3C64F4']
+            }
+            locations={
+              email !== '' &&
+              password !== '' &&
+              confirmpassword !== '' &&
+              lName !== '' &&
+              fName !== ''
+                ? [0, 1]
+                : [1, 1]
+            }
             style={[
               styles.nextButtonStyle,
               {
-                backgroundColor:
+                opacity:
                   email !== '' &&
                   password !== '' &&
                   confirmpassword !== '' &&
                   lName !== '' &&
                   fName !== ''
-                    ? '#3C64F4'
-                    : theme.colors.primary,
+                    ? 1
+                    : 0.4,
               },
-            ]}
-            onPress={() => alert('Sign up')}>
-            {loading ? (
-              <ActivityIndicator animating color={'white'} size={25} />
-            ) : (
-              <Text
-                style={{
-                  fontSize: 18,
-                  fontFamily: Fonts.DMMedium,
-                  color: 'white',
-                  textAlign: 'center',
-                  fontWeight: '500',
-                }}>
-                Sign up
-              </Text>
-            )}
-          </TouchableOpacity>
+            ]}>
+            <TouchableOpacity
+              activeOpacity={0.7}
+              disabled={loading}
+              onPress={() => navigation.navigate('main')}>
+              {loading ? (
+                <ActivityIndicator animating color={'white'} size={25} />
+              ) : (
+                <Text
+                  style={{
+                    fontSize: 18,
+                    fontFamily: Fonts.DMMedium,
+                    color: 'white',
+                    textAlign: 'center',
+                    fontWeight: '500',
+                  }}>
+                  Sign up
+                </Text>
+              )}
+            </TouchableOpacity>
+          </LinearGradient>
         </View>
         <View style={styles.dividercontainer}>
           <View style={styles.divider}></View>
