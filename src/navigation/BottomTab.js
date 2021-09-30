@@ -1,27 +1,25 @@
+/* eslint-disable prettier/prettier */
 import {createMaterialBottomTabNavigator} from '@react-navigation/material-bottom-tabs';
 import React from 'react';
 
-import AntDesign from 'react-native-vector-icons/AntDesign';
-import Feather from 'react-native-vector-icons/Feather';
-import Entypo from 'react-native-vector-icons/Entypo';
-import Ionicons from 'react-native-vector-icons/Ionicons';
-import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
-import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
-import cstyles from '../components/cstyles';
+import theme from '../theme';
 import {createStackNavigator} from '@react-navigation/stack';
-import Camera from '../screens/Camera';
-import SearchDetail from '../screens/SearchDetail';
-import Chat from '../screens/Chat';
-import NotificationScreen from '../screens/NotificationScreen';
-import NotificationDetail from '../screens/NotificationDetail';
+import {
+  calender,
+  cloud,
+  person,
+  people,
+  message,
+  } from '../assets/index'
 
-import Feed from '../screens/Feed';
-import Challenges from '../screens/Challenges';
-import {primaryColor} from '../components/colors';
-import {Alert} from 'react-native';
-import User from '../screens/User';
-import Search from '../screens/Search';
-import Conversation from '../screens/Conversation';
+import Chat from '../screens/bottom_tab/chat/index'
+import Event from '../screens/bottom_tab/Create_event/index'
+import Prayer from '../screens/bottom_tab/Prayers/index'
+import Group from '../screens/bottom_tab/Group/index'
+import Profile from '../screens/bottom_tab/profile/index'
+
+import {Alert,Image} from 'react-native';
+
 const Tab = createMaterialBottomTabNavigator();
 const Stack = createStackNavigator();
 
@@ -30,8 +28,8 @@ const HomeStack = () => {
   return (
     <Stack.Navigator>
       <Stack.Screen
-        name="Home"
-        component={Feed}
+        name="Chat"
+        component={Chat}
         options={{headerShown: false}}
       />
     </Stack.Navigator>
@@ -116,70 +114,76 @@ const NotificationStack = () => {
   );
 };
 
-const INITIAL_ROUTE_NAME = 'Home';
+const INITIAL_ROUTE_NAME = 'Chat';
 
 function BottomTabNavigator({navigation}) {
   return (
     <Tab.Navigator
       initialRouteName={INITIAL_ROUTE_NAME}
-      activeColor={primaryColor}
-      inactiveColor="white"
+      activeColor={theme.colors.txtcolor}
+      inactiveColor={theme.colors.labelColor}
       backBehavior="initialRoute"
-      labeled={false}
+      // labeled={false}
       tabBarOptions={{
-        activeTintColor: primaryColor,
-        headerShown: false,
+        // activeBackgroundColor:"rgba(78, 115, 248, 0.08)",
+        activeBackgroundColor:"red",
+        
+        // activeTintColor: txtcolor,
+        // headerShown: false,
       }}
-      barStyle={{backgroundColor: '#2f2f2f', paddingVertical: 10}}>
+      barStyle={{backgroundColor: 'white', paddingVertical: 10}}>
+        
       <Tab.Screen
-        name="Home"
+        name="Chat"
         component={HomeStack}
         options={{
-          tabBarLabel: 'Home',
+          // tabBarColor:'rgba(78, 115, 248, 0.08)',
+          tabBarLabel: 'Chat',
           tabBarIcon: ({color, size}) => (
-            <MaterialCommunityIcons name="fire" color={color} size={30} />
+            <Image source ={message} style={{width:24,height:24,tintColor:color}}  />
           ),
         }}
       />
       <Tab.Screen
-        name="Challenges"
-        component={ChallengeStack}
+        name="Event"
+        component={Event}
         options={{
           tabBarIcon: ({color}) => (
-            <MaterialIcons name="slideshow" size={28} color={color} />
+            <Image source ={calender} style={{width:24,height:24,tintColor:color}} />
+
           ),
         }}
       />
       <Tab.Screen
-        name="Camera"
-        component={CameraStack}
+        name="Prayer"
+        component={Prayer}
         options={{
-          tabBarLabel: 'Camera',
+          tabBarLabel: 'Prayer',
           tabBarIcon: ({color}) => (
-            <Entypo name="picasa" size={24} color={color} />
+            <Image source ={cloud} style={{width:24,height:24,tintColor:color}}  />
+
           ),
         }}
       />
 
       <Tab.Screen
-        name="Chat"
-        children={ChatStack}
+        name="Group"
+        children={Group}
         options={{
           tabBarIcon: ({color}) => (
-            <Feather name="message-square" size={24} color={color} />
+            <Image source ={people} style={{width:24,height:24,tintColor:color}} />
+
           ),
         }}
       />
       <Tab.Screen
-        name="Notification"
-        component={NotificationStack}
+        name="Profile"
+        component={Profile}
         options={{
           tabBarIcon: ({color}) => (
-            <Ionicons
-              name="ios-notifications-outline"
-              size={24}
-              color={color}
-            />
+            <Image source ={person} 
+            style={{width:24,height:24,tintColor:color}} />
+
           ),
         }}
       />

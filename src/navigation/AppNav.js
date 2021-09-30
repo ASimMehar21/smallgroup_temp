@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 import React, {useEffect, useState, useRef} from 'react';
 import {View, LogBox, PermissionsAndroid, NativeModules} from 'react-native';
 import {NavigationContainer} from '@react-navigation/native';
@@ -5,7 +6,7 @@ import {createStackNavigator} from '@react-navigation/stack';
 import AsyncStorage from '@react-native-community/async-storage';
 import SignupScreen from '../screens/SignupScreen';
 
-// import BottomTab from './src/navigation/BottomTab';
+import BottomTab from './BottomTab';
 import Signin from '../screens/Signin';
 import Splash from '../screens/Splash';
 import AuthenticationStack from './AuthenticationStack';
@@ -31,9 +32,9 @@ function AppNav({}) {
           }}
         />
 
-        {/* <Stack.Screen name="Root" options={{headerShown: false}}>
+        <Stack.Screen name="Root" options={{headerShown: false}}>
           {props => <BottomTab {...props} />}
-        </Stack.Screen> */}
+        </Stack.Screen>
       </Stack.Navigator>
     </NavigationContainer>
   );

@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 import {Platform, StyleProp} from 'react-native';
 import {Fonts} from '../utils/Fonts';
 const theme = {
