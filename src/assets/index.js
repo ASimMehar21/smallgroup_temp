@@ -11,3 +11,12 @@ export const person = require('./images/person.png');
 export const people = require('./images/people.png');
 export const message = require('./images/message-circle.png');
 
+export const back = require('./images/back.png');
+export const next = require('./images/next.png');
+export const jg = require('./images/jg.png');
+export const jgc = require('./images/jgc.png');
+export const cg = require('./images/cg.png');
+export const cgc = require('./images/cgc.png');
+export const invite = require('./images/invite.png');
+export const check = require('./images/check.png');
+export const email_icon = require('./images/email.png');

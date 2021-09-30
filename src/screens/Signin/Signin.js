@@ -22,6 +22,7 @@ import {
   responsiveScreenHeight,
   responsiveScreenWidth,
 } from 'react-native-responsive-dimensions';
+import LinearGradient from 'react-native-linear-gradient';
 const Signin = props => {
   const [loading, setLoading] = useState(false);
   const [password, setPassword] = useState('');
@@ -33,7 +34,10 @@ const Signin = props => {
       style={{flex: 1, backgroundColor: 'white'}}
       // contentContainerStyle={{flexGrow: 1, flex: 1}}
     >
-      <ScrollView style={styles.container} keyboardShouldPersistTaps="handled">
+      <ScrollView
+        style={styles.container}
+        showsVerticalScrollIndicator={false}
+        keyboardShouldPersistTaps="handled">
         <View style={{marginTop: responsiveScreenHeight(13)}}></View>
         <View style={{alignSelf: 'center'}}>
           <Text style={styles.headerText}>Hey there!</Text>
@@ -85,26 +89,30 @@ const Signin = props => {
           ) : null}
         </View>
         <View>
-          <TouchableOpacity
-            activeOpacity={0.7}
-            disabled={loading}
-            style={styles.nextButtonStyle}
-            onPress={() => alert('Sign in')}>
-            {loading ? (
-              <ActivityIndicator animating color={'white'} size={25} />
-            ) : (
-              <Text
-                style={{
-                  fontSize: 18,
-                  fontFamily: Fonts.DMMedium,
-                  color: 'white',
-                  textAlign: 'center',
-                  fontWeight: '500',
-                }}>
-                Sign in
-              </Text>
-            )}
-          </TouchableOpacity>
+          <LinearGradient
+            colors={['#6989FE', '#3C64F4']}
+            style={styles.nextButtonStyle}>
+            <TouchableOpacity
+              activeOpacity={0.7}
+              disabled={loading}
+              // style={styles.nextButtonStyle}
+              onPress={() => alert('Sign in')}>
+              {loading ? (
+                <ActivityIndicator animating color={'white'} size={25} />
+              ) : (
+                <Text
+                  style={{
+                    fontSize: 18,
+                    fontFamily: Fonts.DMMedium,
+                    color: 'white',
+                    textAlign: 'center',
+                    fontWeight: '500',
+                  }}>
+                  Sign in
+                </Text>
+              )}
+            </TouchableOpacity>
+          </LinearGradient>
         </View>
         <View style={styles.dividercontainer}>
           <View style={styles.divider}></View>
