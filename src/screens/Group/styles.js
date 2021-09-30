@@ -81,5 +81,17 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     marginTop: 10,
   },
+  mediumheaderText: {
+    fontSize: 24,
+    fontWeight: '700',
+    fontFamily: Fonts.DMBold,
+    color: theme.colors.textHeader,
+  },
+  namestyle: {
+    fontFamily: Fonts.DMRegular,
+    fontWeight: '500',
+    fontSize: 18,
+    color: theme.colors.gray,
+  },
 });
 export default styles;

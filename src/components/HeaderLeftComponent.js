@@ -1,40 +1,27 @@
 import React from 'react';
-import {View, StyleSheet, Image, TouchableWithoutFeedback} from 'react-native';
-import {drawer, back} from '../assets';
+import {
+  View,
+  StyleSheet,
+  Image,
+  TouchableWithoutFeedback,
+  Text,
+} from 'react-native';
+import {back} from '../assets';
 import theme from '../theme';
 import {Button} from 'react-native-elements';
-import Ionicons from 'react-native-vector-icons/Ionicons';
-
-const HeaderLeftComponent = ({navigation, icon}) => {
+import {Fonts} from '../utils/Fonts';
+import {responsiveScreenWidth} from 'react-native-responsive-dimensions';
+const HeaderLeftComponent = ({navigation}) => {
   return (
-    <View>
-      {icon === 'back' ? (
-        <TouchableWithoutFeedback
-          activeOpacity={0}
-          style={styles.drawerIcon}
-          onPress={() => {
-            navigation.goBack();
-          }}>
-          <Image
-            source={back}
-            resizeMode={'contain'}
-            style={styles.drawerIcon}
-          />
-        </TouchableWithoutFeedback>
-      ) : (
-        <TouchableWithoutFeedback
-          activeOpacity={0}
-          style={styles.drawerIcon}
-          onPress={() => {
-            navigation.openDrawer();
-          }}>
-          <Image
-            source={drawer}
-            resizeMode={'contain'}
-            style={styles.drawerIcon}
-          />
-        </TouchableWithoutFeedback>
-      )}
+    <View style={{right: responsiveScreenWidth(2.4)}}>
+      <TouchableWithoutFeedback
+        activeOpacity={0}
+        onPress={() => {
+          navigation.goBack();
+        }}>
+        <Image source={back} resizeMode={'contain'} style={styles.drawerIcon} />
+        {/* <Text style={styles.txt}>Back</Text> */}
+      </TouchableWithoutFeedback>
     </View>
   );
 };
@@ -43,8 +30,15 @@ export default HeaderLeftComponent;
 
 const styles = StyleSheet.create({
   drawerIcon: {
-    height: 25,
-    width: 25,
-    tintColor: theme.colors.lightGray,
+    height: 48,
+    width: 112,
+
+    // tintColor: theme.colors.lightGray,
+  },
+  txt: {
+    fontFamily: Fonts.DMRegular,
+    fontSize: 16,
+    fontWeight: '400',
+    color: theme.colors.txtcolor,
   },
 });

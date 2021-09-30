@@ -1,20 +1,21 @@
 import React from 'react';
 import {TouchableOpacity, StyleSheet, Text, Image} from 'react-native';
-import {drawer} from '../assets';
+import {responsiveScreenWidth} from 'react-native-responsive-dimensions';
+import {next} from '../assets';
 import theme from '../theme';
 import {Fonts} from '../utils/Fonts';
 
-const HeaderRight = ({name, icon, type, onPress}) => {
+const HeaderRight = ({onPress}) => {
   return (
     <TouchableOpacity onPress={onPress}>
-      {type === 'icon' ? (
-        <Image
-          source={icon}
-          style={{height: 20, width: 20, tintColor: theme.colors.gray}}
-        />
-      ) : (
-        <Text style={styles.textStyle}>{name}</Text>
-      )}
+      <Image
+        source={next}
+        style={{
+          height: 48,
+          width: 112,
+          left: responsiveScreenWidth(2.4),
+        }}
+      />
     </TouchableOpacity>
   );
 };
