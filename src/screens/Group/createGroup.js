@@ -111,7 +111,7 @@ const createGroup = props => {
             // borderWidth: 1,
             marginTop: responsiveScreenHeight(5),
             width: '100%',
-            height: 224,
+            // height: 224,
             borderRadius: 8,
             backgroundColor: '#dbe3fd',
           }}>
@@ -146,7 +146,8 @@ const createGroup = props => {
                 styles.nextButtonStyle,
                 {
                   opacity: code !== '' ? 1 : 0.4,
-                  marginTop: responsiveScreenHeight(8),
+                  marginTop: responsiveHeight(8),
+                  bottom: 20,
                 },
               ]}>
               <TouchableOpacity

@@ -55,12 +55,12 @@ const main = props => {
             style={[
               styles.headerText,
               {
-                width: responsiveScreenWidth(50),
+                // width: responsiveScreenWidth(50),
                 textAlign: 'center',
                 alignSelf: 'center',
               },
             ]}>
-            Join or Create a Group
+            {`Join or Create \n a Group`}
           </Text>
           <Text style={styles.smallheaderText}>Life is better with others</Text>
         </View>
