@@ -8,6 +8,7 @@ import {
   Image,
   ActivityIndicator,
   ScrollView,
+  PermissionsAndroid,
 } from 'react-native';
 import {Header} from 'react-native-elements';
 import AsyncStorage from '@react-native-community/async-storage';
@@ -26,6 +27,8 @@ import {
 import LinearGradient from 'react-native-linear-gradient';
 import HeaderLeftComponent from '../../components/HeaderLeftComponent';
 import HeaderRight from '../../components/HeaderRight';
+import Contacts from 'react-native-contacts';
+import {selectContactPhone} from 'react-native-select-contact';
 const Invite = props => {
   const [createGroup, setcreateGroup] = useState(false);
   const [joinGroup, setjoinGroup] = useState(false);
@@ -37,6 +40,31 @@ const Invite = props => {
     {id: 0, name: 'Dianne Johnson', mail: 'dianne99@email.com'},
     {id: 0, name: 'Dianne Johnson', mail: 'dianne99@email.com'},
   ]);
+  function cont() {
+    try {
+      PermissionsAndroid.request(PermissionsAndroid.PERMISSIONS.READ_CONTACTS, {
+        title: 'Contacts',
+        message: 'This app would like to view your contacts.',
+        buttonPositive: 'Please accept bare mortal',
+      }).then(contcts());
+    } catch (err) {
+      alert(err);
+    }
+  }
+  async function contcts() {
+    console.log('here');
+    selectContactPhone().then(selection => {
+      if (!selection) {
+        return console.log(selection);
+      }
+
+      let {contact, selectedPhone} = selection;
+      console.log(
+        `Selected ${selectedPhone.type} phone number ${selectedPhone.number} from ${contact.name}`,
+      );
+      return selectedPhone.number;
+    });
+  }
   const navigation = props.navigation;
   return (
     <View style={{flex: 1, backgroundColor: 'white'}}>
@@ -44,7 +72,9 @@ const Invite = props => {
         backgroundColor="white"
         containerStyle={{borderBottomWidth: 0}}
         leftComponent={<HeaderLeftComponent navigation={navigation} />}
-        rightComponent={<HeaderRight />}
+        rightComponent={
+          <HeaderRight onPress={() => navigation.navigate('profile')} />
+        }
       />
       <ScrollView
         style={{
@@ -111,9 +141,9 @@ const Invite = props => {
               marginTop: responsiveHeight(2),
             },
           ]}
-          activeOpacity={0.7}
-          disabled={email === '' ? true : false}
-          //   onPress={() => navigation.navigate('main')}
+          // activeOpacity={0.7}
+          // disabled={email === '' ? true : false}
+          // onPress={cont}
         >
           {loading ? (
             <ActivityIndicator animating color={'white'} size={25} />
@@ -181,9 +211,8 @@ const Invite = props => {
           style={[styles.nextButtonStyle, {opacity: email === '' ? 0.4 : 1}]}>
           <TouchableOpacity
             activeOpacity={0.7}
-            disabled={email === '' ? true : false}
-            //   onPress={() => navigation.navigate('main')}
-          >
+            // disabled={email === '' ? true : false}
+            onPress={() => navigation.navigate('profile')}>
             {loading ? (
               <ActivityIndicator animating color={'white'} size={25} />
             ) : (
@@ -218,8 +247,18 @@ const Invite = props => {
             <ActivityIndicator animating color={'white'} size={25} />
           ) : (
             <View
-              style={{flexDirection: 'row', width: '57%', alignSelf: 'center'}}>
-              <Image source={invite} style={{height: 18, width: 18}} />
+              style={{
+                flexDirection: 'row',
+                width: responsiveScreenWidth(60),
+                alignSelf: 'center',
+                // backgroundColor: 'tomato',
+                justifyContent: 'center',
+                // left: 5,
+              }}>
+              <Image
+                source={invite}
+                style={{height: 18, width: 18, alignSelf: 'center'}}
+              />
               <Text
                 style={{
                   fontSize: 18,
