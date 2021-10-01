@@ -10,6 +10,10 @@ export const cloud = require('./images/cloud-upload.png');
 export const person = require('./images/person.png');
 export const people = require('./images/people.png');
 export const message = require('./images/message-circle.png');
+export const lilg = require('./images/lilguy.png');
+export const userg = require('./images/Userpic.png');
+export const userg2 = require('./images/Userpic@4x.png');
+export const userm = require('./images/Userpic4s.png');
 
 export const back = require('./images/back.png');
 export const next = require('./images/next.png');
