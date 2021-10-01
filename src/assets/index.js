@@ -20,3 +20,6 @@ export const cgc = require('./images/cgc.png');
 export const invite = require('./images/invite.png');
 export const check = require('./images/check.png');
 export const email_icon = require('./images/email.png');
+export const edit = require('./images/Edit.png');
+export const background = require('./images/background.png');
+export const confetti = require('./images/confetti.png');
