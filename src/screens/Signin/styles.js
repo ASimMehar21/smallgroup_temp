@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 import {StyleSheet, Dimensions} from 'react-native';
 import theme from '../../theme';
 const {width, height} = Dimensions.get('window');
@@ -9,6 +10,7 @@ const styles = StyleSheet.create({
     width: '90%',
     alignSelf: 'center',
   },
+  
   nameField: {
     borderWidth: 1,
     flexDirection: 'row',
