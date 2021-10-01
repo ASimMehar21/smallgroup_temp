@@ -17,7 +17,7 @@ import AuthenticationStack from './AuthenticationStack';
 const Stack = createStackNavigator();
 
 function AppNav({}) {
-  let initial = 'Auth';
+  let initial = 'Root';
 
   useEffect(() => {}, []);
 

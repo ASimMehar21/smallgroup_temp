@@ -131,7 +131,7 @@ function BottomTabNavigator({navigation}) {
         // activeTintColor: txtcolor,
         // headerShown: false,
       }}
-      barStyle={{backgroundColor: 'white', paddingVertical: 10}}>
+      barStyle={{backgroundColor: 'white'}}>
         
       <Tab.Screen
         name="Chat"
