@@ -20,6 +20,9 @@ export const doc = require('./images/doc.png');
 export const download = require('./images/download.png');
 export const verctor = require('./images/Verctor.png');
 export const button = require('./images/Button.png');
+export const logout = require('./images/log-out.png');
+export const arrow = require('./images/arrow.png');
+export const add = require('./images/add.png');
 
 export const back = require('./images/back.png');
 export const next = require('./images/next.png');
@@ -33,3 +36,5 @@ export const email_icon = require('./images/email.png');
 export const edit = require('./images/Edit.png');
 export const background = require('./images/background.png');
 export const confetti = require('./images/confetti.png');
+export const save_change = require('./images/save_changes.png');
+export const ownership = require('./images/ownership.png');

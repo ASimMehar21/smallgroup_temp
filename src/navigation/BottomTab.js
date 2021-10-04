@@ -17,6 +17,9 @@ import Event from '../screens/bottom_tab/Create_event/index'
 import Prayer from '../screens/bottom_tab/Prayers/index'
 import Group from '../screens/bottom_tab/Group/index'
 import Profile from '../screens/bottom_tab/profile/index'
+import Member from '../screens/bottom_tab/Group/member'
+import Details from '../screens/bottom_tab/Group/group_details'
+import EditDetails from '../screens/bottom_tab/Group/edit_details'
 
 import {Alert,Image} from 'react-native';
 
@@ -36,34 +39,34 @@ const HomeStack = () => {
   );
 };
 //Challenges Stack
-const ChallengeStack = () => {
+const groupStack = () => {
   return (
     <Stack.Navigator>
       <Stack.Screen
-        name="Challenges"
-        component={Challenges}
+        name="Group"
+        component={Group}
         options={{headerShown: false}}
       />
       <Stack.Screen
-        name="User"
-        component={User}
+        name="Member"
+        component={Member}
+        options={{headerShown: false}}
+      />
+       <Stack.Screen
+        name="Details"
+        component={Details}
         options={{headerShown: false}}
       />
       <Stack.Screen
-        name="Camera"
-        component={Camera}
+        name="EditDetails"
+        component={EditDetails}
         options={{headerShown: false}}
       />
-      <Stack.Screen
-        name="Search"
-        component={Search}
-        options={{headerShown: false}}
-      />
-      <Stack.Screen
+      {/*<Stack.Screen
         name="SearchDetail"
         component={SearchDetail}
         options={{headerShown: false}}
-      />
+      /> */}
     </Stack.Navigator>
   );
 };
@@ -168,7 +171,7 @@ function BottomTabNavigator({navigation}) {
 
       <Tab.Screen
         name="Group"
-        children={Group}
+        children={groupStack}
         options={{
           tabBarIcon: ({color}) => (
             <Image source ={people} style={{width:24,height:24,tintColor:color}} />
