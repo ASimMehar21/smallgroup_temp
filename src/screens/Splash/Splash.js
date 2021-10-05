@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import {View, StatusBar, ImageBackground, AsyncStorage} from 'react-native';
 import {icon} from '../../assets';
 import styles from './styles';
-// import {connect} from 'react-redux';
+import {connect} from 'react-redux';
 
 class Splash extends Component {
   constructor(props) {
@@ -16,7 +16,7 @@ class Splash extends Component {
   };
   splashDone = () => {
     setTimeout(() => {
-      this.props.navigation.navigate('Signin');
+      this.props.navigation.navigate(this.props.isLoggedIn ? 'Root' : 'Signin');
     }, 2000);
   };
 
@@ -33,5 +33,10 @@ class Splash extends Component {
     );
   }
 }
+const mapStateToProps = state => {
+  const {status, message, interest, isLoading, errMsg, isSuccess, isLoggedIn} =
+    state.auth;
+  return {status, message, isLoading, errMsg, isSuccess, interest, isLoggedIn};
+};
 
-export default Splash;
+export default connect(mapStateToProps)(Splash);

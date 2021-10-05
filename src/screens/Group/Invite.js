@@ -18,7 +18,7 @@ import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import Snackbar from 'react-native-snackbar';
 import styles from './styles';
 import {FloatingLabelInput} from 'react-native-floating-label-input';
-import {cross, invite, email_icon} from '../../assets';
+import {cross, invite, email_icon, close} from '../../assets';
 import {
   responsiveHeight,
   responsiveScreenHeight,
@@ -28,44 +28,85 @@ import LinearGradient from 'react-native-linear-gradient';
 import HeaderLeftComponent from '../../components/HeaderLeftComponent';
 import HeaderRight from '../../components/HeaderRight';
 import Contacts from 'react-native-contacts';
-import {selectContactPhone} from 'react-native-select-contact';
+//redux
+import {connect} from 'react-redux';
+import {emailInvitation} from '../../redux/actions/auth';
 const Invite = props => {
   const [createGroup, setcreateGroup] = useState(false);
   const [joinGroup, setjoinGroup] = useState(false);
   const {height} = Dimensions.get('window');
   const [email, setemail] = useState('');
   const [loading, setLoading] = useState(false);
-  const [contacts, setcontacts] = useState([
-    {id: 0, name: 'Dianne Johnson', mail: 'dianne99@email.com'},
-    {id: 0, name: 'Dianne Johnson', mail: 'dianne99@email.com'},
-    {id: 0, name: 'Dianne Johnson', mail: 'dianne99@email.com'},
-  ]);
+  const [contacts, setcontacts] = useState([]);
+  const [loadingContacts, setLoadingContacts] = useState(false);
+
+  const navigation = props.navigation;
+  useEffect(() => {
+    const code = props.route.params.code;
+    console.log(code);
+    AsyncStorage.setItem('code', code);
+  }, []);
   function cont() {
-    try {
+    if (Platform.OS === 'android') {
       PermissionsAndroid.request(PermissionsAndroid.PERMISSIONS.READ_CONTACTS, {
         title: 'Contacts',
         message: 'This app would like to view your contacts.',
-        buttonPositive: 'Please accept bare mortal',
-      }).then(contcts());
-    } catch (err) {
-      alert(err);
+      }).then(() => {
+        loadContacts();
+      });
+    } else {
+      setLoadingContacts(false);
+      // loadContacts();
     }
   }
-  async function contcts() {
-    console.log('here');
-    selectContactPhone().then(selection => {
-      if (!selection) {
-        return console.log(selection);
-      }
-
-      let {contact, selectedPhone} = selection;
-      console.log(
-        `Selected ${selectedPhone.type} phone number ${selectedPhone.number} from ${contact.name}`,
-      );
-      return selectedPhone.number;
+  const loadContacts = () => {
+    var arr = [];
+    Contacts.getAll().then(contacts => {
+      contacts.map((item, index) => {
+        item.emailAddresses.map(items => {
+          if (items.email !== null) {
+            arr.push({
+              id: index,
+              mail: items.email,
+              name: item.displayName,
+            });
+          }
+        });
+      });
+      setcontacts(arr);
+      console.log('contacts', arr);
+      setLoadingContacts(false);
     });
+  };
+  async function onInvitation() {
+    const mails = email.split(',');
+    console.log(mails);
+    const params = {
+      invitedMembers: mails,
+    };
+    try {
+      await props.emailInvitation(params);
+      if (props.isSuccess) {
+        setLoading(false);
+        navigation.navigate('profile');
+        Snackbar.show({
+          text: 'Invitation Send Succesfully',
+          backgroundColor: theme.colors.primary,
+          textColor: 'white',
+        });
+      } else {
+        setLoading(false);
+        Snackbar.show({
+          text: JSON.stringify(props.message),
+          backgroundColor: '#F14336',
+          textColor: 'white',
+        });
+      }
+    } catch (err) {
+      setLoading(false);
+      console.log(err);
+    }
   }
-  const navigation = props.navigation;
   return (
     <View style={{flex: 1, backgroundColor: 'white'}}>
       <Header
@@ -143,8 +184,7 @@ const Invite = props => {
           ]}
           // activeOpacity={0.7}
           // disabled={email === '' ? true : false}
-          // onPress={cont}
-        >
+          onPress={cont}>
           {loading ? (
             <ActivityIndicator animating color={'white'} size={25} />
           ) : (
@@ -164,6 +204,7 @@ const Invite = props => {
         {contacts &&
           contacts.map((item, index) => (
             <View
+              key={index}
               style={[
                 styles.nextButtonStyle,
                 {
@@ -181,7 +222,9 @@ const Invite = props => {
                   resizeMode="contain"
                 />
                 <View style={{left: 10, alignContent: 'center'}}>
-                  <Text style={styles.namestyle}>{item.name}</Text>
+                  <Text style={[styles.namestyle, {marginBottom: 3}]}>
+                    {item.name}
+                  </Text>
                   <Text
                     style={{
                       fontFamily: Fonts.DMRegular,
@@ -195,8 +238,8 @@ const Invite = props => {
               </View>
               <TouchableOpacity>
                 <Image
-                  source={cross}
-                  style={{width: 20, height: 16}}
+                  source={close}
+                  style={{width: 12, height: 12}}
                   resizeMode="contain"
                 />
               </TouchableOpacity>
@@ -211,8 +254,11 @@ const Invite = props => {
           style={[styles.nextButtonStyle, {opacity: email === '' ? 0.4 : 1}]}>
           <TouchableOpacity
             activeOpacity={0.7}
-            // disabled={email === '' ? true : false}
-            onPress={() => navigation.navigate('profile')}>
+            disabled={email === '' ? true : false}
+            // onPress={() => navigation.navigate('profile')}
+            onPress={() => {
+              setLoading(true), onInvitation();
+            }}>
             {loading ? (
               <ActivityIndicator animating color={'white'} size={25} />
             ) : (
@@ -237,6 +283,7 @@ const Invite = props => {
               borderColor: '#E1E3E6',
               backgroundColor: '#F8F8F8',
               width: '100%',
+              marginBottom: contacts ? 10 : 0,
             },
           ]}
           activeOpacity={0.7}
@@ -277,4 +324,8 @@ const Invite = props => {
     </View>
   );
 };
-export default Invite;
+const mapStateToProps = state => {
+  const {status, message, isLoading, errMsg, isSuccess, token} = state.auth;
+  return {status, message, isLoading, errMsg, isSuccess, token};
+};
+export default connect(mapStateToProps, {emailInvitation})(Invite);

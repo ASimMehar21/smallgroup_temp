@@ -55,10 +55,11 @@ const profile = props => {
         console.log('User tapped custom button: ', response.customButton);
         alert(response.customButton);
       } else {
-        const source = JSON.stringify(response.assets);
+        const source = response.assets;
 
         console.log('response', source);
-        // seturl(response.assets.uri);
+        var mapped = source.map(item => seturl(item.uri));
+        // seturl(source.);
       }
     });
   };
@@ -117,7 +118,7 @@ const profile = props => {
         style={{alignSelf: 'center'}}
         onPress={requestImagePermission}>
         <ImageBackground
-          resizeMode="contain"
+          // resizeMode="contain"
           source={url ? {uri: url} : background}
           borderRadius={36}
           style={{
@@ -125,6 +126,7 @@ const profile = props => {
             width: 72,
             justifyContent: 'center',
             borderRadius: 36,
+            // backgroundColor: 'tomato',
           }}>
           {!url && (
             <Text
