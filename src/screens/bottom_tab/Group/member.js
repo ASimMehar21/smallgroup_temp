@@ -38,9 +38,9 @@ function member  (props)  {
         <View style={{flex:1,backgroundColor:'white'}}>
              <Header
                 backgroundColor="white"
-                containerStyle={{borderBottomWidth: 0,justifyContent:'center'}}
-                leftComponent={<HeaderLeftComponent navigation={props.navigation} />}
+                containerStyle={{borderBottomWidth: 0,alignSelf:'center'}}
                 centerComponent={<HeaderCenterComponent name = {'Member Details'} />}
+                leftComponent={<HeaderLeftComponent navigation={props.navigation} />}
                 // rightComponent={<HeaderRight onPress={navigation} />}
             />
             <View style={styles.container}>

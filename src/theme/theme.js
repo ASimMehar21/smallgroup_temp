@@ -12,6 +12,7 @@ const theme = {
     labelColor: '#757D8A',
     dividerColor: '#C3C7CE',
     txtcolor: '#4E73F8',
+    gren:'#07A287'
   },
 };
 

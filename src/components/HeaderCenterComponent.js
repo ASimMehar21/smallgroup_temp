@@ -6,7 +6,7 @@ import {Fonts} from '../utils/Fonts';
 
 const HeaderCenterComponent = ({name}) => {
   return (
-    <View>
+    <View style={{justifyContent:'center',alignSelf:'center',width:150,height:48}}>
       <Text style={styles.textStyle}>{name}</Text>
     </View>
   );
@@ -14,8 +14,10 @@ const HeaderCenterComponent = ({name}) => {
 export default HeaderCenterComponent;
 export const styles = StyleSheet.create({
   textStyle: {
-    fontSize: 20,
-    fontFamily: Fonts.GoogleSansBold,
-    color: theme.colors.lightGray,
+    fontSize: 18,
+    // backgroundColor:'red',
+    // alignSelf:'center',
+    fontFamily: Fonts.DMBold,
+    color: theme.colors.textHeader,
   },
 });

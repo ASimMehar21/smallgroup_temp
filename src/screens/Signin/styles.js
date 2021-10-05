@@ -67,7 +67,7 @@ const styles = StyleSheet.create({
   divider: {
     width: '40%',
     borderWidth: 1,
-    borderColor: theme.colors.dividerColor,
+    borderColor: '#F1F2F3',
   },
   headerText: {
     fontSize: 32,
