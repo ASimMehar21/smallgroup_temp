@@ -10,11 +10,11 @@ const styles = StyleSheet.create({
     width: '90%',
     alignSelf: 'center',
   },
-  
+
   nameField: {
     borderWidth: 1,
     flexDirection: 'row',
-    width: '48%',
+    width: '100%',
     justifyContent: 'space-between',
     backgroundColor: '#fff',
     borderColor: theme.colors.borderColor,

@@ -1,200 +1,183 @@
 import axios from 'axios';
 import {BASE_URL} from '../base-url';
-import {LOGIN_USER, REGISTER_USER, LOGOUT_USER} from './types';
+
+import {
+  LOGIN_USER,
+  REGISTER_USER,
+  LOGOUT_USER,
+  GET_INTEREST,
+  CONFIRM_EMAIL,
+  CONFIRM_CODE,
+  CREATE_GROUP,
+} from './types';
 
 //Local Types
 export const AUTH_LOADING = 'AUTH_LOADING';
 export const AUTH_FAILED = 'AUTH_FAILED';
+export const INTEREST_FAILED = 'INTEREST_FAILED';
+export const EMAIL_FAILED = 'EMAIL_FAILED';
+export const CODE_FAILED = 'CODE_FAILED';
+export const REG_FAILED = 'REG_FAILED';
 
-export const GoogleLogin = (params) => {
+export const loginUser = params => {
+  console.log('HERE');
   console.log(params);
-  return async (dispatch) => {
+  return async dispatch => {
     dispatch(authLoading());
-    try {
-      const res = await axios.post(`${BASE_URL}Api/login`, params, {
-        headers: {
-          Accept: 'application/json',
-          'Content-Type': 'application/json',
-        },
-      });
 
-      if (res && res.data.response === 'error')
-        return dispatch(authFailed(res.data.message));
+    try {
+      const res = await axios.post(
+        `${BASE_URL}auth/login`,
+        JSON.stringify(params),
+        {
+          headers: {
+            Accept: 'application/json',
+            'Content-Type': 'application/json',
+          },
+        },
+      );
+      console.log(res);
+      if (res && res.data.status !== 200) {
+        console.log(res);
+        return dispatch(authFailed(res));
+      }
       dispatch(loginSuccess(res));
     } catch (err) {
+      console.log(err);
       dispatch(authFailed(err));
     }
   };
 };
-//check if email already exists
-export const checkEmail = (data, rsl, rej) => {
-  return (dispatch) => {
-    axios(`${BASE_URL}/Authentication/checkemail`, {
-      method: 'post',
-      data,
-    })
-      .then((res) => {
-        console.log(res);
-        rsl(res.data.status);
-      })
-      .catch((err) => {
-        rej(err.message);
-      });
+
+export const emailInvitation = params => {
+  console.log('HERE');
+  const id = JSON.stringify('61563003771e72607d18a3ce');
+  return async dispatch => {
+    // dispatch(authLoading());
+    try {
+      const res = await axios.put(
+        `${BASE_URL}api/group/sendinvites/61563003771e72607d18a3ce`,
+        JSON.stringify(params),
+        {
+          headers: {
+            Accept: 'application/json',
+            'Content-Type': 'application/json',
+          },
+        },
+      );
+      // if (res && res.data.status !== 200) return dispatch(emailfailed(res));
+
+      dispatch(confirmemail(res));
+    } catch (err) {
+      dispatch(emailfailed(err));
+    }
   };
 };
-//check if username already exists
-export const checkUsername = (data, rsl, rej) => {
-  return (dispatch) => {
-    axios(`${BASE_URL}/Authentication/checkusername`, {
-      method: 'post',
-      data,
-    })
-      .then((res) => {
-        if (res.data.status == true) {
-          rsl(res.data.message);
-        } else {
-          rej(res.data.message);
-        }
-      })
-      .catch((err) => {
-        rej(err.message);
-      });
+export const emailactive = params => {
+  console.log('HERE');
+  return async dispatch => {
+    // dispatch(authLoading());
+    try {
+      const res = await axios.post(
+        `${BASE_URL}user/activation_email/confirm`,
+        JSON.stringify(params),
+        {
+          headers: {
+            Accept: 'application/json',
+            'Content-Type': 'application/json',
+          },
+        },
+      );
+      if (res && res.data.status !== 200) return dispatch(codefailed(res));
+      dispatch(confirmCode(res));
+    } catch (err) {
+      dispatch(codefailed(err));
+    }
   };
 };
 
-//register user
-export const registerUser = (data, rsl, rej) => {
-  return (dispatch) => {
-    axios(`${BASE_URL}/Authentication/signpup`, {
-      method: 'post',
-      data,
-    })
-      .then((res) => {
-        if (res.data.status == true) {
-          rsl(res.data.message);
-          dispatch({
-            type: REGISTER_USER,
-            user: res.data.data,
-          });
-        } else {
-          rej(res.data.message);
-        }
-      })
-      .catch((err) => {
-        rej(err.message);
-      });
+export const registerUser = params => {
+  return async dispatch => {
+    try {
+      const res = await axios.post(
+        `${BASE_URL}auth/signup`,
+        JSON.stringify(params),
+        {
+          headers: {
+            Accept: 'application/json',
+            'Content-Type': 'application/json',
+          },
+        },
+      );
+      if (res && res.data.status !== 200) return dispatch(registerFAILED(res));
+      dispatch(registerSuccess(res));
+    } catch (err) {
+      dispatch(registerFAILED(res));
+    }
   };
 };
-//register user
-export const login = (data, rsl, rej) => {
-  return (dispatch) => {
-    // axios('http://192.168.1.5:3000/api/user-login', {
-    //   method: 'post',
-    //   data,
-    // })
-    //   .then((res) => {
-    //     if (res.data.status == true) {
-    //       rsl(res.data.message);
-    //       dispatch({
-    //         type: LOGIN_USER,
-    //         user: res.data.data[0],
-    //       });
-    //     } else {
-    //       rej(res.data.message);
-    //       dispatch({
-    //         type: LOGIN_USER,
-    //       });
-    //     }
-    //   })
-    //   .catch((err) => {
-    //     rej(err.message);
-    //   });
-    axios(`${BASE_URL}/Authentication/login`, {
-      method: 'post',
-      data,
-    })
-      .then((res) => {
-        if (res.data.status == true) {
-          rsl(res.data.message);
-          dispatch({
-            type: LOGIN_USER,
-            user: res.data.data,
-          });
-        } else {
-          rej(res.data.message);
-          dispatch({
-            type: LOGIN_USER,
-          });
-        }
-      })
-      .catch((err) => {
-        rej(err.message);
-      });
+export const CreateGroup = params => {
+  return async dispatch => {
+    try {
+      const res = await axios.post(
+        `${BASE_URL}api/group/61549c6effc4e455cc6faf11`,
+        JSON.stringify(params),
+        {
+          headers: {
+            Accept: 'application/json',
+            'Content-Type': 'application/json',
+          },
+        },
+      );
+      if (res && res.data.status !== 200) return dispatch(authFailed(res));
+      dispatch(creategroup(res));
+    } catch (err) {
+      dispatch(authFailed(res));
+    }
   };
 };
-//OTP for password reset
-export const getOtp = (data, rsl, rej) => {
-  return (dispatch) => {
-    axios(`${BASE_URL}/Authentication/forgotpassword`, {
-      method: 'post',
-      data,
-    })
-      .then((res) => {
-        if (res.data.status == true) {
-          rsl(res.data.message);
-        } else {
-          rej(res.data.message);
-        }
-      })
-      .catch((err) => {
-        rej(err.message);
-      });
-  };
-};
-//OTP Verify
-export const otpVerify = (data, rsl, rej) => {
-  return (dispatch) => {
-    axios(`${BASE_URL}/Authentication/verifyotp`, {
-      method: 'post',
-      data,
-    })
-      .then((res) => {
-        if (res.data.status == true) {
-          rsl(res.data.message);
-        } else {
-          rej(res.data.message);
-        }
-      })
-      .catch((err) => {
-        rej(err.message);
-      });
-  };
-};
-//Change password
-export const changePass = (data, rsl, rej) => {
-  return (dispatch) => {
-    axios(`${BASE_URL}/Authentication/ResetPassword`, {
-      method: 'post',
-      data,
-    })
-      .then((res) => {
-        if (res.data.status == true) {
-          rsl(res.data.message);
-        } else {
-          rej(res.data.message);
-        }
-      })
-      .catch((err) => {
-        rej(err.message);
-      });
-  };
-};
-//Logout user
-export const logoutSuccess = (rsl, rej) => {
-  return (dispatch) => {
-    rsl();
-    dispatch({
-      type: 'LOGOUT',
-    });
-  };
-};
+//helper Functions
+const creategroup = res => ({
+  type: CREATE_GROUP,
+  payload: res,
+});
+const authLoading = () => ({
+  type: AUTH_LOADING,
+});
+const authFailed = err => ({
+  type: AUTH_FAILED,
+  payload: err,
+});
+const loginSuccess = res => ({
+  type: LOGIN_USER,
+  payload: res,
+});
+
+const registerSuccess = res => ({
+  type: REGISTER_USER,
+  payload: res,
+});
+const registerFAILED = err => ({
+  type: REG_FAILED,
+  payload: err,
+});
+
+export const logoutUserSuccess = () => ({
+  type: LOGOUT_USER,
+});
+const confirmemail = res => ({
+  type: CONFIRM_EMAIL,
+  payload: res,
+});
+const emailfailed = err => ({
+  type: EMAIL_FAILED,
+  payload: err,
+});
+const confirmCode = res => ({
+  type: CONFIRM_CODE,
+  payload: res,
+});
+const codefailed = err => ({
+  type: CODE_FAILED,
+  payload: err,
+});
