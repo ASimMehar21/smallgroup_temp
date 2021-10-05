@@ -37,7 +37,7 @@ import { LinearTextGradient } from "react-native-text-gradient";
 
   const Tab = createMaterialTopTabNavigator();
 
-export default function Chat() {
+export default function Profile(props) {
 
     const [tog1, settog1] = useState(true);
     const [tog2, settog2] = useState(false)
@@ -115,7 +115,7 @@ export default function Chat() {
                 {tog1?
                     <Detail/>
                 :
-                    <Setting/>
+                    <Setting props={props}/>
                 }
             </View>
         </View>

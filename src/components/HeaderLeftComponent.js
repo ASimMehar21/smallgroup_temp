@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 import React from 'react';
 import {
   View,
@@ -30,6 +31,8 @@ export default HeaderLeftComponent;
 
 const styles = StyleSheet.create({
   drawerIcon: {
+    // alignSelf:'center',
+    // backgroundColor:'red',
     height: 48,
     width: 112,
 

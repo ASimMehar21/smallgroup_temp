@@ -1,3 +1,6 @@
+/* eslint-disable react-native/no-inline-styles */
+/* eslint-disable comma-dangle */
+/* eslint-disable prettier/prettier */
 
 import React from 'react'
 import { View,
@@ -61,10 +64,10 @@ import {
                     borderWidth:0.5,
                     borderColor:'rgba(225, 227, 230, 1)',
                     borderRadius:8,
-                    alignItems:'center'
+                    // alignItems:'center'
                 }}>
                     <TextInput
-                        style={[styles.labelStyle,{marginLeft:16,color: theme.colors.labelColor,height:50}]}
+                        style={[styles.labelStyle,{marginLeft:16,width:'90%',color: theme.colors.labelColor,height:38}]}
                     />
                 </View>
                 <TouchableOpacity>

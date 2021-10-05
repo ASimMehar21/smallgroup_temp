@@ -1,5 +1,7 @@
+/* eslint-disable no-trailing-spaces */
+/* eslint-disable react-native/no-inline-styles */
 /* eslint-disable prettier/prettier */
-import React , {useState} from 'react'
+import React , {useState} from 'react';
 import { View,
     Text,
     Switch,
@@ -11,7 +13,7 @@ import { View,
     ImageBackground,
     ActivityIndicator,
     ScrollView,
-    KeyboardAvoidingView} from 'react-native'
+    KeyboardAvoidingView} from 'react-native';
 import theme from '../../../theme';
 import {Fonts} from '../../../utils/Fonts';
 import styles from './syles';
@@ -22,7 +24,7 @@ import {
 } from '../../../assets';
 import {FloatingLabelInput} from 'react-native-floating-label-input';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
-export default function Chat() {
+export default function Chat({props}) {
 
     const [isEnabled, setIsEnabled] = useState(false);
   const toggleSwitch = () => setIsEnabled(previousState => !previousState);
@@ -123,7 +125,7 @@ export default function Chat() {
                 </TouchableOpacity>    
             </View>
             <View style={{flexDirection:'row',marginTop:28,marginBottom:30}}>
-                <TouchableOpacity style={{flexDirection:'row'}}>
+                <TouchableOpacity onPress={()=> props.navigation.navigate('Signin')} style={{flexDirection:'row'}}>
                     <Image 
                         source={logout}
                         style={{width:22,height:22}}
@@ -133,5 +135,5 @@ export default function Chat() {
             </View>
         </View>
         </ScrollView>
-    )
+    );
 }

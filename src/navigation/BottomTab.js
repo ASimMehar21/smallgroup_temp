@@ -20,6 +20,7 @@ import Profile from '../screens/bottom_tab/profile/index'
 import Member from '../screens/bottom_tab/Group/member'
 import Details from '../screens/bottom_tab/Group/group_details'
 import EditDetails from '../screens/bottom_tab/Group/edit_details'
+import PrayerDetails from '../screens/bottom_tab/Prayers/prayer_detail'
 
 import {Alert,Image} from 'react-native';
 
@@ -71,12 +72,18 @@ const groupStack = () => {
   );
 };
 //Camera Stack
-const CameraStack = () => {
+const prayerStack = () => {
   return (
     <Stack.Navigator>
       <Stack.Screen
-        name="Camera"
-        component={Camera}
+        name="Prayer"
+        component={Prayer}
+        options={{headerShown: false}}
+      />
+
+      <Stack.Screen
+        name="PrayerDetails"
+        component={PrayerDetails}
         options={{headerShown: false}}
       />
     </Stack.Navigator>
@@ -159,7 +166,7 @@ function BottomTabNavigator({navigation}) {
       />
       <Tab.Screen
         name="Prayer"
-        component={Prayer}
+        component={prayerStack}
         options={{
           tabBarLabel: 'Prayer',
           tabBarIcon: ({color}) => (

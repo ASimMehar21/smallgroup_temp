@@ -28,10 +28,21 @@ import {Fonts} from '../../../utils/Fonts';
 import styles from './styles';
 import {FloatingLabelInput} from 'react-native-floating-label-input';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
+import HeaderCenterComponent from '../../../components/HeaderCenterComponent';
+import HeaderLeftComponent from '../../../components/HeaderLeftComponent';
+import HeaderRight from '../../../components/HeaderRight';
+import {Header} from 'react-native-elements';
 
  const group_details = (props) => {
     return (
         <View style={{flex:1,backgroundColor:'white'}}>
+             <Header
+                backgroundColor="white"
+                containerStyle={{borderBottomWidth: 0,alignSelf:'center'}}
+                centerComponent={<HeaderCenterComponent name = {'Group Details'} />}
+                leftComponent={<HeaderLeftComponent navigation={props.navigation} />}
+                rightComponent={<HeaderRight navigation={props.navigation} />}
+            />
             <View style={styles.container}>
                 <View style={[styles.divider,{marginTop:32}]} />
                     <View>
