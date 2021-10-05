@@ -1,3 +1,5 @@
+/* eslint-disable no-trailing-spaces */
+/* eslint-disable react-native/no-inline-styles */
 /* eslint-disable prettier/prettier */
 import React , {useState} from 'react'
 import { View,
@@ -6,7 +8,7 @@ import { View,
     Dimensions,
     TouchableOpacity,
     Image,
-    FlatList,
+    Modal,
     ImageBackground,
     ActivityIndicator,
     ScrollView,
@@ -20,16 +22,26 @@ import {
   import {
     save_change,
     ownership,
+    transfer,
+    current,
+    others,
 } from '../../../assets';
 import {Fonts} from '../../../utils/Fonts';
 import styles from './styles';
 import {FloatingLabelInput} from 'react-native-floating-label-input';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
+import { Scope } from '@babel/traverse';
 const edit_details = (props) => {
     const [gname, setgname] = useState('')
     const [gcode, setgcode] = useState('')
     const [owner, setowner] = useState('')
     const [contact, setcontact] = useState('')
+    const [modalVisible, setmodalVisible] = useState('')
+
+    // function modal_Visible (visible)  {
+    //     this.setState({ModalVisible : visible });
+    // }
+
     return (
         <View style={{flex:1,backgroundColor:'white'}}>
             <View style={styles.container}>
@@ -86,10 +98,125 @@ const edit_details = (props) => {
                     style={{width:'100%',height:48}}
                 />
             </TouchableOpacity>
-            <TouchableOpacity style={[styles.btn,{marginTop:16}]} >
+            <TouchableOpacity onPress={()=> setmodalVisible(true)} style={[styles.btn,{marginTop:16}]} >
                 <Text style={styles.email,{fontSize:18,color:theme.colors.labelColor}}>Transfer Ownership</Text>
             </TouchableOpacity>
             </View>
+
+            <Modal
+                animationType="slide"
+                transparent={true}
+                visible={modalVisible}
+                // style={{ backgroundColor:'rgba(64, 77, 97, 1)' }}
+                onRequestClose={() => {
+                    setmodalVisible(!modalVisible)
+                }}
+                >
+                  <View style={styles.centeredView}>
+                    <View style={styles.modalView}>
+                        <View style={{width:'100%',height:48,flexDirection:'row',backgroundColor:'white',borderTopLeftRadius:15,borderTopRightRadius:5}}>
+                            <TouchableOpacity style={{flex:0.2,alignItems:'center',alignSelf:'center'}} onPress={()=> setmodalVisible(!modalVisible)}>
+                                <Text style={[styles.tabtext,{height:'auto',fontFamily:Fonts.DMRegular,fontWeight:'400',color:theme.colors.txtblue}]}>Cancel</Text>
+                            </TouchableOpacity>
+                            <View style={{flex:0.6,alignItems:'center',alignSelf:'center'}}>
+                                <Text style={[styles.tabtext,{height:'auto',fontSize:18,fontFamily:Fonts.DMBold,color:theme.colors.textHeader}]}>Transfer Ownership</Text>
+                            </View>
+                            <TouchableOpacity style={{flex:0.2}} onPress={()=> setmodalVisible(!modalVisible)}>
+                                {/* <Text style={[styles.tabtext,{margin:12,fontFamily:Fonts.DMRegular,fontWeight:'400',color:theme.colors.txtblue}]}>Cancel</Text> */}
+                            </TouchableOpacity>
+                        </View>
+                    
+                    <View style={[styles.divider,{marginTop:0}]} />
+                    <ScrollView style={{}}>
+                        <View style={{marginTop:24,alignItems:'center'}}>
+
+                        <TouchableOpacity style={[styles.btn,{justifyContent:'flex-start',flexDirection:'row',borderColor:'#6989FE',borderWidth:1,backgroundColor:'rgba(78, 115, 248, 0.08)',marginTop:0,width:372}]} >
+                            <Image
+                                source={current}
+                                style={{width:24,height:28,marginLeft:16}}
+                            />
+                            <Text style={styles.email,{fontSize:18,color:theme.colors.labelColor,marginLeft:8,marginBottom:5}}>Brianna Louise (Current)</Text>
+                        </TouchableOpacity>
+
+                        <TouchableOpacity style={[styles.btn,{backgroundColor:'white',justifyContent:'flex-start',flexDirection:'row',marginTop:8,width:372}]} >
+                            <Image
+                                source={others}
+                                style={{width:28,height:28,marginLeft:16}}
+                            />
+                            <Text style={styles.email,{marginLeft:8,fontSize:18,color:theme.colors.labelColor}}>David C.</Text>
+                        </TouchableOpacity>
+
+                        <TouchableOpacity style={[styles.btn,{backgroundColor:'white',justifyContent:'flex-start',flexDirection:'row',marginTop:8,width:372}]} >
+                            <Image
+                                source={others}
+                                style={{width:28,height:28,marginLeft:16}}
+                            />
+                            <Text style={styles.email,{marginLeft:8,fontSize:18,color:theme.colors.labelColor}}>David C.</Text>
+                        </TouchableOpacity>
+
+                        <TouchableOpacity style={[styles.btn,{backgroundColor:'white',justifyContent:'flex-start',flexDirection:'row',marginTop:8,width:372}]} >
+                            <Image
+                                source={others}
+                                style={{width:28,height:28,marginLeft:16}}
+                            />
+                            <Text style={styles.email,{marginLeft:8,fontSize:18,color:theme.colors.labelColor}}>David C.</Text>
+                        </TouchableOpacity>
+
+                        <TouchableOpacity style={[styles.btn,{backgroundColor:'white',justifyContent:'flex-start',flexDirection:'row',marginTop:8,width:372}]} >
+                            <Image
+                                source={others}
+                                style={{width:28,height:28,marginLeft:16}}
+                            />
+                            <Text style={styles.email,{marginLeft:8,fontSize:18,color:theme.colors.labelColor}}>David C.</Text>
+                        </TouchableOpacity>
+
+                        <TouchableOpacity style={[styles.btn,{backgroundColor:'white',justifyContent:'flex-start',flexDirection:'row',marginTop:8,width:372}]} >
+                            <Image
+                                source={others}
+                                style={{width:28,height:28,marginLeft:16}}
+                            />
+                            <Text style={styles.email,{marginLeft:8,fontSize:18,color:theme.colors.labelColor}}>David C.</Text>
+                        </TouchableOpacity>
+
+                        <TouchableOpacity style={[styles.btn,{backgroundColor:'white',justifyContent:'flex-start',flexDirection:'row',marginTop:8,width:372}]} >
+                            <Image
+                                source={others}
+                                style={{width:28,height:28,marginLeft:16}}
+                            />
+                            <Text style={styles.email,{marginLeft:8,fontSize:18,color:theme.colors.labelColor}}>David C.</Text>
+                        </TouchableOpacity>
+
+                        <TouchableOpacity style={[styles.btn,{backgroundColor:'white',justifyContent:'flex-start',flexDirection:'row',marginTop:8,width:372}]} >
+                            <Image
+                                source={others}
+                                style={{width:28,height:28,marginLeft:16}}
+                            />
+                            <Text style={styles.email,{marginLeft:8,fontSize:18,color:theme.colors.labelColor}}>David C.</Text>
+                        </TouchableOpacity>
+
+                        <TouchableOpacity style={[styles.btn,{backgroundColor:'white',justifyContent:'flex-start',flexDirection:'row',marginTop:8,width:372}]} >
+                            <Image
+                                source={others}
+                                style={{width:28,height:28,marginLeft:16}}
+                            />
+                            <Text style={styles.email,{marginLeft:8,fontSize:18,color:theme.colors.labelColor}}>David C.</Text>
+                        </TouchableOpacity>
+   
+                        </View>
+                    </ScrollView>
+
+                    <TouchableOpacity style={{alignItems:'center',marginBottom:50,marginTop:32}}>
+                        <Image
+                            source={transfer}
+                            style={{width:372,height:48}}
+                        />
+                    </TouchableOpacity>
+
+                    </View>
+                </View>
+              </Modal>
+      
+
         </View>
     )
 }

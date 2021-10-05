@@ -103,7 +103,38 @@ const styles = StyleSheet.create({
         borderWidth:0.5,
         borderColor:'#E1E3E6',
         borderRadius:8
-      }
+      },
+      centeredView: {
+        // flex: 0.2,
+        // justifyContent:'flex-end',
+        // top:100,
+        // bottom:0,
+        // position:'absolute',
+        height:'100%',
+        // alignItems:'flex-end',
+        // alignSelf:'flex-end',
+        backgroundColor:'rgba(64, 77, 97, 0.5)',
+      },
+      modalView: {
+        height:544,
+        marginTop: 'auto',
+        // bottom:0,
+        width:'100%',
+        // margin:10,
+        // justifyContent:'center',
+        backgroundColor: "#F8F8F8",
+        borderTopLeftRadius:15,
+        borderTopRightRadius:15,
+        // alignItems: "center",
+        shadowColor: "#000",
+        shadowOffset: {
+          width: 0,
+          height: 8
+        },
+        shadowOpacity: 0.25,
+        shadowRadius: 3.84,
+        elevation: 10
+      },
   
 });
 export default styles;

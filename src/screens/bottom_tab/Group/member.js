@@ -28,10 +28,21 @@ import {Fonts} from '../../../utils/Fonts';
 import styles from './styles';
 import {FloatingLabelInput} from 'react-native-floating-label-input';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
-function member  ()  {
+import HeaderCenterComponent from '../../../components/HeaderCenterComponent';
+import HeaderLeftComponent from '../../../components/HeaderLeftComponent';
+import {Header} from 'react-native-elements';
+
+function member  (props)  {
     const [admin, setadmin] = useState(false)
     return (
         <View style={{flex:1,backgroundColor:'white'}}>
+             <Header
+                backgroundColor="white"
+                containerStyle={{borderBottomWidth: 0,justifyContent:'center'}}
+                leftComponent={<HeaderLeftComponent navigation={props.navigation} />}
+                centerComponent={<HeaderCenterComponent name = {'Member Details'} />}
+                // rightComponent={<HeaderRight onPress={navigation} />}
+            />
             <View style={styles.container}>
                 <Image
                     source={userg2}
