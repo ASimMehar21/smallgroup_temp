@@ -5,12 +5,18 @@ import {PersistGate} from 'redux-persist/integration/react';
 import {persister, store} from './src/redux/store';
 import AppNav from './src/navigation/AppNav';
 import {View, YellowBox} from 'react-native';
+import theme from './src/theme';
+import {ThemeProvider} from 'react-native-elements';
 YellowBox.ignoreWarnings(['']);
 const App = () => {
   return (
-    <View style={{flex: 1}}>
-      <AppNav />
-    </View>
+    <Provider store={store}>
+      <PersistGate persistor={persister}>
+        <ThemeProvider theme={theme}>
+          <AppNav />
+        </ThemeProvider>
+      </PersistGate>
+    </Provider>
   );
 };
 export default App;

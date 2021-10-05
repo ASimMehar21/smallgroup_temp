@@ -155,7 +155,7 @@ const createGroup = props => {
               <TouchableOpacity
                 activeOpacity={0.7}
                 disabled={code === '' ? true : false}
-                onPress={() => navigation.navigate('Invite')}>
+                onPress={() => navigation.navigate('Invite', {code})}>
                 {loading ? (
                   <ActivityIndicator animating color={'white'} size={25} />
                 ) : (

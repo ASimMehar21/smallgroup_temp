@@ -1,1 +1,1 @@
-export const BASE_URL = 'https://challengeit.coviknow.com/';
+export const BASE_URL = 'https://small-group-app.herokuapp.com/';

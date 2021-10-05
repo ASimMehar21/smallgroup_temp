@@ -161,8 +161,7 @@ const joinGroup = props => {
             <TouchableOpacity
               activeOpacity={0.7}
               disabled={code === '' ? true : false}
-              // onPress={() => navigation.navigate('main')}
-            >
+              onPress={() => navigation.navigate('setup')}>
               {loading ? (
                 <ActivityIndicator animating color={'white'} size={25} />
               ) : (

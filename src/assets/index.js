@@ -41,3 +41,4 @@ export const background = require('./images/background.png');
 export const confetti = require('./images/confetti.png');
 export const save_change = require('./images/save_changes.png');
 export const ownership = require('./images/ownership.png');
+export const close = require('./images/cross.png');

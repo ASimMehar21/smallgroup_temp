@@ -23,6 +23,8 @@ import {
   responsiveScreenWidth,
 } from 'react-native-responsive-dimensions';
 import LinearGradient from 'react-native-linear-gradient';
+import {registerUser} from '../../redux/actions/auth';
+import {connect} from 'react-redux';
 const SignupScreen = props => {
   const [loading, setLoading] = useState(false);
   const [password, setPassword] = useState('');
@@ -31,7 +33,95 @@ const SignupScreen = props => {
   const [fName, setfName] = useState('');
   const [lName, setlName] = useState('');
   const {height} = Dimensions.get('window');
+  const [emailMessage, setemailMessage] = useState('');
+  const [passwordMessage, setpasswordMessage] = useState('');
+  const [confirmMessage, setconfirmMessage] = useState('');
+  const [fNameMessage, setfNameMessage] = useState('');
+  const [lNameMessage, setlNameMessage] = useState('');
   const navigation = props.navigation;
+  async function onregister() {
+    setconfirmMessage('');
+    setemailMessage('');
+    setfNameMessage('');
+    setlNameMessage('');
+    setconfirmMessage('');
+    if (
+      password !== '' &&
+      confirmpassword !== '' &&
+      fName !== '' &&
+      lName !== '' &&
+      email !== ''
+    ) {
+      const params = {
+        firstName: fName,
+        lastName: lName,
+        email: email,
+        password: password,
+      };
+      if (password === confirmpassword) {
+        const re =
+          /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+        const emailValid = re.test(email);
+
+        if (emailValid) {
+          await props.registerUser(params);
+          if (props.isSuccess) {
+            setLoading(false);
+            navigation.navigate('main');
+            Snackbar.show({
+              text: props.message,
+              backgroundColor: theme.colors.primary,
+              textColor: theme.colors.secondary,
+            });
+          } else {
+            setLoading(false);
+            Snackbar.show({
+              text: JSON.stringify(props.message),
+              backgroundColor: '#F14336',
+              textColor: 'white',
+            });
+          }
+        } else {
+          setLoading(false);
+          setemailMessage('Kindly enter correct email');
+        }
+      } else {
+        setLoading(false);
+        setconfirmMessage('Both passwords Must be match');
+      }
+    } else {
+      setLoading(false);
+      if (
+        password === '' &&
+        confirmpassword === '' &&
+        fName === '' &&
+        lName === ''
+      ) {
+        setconfirmMessage('Kindly enter confirm password');
+        setemailMessage('Kindly enter email');
+        setpasswordMessage('Kindly enter password');
+        setfNameMessage('Kindly enter first name');
+        setlNameMessage('Kindly enter last name');
+      }
+
+      if (email === '') {
+        setemailMessage('Kindly enter email');
+      }
+      if (password === '') {
+        setpasswordMessage('Kindly enter password');
+      }
+      if (lName == '') {
+        setlNameMessage('Kindly enter last name');
+      }
+      if (fName) {
+        setfNameMessage('Kindly enter first name');
+      }
+      if (confirmpassword === '') {
+        setconfirmMessage('Kindly enter confirm password');
+      }
+      return false;
+    }
+  }
   return (
     <View
       style={{flex: 1, backgroundColor: 'white'}}
@@ -49,33 +139,60 @@ const SignupScreen = props => {
         </View>
         <View style={{marginTop: responsiveScreenHeight(5)}}></View>
         <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
-          <View style={styles.nameField}>
-            <View style={styles.nametext}>
-              <FloatingLabelInput
-                label={'First Name'}
-                value={fName}
-                onChangeText={value => setfName(value)}
-                containerStyles={{padding: 5}}
-                labelStyles={styles.labelStyle}
-                inputStyles={{width: '100%'}}
-              />
+          <View style={{width: '48%'}}>
+            <View
+              style={[
+                styles.nameField,
+                {
+                  borderColor:
+                    fNameMessage !== '' ? 'tomato' : theme.colors.borderColor,
+                },
+              ]}>
+              <View style={styles.nametext}>
+                <FloatingLabelInput
+                  label={'First Name'}
+                  value={fName}
+                  onChangeText={value => setfName(value)}
+                  containerStyles={{padding: 5}}
+                  labelStyles={styles.labelStyle}
+                  inputStyles={{width: '100%'}}
+                />
+              </View>
             </View>
+            {fNameMessage !== '' && <Errors errors={fNameMessage} />}
           </View>
-          <View style={[styles.nameField]}>
-            <View style={styles.textInputStyle}>
-              <FloatingLabelInput
-                label={'Last Name'}
-                value={lName}
-                onChangeText={value => setlName(value)}
-                containerStyles={{padding: 5}}
-                labelStyles={styles.labelStyle}
-                inputStyles={{width: '100%'}}
-              />
+          <View style={{width: '48%'}}>
+            <View
+              style={[
+                styles.nameField,
+                {
+                  borderColor:
+                    lNameMessage !== '' ? 'tomato' : theme.colors.borderColor,
+                },
+              ]}>
+              <View style={styles.textInputStyle}>
+                <FloatingLabelInput
+                  label={'Last Name'}
+                  value={lName}
+                  onChangeText={value => setlName(value)}
+                  containerStyles={{padding: 5}}
+                  labelStyles={styles.labelStyle}
+                  inputStyles={{width: '100%'}}
+                />
+              </View>
             </View>
+            {lNameMessage !== '' && <Errors errors={lNameMessage} />}
           </View>
         </View>
         <View style={{marginTop: responsiveScreenHeight(1)}}></View>
-        <View style={styles.maincontainer}>
+        <View
+          style={[
+            styles.maincontainer,
+            {
+              borderColor:
+                emailMessage !== '' ? 'tomato' : theme.colors.borderColor,
+            },
+          ]}>
           <View style={styles.textInputStyle}>
             <FloatingLabelInput
               label={'Your Email'}
@@ -87,9 +204,16 @@ const SignupScreen = props => {
             />
           </View>
         </View>
-
+        {emailMessage !== '' && <Errors errors={emailMessage} />}
         <View style={{marginTop: responsiveScreenHeight(1)}}></View>
-        <View style={styles.maincontainer}>
+        <View
+          style={[
+            styles.maincontainer,
+            {
+              borderColor:
+                passwordMessage !== '' ? 'tomato' : theme.colors.borderColor,
+            },
+          ]}>
           <View style={styles.textInputStyle}>
             <FloatingLabelInput
               label={'Password'}
@@ -104,8 +228,16 @@ const SignupScreen = props => {
             />
           </View>
         </View>
+        {passwordMessage !== '' && <Errors errors={passwordMessage} />}
         <View style={{marginTop: responsiveScreenHeight(1)}}></View>
-        <View style={styles.maincontainer}>
+        <View
+          style={[
+            styles.maincontainer,
+            {
+              borderColor:
+                confirmMessage !== '' ? 'tomato' : theme.colors.borderColor,
+            },
+          ]}>
           <View style={styles.textInputStyle}>
             <FloatingLabelInput
               label={'Confirm Password'}
@@ -118,8 +250,8 @@ const SignupScreen = props => {
             />
           </View>
         </View>
-
         <View>
+          {confirmMessage !== '' && <Errors errors={confirmMessage} />}
           <LinearGradient
             colors={
               email !== '' &&
@@ -155,7 +287,11 @@ const SignupScreen = props => {
             <TouchableOpacity
               activeOpacity={0.7}
               disabled={loading}
-              onPress={() => navigation.navigate('main')}>
+              onPress={() => {
+                setLoading(true), onregister();
+              }}
+              // onPress={() => navigation.navigate('main')}
+            >
               {loading ? (
                 <ActivityIndicator animating color={'white'} size={25} />
               ) : (
@@ -289,4 +425,24 @@ const SignupScreen = props => {
   );
 };
 
-export default SignupScreen;
+// export default SignupScreen;
+const mapStateToProps = state => {
+  const {status, message, isLoading, errMsg, isSuccess, token} = state.auth;
+  return {status, message, isLoading, errMsg, isSuccess, token};
+};
+export default connect(mapStateToProps, {registerUser})(SignupScreen);
+export function Errors({errors}) {
+  return (
+    <Text
+      style={{
+        fontSize: 12,
+        fontWeight: 'bold',
+        width: '95%',
+        alignSelf: 'center',
+        marginTop: 5,
+        color: 'red',
+      }}>
+      {errors}
+    </Text>
+  );
+}
