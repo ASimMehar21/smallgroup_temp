@@ -350,10 +350,11 @@ const SignupScreen = props => {
             <TouchableOpacity
               activeOpacity={0.7}
               disabled={loading}
-              // onPress={() => {
-              //   setLoading(true), onregister();
-              // }}
-              onPress={() => navigation.navigate('main')}>
+              onPress={() => {
+                setLoading(true), onregister();
+              }}
+              // onPress={() => navigation.navigate('main')}
+            >
               {loading ? (
                 <ActivityIndicator animating color={'white'} size={25} />
               ) : (
