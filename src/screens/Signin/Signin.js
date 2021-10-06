@@ -19,7 +19,7 @@ import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import Snackbar from 'react-native-snackbar';
 import styles from './styles';
 import {FloatingLabelInput} from 'react-native-floating-label-input';
-import {cross, fb, gb} from '../../assets';
+import {cross, lfb, lgb} from '../../assets';
 import {
   responsiveHeight,
   responsiveScreenHeight,
@@ -33,7 +33,7 @@ import {
 } from '@react-native-google-signin/google-signin';
 //redux
 import {connect} from 'react-redux';
-import {loginUser} from '../../redux/actions/auth';
+import {loginUser, Googlelogin} from '../../redux/actions/auth';
 const Signin = props => {
   const [loading, setLoading] = useState(false);
   const [password, setPassword] = useState('');
@@ -60,10 +60,28 @@ const Signin = props => {
         .user;
       if (userInfo) {
         const params = {
-          user: userInfo,
+          google_UID: userInfo.id,
         };
         console.log(userInfo);
-        // setIsGoogleLoggingIn(true);
+        await props.Googlelogin(params);
+        if (props.isSuccess) {
+          setLoading(false);
+          navigation.navigate('Root');
+          console.log('tokens', props.token);
+          Snackbar.show({
+            text: JSON.stringify(props.message),
+            backgroundColor: theme.colors.primary,
+            textColor: 'white',
+          });
+        } else {
+          setLoading(false);
+          // await GoogleSignin.revokeAccess();
+          Snackbar.show({
+            text: JSON.stringify(props.message),
+            backgroundColor: '#F14336',
+            textColor: 'white',
+          });
+        }
       }
     } catch (error) {
       if (error.code === statusCodes.SIGN_IN_CANCELLED) {
@@ -259,57 +277,57 @@ const Signin = props => {
           style={{
             width: '100%',
             marginTop: 5,
-            borderWidth: 1,
-            borderRadius: 8,
-            borderColor: theme.colors.borderColor,
+            // borderWidth: 1,
+            // borderRadius: 8,
+            // borderColor: theme.colors.borderColor,
           }}>
-          <View
+          {/* <View
             style={{
               flexDirection: 'row',
-              width: responsiveScreenWidth(65),
+              width: '50%',
               padding: 15,
               justifyContent: 'space-between',
-            }}>
-            <Image
-              source={gb}
-              style={{
-                width: 16,
-                height: 16,
-              }}
-              resizeMode="contain"
-            />
-            <Text style={styles.dividertxt}>Log in with Google</Text>
-          </View>
+            }}> */}
+          <Image
+            source={lgb}
+            style={{
+              width: '100%',
+              height: 50,
+            }}
+            resizeMode="stretch"
+          />
+          {/* <Text style={styles.dividertxt}>Log in with Google</Text>
+          </View> */}
         </TouchableOpacity>
 
         <View
           style={{
             width: '100%',
             marginTop: 7,
-            borderWidth: 1,
-            borderRadius: 8,
-            borderColor: theme.colors.borderColor,
+            // borderWidth: 1,
+            // borderRadius: 8,
+            // borderColor: theme.colors.borderColor,
           }}>
-          <View
+          {/* <View
             style={{
               flexDirection: 'row',
               width: responsiveScreenWidth(65),
               padding: 12,
               justifyContent: 'space-between',
-            }}>
-            <Image
-              source={fb}
-              style={{
-                width: 20.22,
-                height: 24,
-              }}
-              resizeMode="contain"
-            />
-            <Text style={styles.dividertxt}>Log in with Apple</Text>
-          </View>
+            }}> */}
+          <Image
+            source={lfb}
+            style={{
+              width: '100%',
+              height: 50,
+            }}
+            resizeMode="stretch"
+          />
+          {/* <Text style={styles.dividertxt}>Log in with Apple</Text>
+          </View> */}
         </View>
         <View
-          style={{alignSelf: 'center', marginTop: responsiveScreenHeight(2)}}>
+          style={{alignSelf: 'center', marginTop: responsiveScreenHeight(1)}}>
           <TouchableOpacity>
             <Text
               style={{
@@ -349,7 +367,7 @@ const Signin = props => {
           style={{
             alignSelf: 'center',
             alignItems: 'center',
-            marginTop: responsiveScreenHeight(20),
+            marginTop: responsiveScreenHeight(18),
           }}>
           <Text
             style={{
@@ -380,7 +398,7 @@ const mapStateToProps = state => {
   const {status, message, isLoading, errMsg, isSuccess, token} = state.auth;
   return {status, message, isLoading, errMsg, isSuccess, token};
 };
-export default connect(mapStateToProps, {loginUser})(Signin);
+export default connect(mapStateToProps, {loginUser, Googlelogin})(Signin);
 export function Errors({errors}) {
   return (
     <Text

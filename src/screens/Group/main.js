@@ -42,9 +42,7 @@ const main = props => {
         style={{
           width: '90%',
           alignSelf: 'center',
-          //   backgroundColor: 'tomato',
           flex: 1,
-          flexGrow: 1,
         }}>
         <View
           style={{

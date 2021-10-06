@@ -169,7 +169,7 @@ const profile = props => {
             alignSelf: 'center',
             width: '90%',
             position: 'absolute',
-            bottom: responsiveHeight(8),
+            bottom: responsiveHeight(9),
           },
         ]}>
         <TouchableOpacity

@@ -1,16 +1,15 @@
 import axios from 'axios';
 import {BASE_URL} from '../base-url';
-
 import {
   LOGIN_USER,
   REGISTER_USER,
   LOGOUT_USER,
-  GET_INTEREST,
   CONFIRM_EMAIL,
   CONFIRM_CODE,
   CREATE_GROUP,
+  GOOGLE_LOGIN,
+  GOOGLE_SIGNUP,
 } from './types';
-
 //Local Types
 export const AUTH_LOADING = 'AUTH_LOADING';
 export const AUTH_FAILED = 'AUTH_FAILED';
@@ -43,8 +42,8 @@ export const loginUser = params => {
       }
       dispatch(loginSuccess(res));
     } catch (err) {
-      console.log(err);
-      dispatch(authFailed(err));
+      console.log(err.response.data);
+      dispatch(authFailed(err.response));
     }
   };
 };
@@ -69,7 +68,7 @@ export const emailInvitation = params => {
 
       dispatch(confirmemail(res));
     } catch (err) {
-      dispatch(emailfailed(err));
+      dispatch(emailfailed(err.response));
     }
   };
 };
@@ -91,11 +90,10 @@ export const emailactive = params => {
       if (res && res.data.status !== 200) return dispatch(codefailed(res));
       dispatch(confirmCode(res));
     } catch (err) {
-      dispatch(codefailed(err));
+      dispatch(codefailed(err.response));
     }
   };
 };
-
 export const registerUser = params => {
   return async dispatch => {
     try {
@@ -112,7 +110,7 @@ export const registerUser = params => {
       if (res && res.data.status !== 200) return dispatch(registerFAILED(res));
       dispatch(registerSuccess(res));
     } catch (err) {
-      dispatch(registerFAILED(res));
+      dispatch(registerFAILED(err.response));
     }
   };
 };
@@ -132,11 +130,78 @@ export const CreateGroup = params => {
       if (res && res.data.status !== 200) return dispatch(authFailed(res));
       dispatch(creategroup(res));
     } catch (err) {
-      dispatch(authFailed(res));
+      dispatch(authFailed(err.response));
+    }
+  };
+};
+//Google
+export const Googlelogin = params => {
+  console.log('HERE');
+  console.log(params);
+  return async dispatch => {
+    dispatch(authLoading());
+
+    try {
+      const res = await axios.post(
+        `${BASE_URL}auth/google/login`,
+        JSON.stringify(params),
+        {
+          headers: {
+            Accept: 'application/json',
+            'Content-Type': 'application/json',
+          },
+        },
+      );
+      console.log(res);
+      if (res && res.data.status !== 200) {
+        console.log(res);
+        return dispatch(authFailed(res));
+      }
+      dispatch(logingoogle(res));
+    } catch (err) {
+      console.log(err.response.data);
+      dispatch(authFailed(err.response));
+    }
+  };
+};
+export const GoogleSignup = params => {
+  console.log('HERE');
+  console.log(params);
+  return async dispatch => {
+    dispatch(authLoading());
+
+    try {
+      const res = await axios.post(
+        `${BASE_URL}auth/google/signup`,
+        JSON.stringify(params),
+        {
+          headers: {
+            Accept: 'application/json',
+            'Content-Type': 'application/json',
+          },
+        },
+      );
+      console.log(res);
+      if (res && res.data.status !== 200) {
+        console.log(res);
+        return dispatch(authFailed(res));
+      }
+      dispatch(signupgoogle(res));
+    } catch (err) {
+      console.log(err.response.data);
+      dispatch(authFailed(err.response));
     }
   };
 };
 //helper Functions
+const signupgoogle = res => ({
+  type: GOOGLE_SIGNUP,
+  payload: res,
+});
+const logingoogle = res => ({
+  type: GOOGLE_LOGIN,
+  payload: res,
+});
 const creategroup = res => ({
   type: CREATE_GROUP,
   payload: res,

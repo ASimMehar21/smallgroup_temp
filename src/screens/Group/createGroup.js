@@ -180,7 +180,7 @@ const createGroup = props => {
             fontSize: 14,
             fontWeight: '400',
             color: theme.colors.txtcolor,
-            marginTop: responsiveScreenHeight(3),
+            marginTop: responsiveScreenHeight(1.5),
             alignSelf: 'center',
           }}>
           Redeem Code
