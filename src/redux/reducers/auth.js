@@ -16,6 +16,7 @@ import {
   CREATE_GROUP,
   GOOGLE_LOGIN,
   GOOGLE_SIGNUP,
+  GOOGLE_FAIL,
 } from '../actions/types';
 
 const initialState = {
@@ -41,7 +42,17 @@ export const authReducer = (state = initialState, action) => {
         isError: false,
         isSuccess: false,
         errMsg: null,
-        message: '',
+        message: null,
+      };
+    case GOOGLE_FAIL:
+      return {
+        ...state,
+        isLoading: false,
+        isError: true,
+        isSuccess: false,
+        errMsg: action.payload.data.message,
+        isLoggedIn: false,
+        // message: action.payload.data.message,
       };
     case AUTH_FAILED:
       console.log('auth', action.payload.data.message);
@@ -50,7 +61,6 @@ export const authReducer = (state = initialState, action) => {
         isLoading: false,
         isError: true,
         isSuccess: false,
-        errMsg: action.payload.data.message,
         isLoggedIn: false,
         message: action.payload.data.message,
       };
@@ -69,25 +79,25 @@ export const authReducer = (state = initialState, action) => {
     case GOOGLE_LOGIN:
       return {
         ...state,
-        message: action.payload.data.message,
+        errMsg: action.payload.data.message,
         token: action.payload.data.token,
         isLoggedIn: true,
         isLoading: false,
         isSuccess: true,
         isError: false,
-        errMsg: null,
+        // errMsg: null,
       };
     case GOOGLE_SIGNUP:
       console.log('action.payload sign up', action.payload.data);
       return {
         ...state,
-        message: action.payload.data.message,
+        errMsg: action.payload.data.message,
         token: action.payload.data.token,
         isLoggedIn: true,
         isLoading: false,
         isSuccess: true,
         isError: false,
-        errMsg: null,
+        // errMsg: null,
       };
     case REGISTER_USER:
       return {

@@ -9,6 +9,7 @@ import {
   CREATE_GROUP,
   GOOGLE_LOGIN,
   GOOGLE_SIGNUP,
+  GOOGLE_FAIL,
 } from './types';
 //Local Types
 export const AUTH_LOADING = 'AUTH_LOADING';
@@ -208,6 +209,10 @@ const creategroup = res => ({
 });
 const authLoading = () => ({
   type: AUTH_LOADING,
+});
+const googleFailed = err => ({
+  type: GOOGLE_FAIL,
+  payload: err,
 });
 const authFailed = err => ({
   type: AUTH_FAILED,

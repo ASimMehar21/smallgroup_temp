@@ -9,6 +9,7 @@ export const CONFIRM_CODE = 'CONFIRM_CODE';
 export const SAVE_INTEREST = 'SAVE_INTEREST';
 export const GOOGLE_LOGIN = 'GOOGLE_LOGIN';
 export const GOOGLE_SIGNUP = 'GOOGLE_SIGNUP';
+export const GOOGLE_FAIL = 'GOOGLE_FAIL';
 //ACTIVITY
 export const CREATE_ACTIVITY = 'CREATE_ACTIVITY';
 export const GET_ACTIVITY = 'GET_ACTIVITY';
