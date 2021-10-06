@@ -37,6 +37,8 @@ import {
             position:'absolute',
             bottom:0,
             alignSelf:'flex-end',
+            justifyContent:'center',
+            alignItems:'center',
             width:'100%',
             height:56,
             backgroundColor: 'rgba(255, 255, 255, 0.93)'
@@ -46,9 +48,13 @@ import {
                 flexDirection:'row'
             }}>
                 <TouchableOpacity style={{
-                    marginTop:18,
-                    marginLeft:11,
-                    marginBottom:19
+                    width:'10%',
+                    alignItems:'center',
+                    justifyContent:'center',
+                    // backgroundColor:'red'
+                    // marginTop:18,
+                    // marginLeft:11,
+                    // marginBottom:19
                 }}>
                     <Image
                         source={verctor}
@@ -56,10 +62,11 @@ import {
                     />
                 </TouchableOpacity>
                 <View style={{
-                    marginLeft:11,
+                    // marginLeft:11,
                     marginTop:8,
                     marginBottom:12,
-                    width:315,
+                    width:'77%',
+                    // width:315,
                     height:40,
                     borderWidth:0.5,
                     borderColor:'rgba(225, 227, 230, 1)',
@@ -70,7 +77,11 @@ import {
                         style={[styles.labelStyle,{marginLeft:16,width:'90%',color: theme.colors.labelColor,height:38}]}
                     />
                 </View>
-                <TouchableOpacity>
+                <TouchableOpacity style={{
+                    width:'12%',
+                    alignItems:'center',
+                    justifyContent:'center',
+                }}>
                     <Image
                         source={button}
                         style={{width:40,height:40,margin:8}}

@@ -1,15 +1,26 @@
 /* eslint-disable prettier/prettier */
 import React, {useState} from 'react';
-import {View, StyleSheet, Text} from 'react-native';
-import {drawer} from '../assets';
+import {View, StyleSheet, Text,Image} from 'react-native';
+import {down} from '../assets';
 import theme from '../theme';
 import {Fonts} from '../utils/Fonts';
 import SelectDropdown from 'react-native-select-dropdown';
 const HeaderCenterComponent = ({data}) => {
-  const countries = ['Egypt', 'Canada', 'Australia', 'Ireland'];
+  const countries = ['Leaders', 'Camarillo Group'];
   return (
     <SelectDropdown
+      rowStyle={styles.dropdown2RowStyle}
+      rowTextStyle={styles.dropdown2RowTxtStyle}
+      dropdownStyle={{width:'200%',marginTop:0,borderRadius:8}}
+      buttonStyle={{height:32,margin:12,backgroundColor:'white'}}
+      renderDropdownIcon={() => {
+        return (
+          <Image source={down} style={{width:24,height:24}} />
+        );
+      }}
+      dropdownIconPosition={"right"}
       data={countries}
+      defaultButtonText={"Select Group"}
       onSelect={(selectedItem, index) => {
         console.log(selectedItem, index);
       }}
@@ -35,4 +46,41 @@ export const styles = StyleSheet.create({
     fontFamily: Fonts.DMBold,
     color: theme.colors.textHeader,
   },
+  dropdownsRow: {
+    flexDirection: "row",
+    width: "100%",
+    paddingHorizontal: "5%",
+  },
+
+  dropdown1BtnStyle: {
+    flex: 1,
+    height: 50,
+    backgroundColor: "#FFF",
+    borderRadius: 8,
+    borderWidth: 1,
+    borderColor: "#444",
+  },
+  dropdown1BtnTxtStyle: { color: "#444", textAlign: "left" },
+  dropdown1DropdownStyle: { backgroundColor: "#EFEFEF" },
+  dropdown1RowStyle: {
+    backgroundColor: "#EFEFEF",
+    borderBottomColor: "#C5C5C5",
+  },
+  dropdown1RowTxtStyle: { color: "#444", textAlign: "left" },
+
+  dropdown2BtnStyle: {
+    flex: 1,
+    height: 50,
+    backgroundColor: "#FFF",
+    borderRadius: 8,
+    borderWidth: 1,
+    borderColor: "#444",
+  },
+  dropdown2BtnTxtStyle: { color: "#444", textAlign: "left" },
+  dropdown2DropdownStyle: { backgroundColor: "#EFEFEF" },
+  dropdown2RowStyle: {
+    backgroundColor: "#ffffff",
+    borderBottomColor: "white",
+  },
+  dropdown2RowTxtStyle: { color: "#5A6474",fontWeight:'700',fontSize:18,fontFamily:Fonts.DMRegular, textAlign: "left" },
 });

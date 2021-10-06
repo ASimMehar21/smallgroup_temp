@@ -24,14 +24,20 @@ import {
     userg2,
     userm,
     arrow,
-    cross
+    cross,
+    create
 } from '../../../assets';
 import {Fonts} from '../../../utils/Fonts';
 import styles from './styles';
 import stylesg from '../../Group/styles';
 import {FloatingLabelInput} from 'react-native-floating-label-input';
 import LinearGradient from 'react-native-linear-gradient';
-
+import HeaderCenterComponent from '../../../components/HeaderCenterComponent';
+import HeaderLeftComponent from '../../../components/HeaderLeftComponent';
+import HeaderRight from '../../../components/HeaderRight';
+import {Header} from 'react-native-elements';
+import DropdownHead from '../../../components/DropdownHeader';
+import { Calendar } from 'react-native-calendars'
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 export default function Group(props) {
 
@@ -42,6 +48,12 @@ export default function Group(props) {
 
     return (
         <ScrollView style={{backgroundColor:'white'}}>
+            <Header 
+                backgroundColor="white"
+                containerStyle={{borderBottomWidth: 0,alignSelf:'center',height:48,borderBottomWidth:0.3,borderBottomColor:'#E1E3E6'}}
+                centerComponent={<DropdownHead />}
+                rightComponent={<HeaderRight  image={create} style={{width:32,height:32,margib:12}} />}
+            />
             <View style={styles.container}>
                 <Text style={[styles.tabtext,{color:theme.colors.textHeader,marginTop:responsiveScreenHeight(5)}]} >People</Text>
                 <View style={{flexDirection:'row',marginTop:12}}>

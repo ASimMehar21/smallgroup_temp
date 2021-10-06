@@ -36,7 +36,8 @@ const styles = StyleSheet.create({
       activeTab:{
         height:24,
         backgroundColor:'white',
-        width:175.5,
+        width:'48%',
+        // width:175.5,
         borderRadius:8,
         alignItems:'center',
         alignSelf:'center',
@@ -44,7 +45,8 @@ const styles = StyleSheet.create({
       },
     offtab:{
         height:24,
-        width:175.5,
+        width:'48%',
+        // width:175.5,
         borderRadius:8,
         alignItems:'center',
         alignSelf:'center',

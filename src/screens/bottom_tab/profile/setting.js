@@ -126,7 +126,7 @@ export default function Chat({props}) {
                 </TouchableOpacity>    
             </View>
             <View style={{flexDirection:'row',marginTop:28,marginBottom:30}}>
-                <TouchableOpacity onPress={()=> props.navigation.navigate('Auth')} style={{flexDirection:'row'}}>
+                <TouchableOpacity onPress={()=> props.navigation.navigate('Auth',{screen:'Signin'})} style={{flexDirection:'row'}}>
                     <Image 
                         source={logout}
                         style={{width:22,height:22}}
