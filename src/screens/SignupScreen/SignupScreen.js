@@ -9,6 +9,11 @@ import {
   ActivityIndicator,
   ScrollView,
 } from 'react-native';
+import {
+  GoogleSignin,
+  GoogleSigninButton,
+  statusCodes,
+} from '@react-native-google-signin/google-signin';
 import AsyncStorage from '@react-native-community/async-storage';
 import theme from '../../theme';
 import {Fonts} from '../../utils/Fonts';
@@ -23,7 +28,7 @@ import {
   responsiveScreenWidth,
 } from 'react-native-responsive-dimensions';
 import LinearGradient from 'react-native-linear-gradient';
-import {registerUser} from '../../redux/actions/auth';
+import {registerUser, GoogleSignup} from '../../redux/actions/auth';
 import {connect} from 'react-redux';
 const SignupScreen = props => {
   const [loading, setLoading] = useState(false);
@@ -39,6 +44,64 @@ const SignupScreen = props => {
   const [fNameMessage, setfNameMessage] = useState('');
   const [lNameMessage, setlNameMessage] = useState('');
   const navigation = props.navigation;
+  useEffect(() => {
+    GoogleSignin.configure({
+      webClientId:
+        '237114661060-g9vl5km5n8juo3u8e80tin1rtpchm8v3.apps.googleusercontent.com',
+      offlineAccess: true,
+      client_type: 3,
+      // iosClientId:
+      //   '664178336819-pfg0mvocbu3sml19e499di4145i0qmvv.apps.googleusercontent.com',
+    });
+  }, []);
+  async function onGoogleSignupPress() {
+    try {
+      await GoogleSignin.hasPlayServices();
+      const googlePromise = await GoogleSignin.signIn();
+      const userInfo = (await GoogleSignin.getCurrentUser().then(googlePromise))
+        .user;
+      if (userInfo) {
+        const params = {
+          google_UID: userInfo.id,
+          email: userInfo.email,
+          firstName: userInfo.givenName,
+          lastName: userInfo.familyName,
+          image: userInfo.photo,
+        };
+        console.log(userInfo);
+        await props.GoogleSignup(params);
+        if (props.isSuccess) {
+          setLoading(false);
+          navigation.navigate('Root');
+          console.log('tokens', props.token);
+          Snackbar.show({
+            text: JSON.stringify(props.message),
+            backgroundColor: theme.colors.primary,
+            textColor: 'white',
+          });
+        } else {
+          setLoading(false);
+          // GoogleSignin.revokeAccess();
+          Snackbar.show({
+            text: JSON.stringify(props.message),
+            backgroundColor: '#F14336',
+            textColor: 'white',
+          });
+        }
+      }
+    } catch (error) {
+      if (error.code === statusCodes.SIGN_IN_CANCELLED) {
+        // user cancelled the login flow
+      } else if (error.code === statusCodes.IN_PROGRESS) {
+        // operation (e.g. sign in) is in progress already
+      } else if (error.code === statusCodes.PLAY_SERVICES_NOT_AVAILABLE) {
+        // play services not available or outdated
+      } else {
+        // some other error happened
+        alert(error);
+      }
+    }
+  }
   async function onregister() {
     setconfirmMessage('');
     setemailMessage('');
@@ -287,11 +350,10 @@ const SignupScreen = props => {
             <TouchableOpacity
               activeOpacity={0.7}
               disabled={loading}
-              onPress={() => {
-                setLoading(true), onregister();
-              }}
-              // onPress={() => navigation.navigate('main')}
-            >
+              // onPress={() => {
+              //   setLoading(true), onregister();
+              // }}
+              onPress={() => navigation.navigate('main')}>
               {loading ? (
                 <ActivityIndicator animating color={'white'} size={25} />
               ) : (
@@ -316,58 +378,60 @@ const SignupScreen = props => {
           </View>
           <View style={styles.divider}></View>
         </View>
-        <View
+        <TouchableOpacity
+          onPress={onGoogleSignupPress}
           style={{
             width: '100%',
             marginTop: 5,
-            borderWidth: 1,
-            borderRadius: 8,
-            borderColor: theme.colors.borderColor,
+            // borderWidth: 1,
+            // borderRadius: 8,
+            // borderColor: theme.colors.borderColor,
           }}>
-          <View
+          {/* <View
             style={{
               flexDirection: 'row',
-              width: responsiveScreenWidth(65),
+              width: '50%',
               padding: 15,
               justifyContent: 'space-between',
-            }}>
-            <Image
-              source={gb}
-              style={{
-                width: 16,
-                height: 16,
-              }}
-              resizeMode="contain"
-            />
-            <Text style={styles.dividertxt}>Sign up with Google</Text>
-          </View>
-        </View>
+            }}> */}
+          <Image
+            source={gb}
+            style={{
+              width: '100%',
+              height: 50,
+            }}
+            resizeMode="stretch"
+          />
+          {/* <Text style={styles.dividertxt}>Log in with Google</Text>
+          </View> */}
+        </TouchableOpacity>
         <View
           style={{
             width: '100%',
             marginTop: 7,
-            borderWidth: 1,
-            borderRadius: 8,
-            borderColor: theme.colors.borderColor,
+            // borderWidth: 1,
+            // borderRadius: 8,
+            // borderColor: theme.colors.borderColor,
           }}>
-          <View
+          {/* <View
             style={{
               flexDirection: 'row',
               width: responsiveScreenWidth(65),
               padding: 12,
               justifyContent: 'space-between',
-            }}>
-            <Image
-              source={fb}
-              style={{
-                width: 20.22,
-                height: 24,
-              }}
-              resizeMode="contain"
-            />
-            <Text style={styles.dividertxt}>Sign up with Apple</Text>
-          </View>
+            }}> */}
+          <Image
+            source={fb}
+            style={{
+              width: '100%',
+              height: 50,
+            }}
+            resizeMode="stretch"
+          />
+          {/* <Text style={styles.dividertxt}>Log in with Apple</Text>
+          </View> */}
         </View>
+
         <View
           style={{alignSelf: 'center', marginTop: responsiveScreenHeight(1)}}>
           <TouchableOpacity
@@ -430,7 +494,9 @@ const mapStateToProps = state => {
   const {status, message, isLoading, errMsg, isSuccess, token} = state.auth;
   return {status, message, isLoading, errMsg, isSuccess, token};
 };
-export default connect(mapStateToProps, {registerUser})(SignupScreen);
+export default connect(mapStateToProps, {registerUser, GoogleSignup})(
+  SignupScreen,
+);
 export function Errors({errors}) {
   return (
     <Text

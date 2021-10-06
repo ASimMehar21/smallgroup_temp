@@ -283,7 +283,7 @@ const Invite = props => {
               borderColor: '#E1E3E6',
               backgroundColor: '#F8F8F8',
               width: '100%',
-              marginBottom: contacts ? 10 : 0,
+              marginBottom: contacts ? 8 : 0,
             },
           ]}
           activeOpacity={0.7}
