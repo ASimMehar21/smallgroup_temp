@@ -22,6 +22,7 @@ import {
     seeMore,
     option,
     doc,
+    create,
     userm} from '../../../assets';
 import {
     responsiveHeight,
@@ -32,7 +33,12 @@ import {
   import styles from '../../Signin/styles';
   import stylesp from './styles';
   import LinearGradient from 'react-native-linear-gradient';
-
+  import HeaderCenterComponent from '../../../components/HeaderCenterComponent';
+  import HeaderLeftComponent from '../../../components/HeaderLeftComponent';
+  import HeaderRight from '../../../components/HeaderRight';
+  import {Header} from 'react-native-elements';
+  import DropdownHead from '../../../components/DropdownHeader';
+  import { Calendar } from 'react-native-calendars'
 
   const prayers = [
     {
@@ -75,6 +81,12 @@ export default function Prayers(props) {
 
     return (
         <View style={{flex: 1, backgroundColor: 'white'}}>
+            <Header 
+                backgroundColor="white"
+                containerStyle={{borderBottomWidth: 0,alignSelf:'center',height:48,borderBottomWidth:0.3,borderBottomColor:'#E1E3E6'}}
+                centerComponent={<DropdownHead />}
+                rightComponent={<HeaderRight  image={create} style={{width:32,height:32,margib:12}} />}
+            />
             <View style={{marginTop: responsiveScreenHeight(1.5)}}></View>
 
              <FlatList
