@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 import React, {useState} from 'react';
 import {View, StyleSheet, Text} from 'react-native';
 import {drawer} from '../assets';

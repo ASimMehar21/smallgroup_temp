@@ -24,6 +24,7 @@ import {
 } from '../../../assets';
 import {FloatingLabelInput} from 'react-native-floating-label-input';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
+
 export default function Chat({props}) {
 
     const [isEnabled, setIsEnabled] = useState(false);
@@ -125,7 +126,7 @@ export default function Chat({props}) {
                 </TouchableOpacity>    
             </View>
             <View style={{flexDirection:'row',marginTop:28,marginBottom:30}}>
-                <TouchableOpacity onPress={()=> props.navigation.navigate('Signin')} style={{flexDirection:'row'}}>
+                <TouchableOpacity onPress={()=> props.navigation.navigate('Auth')} style={{flexDirection:'row'}}>
                     <Image 
                         source={logout}
                         style={{width:22,height:22}}

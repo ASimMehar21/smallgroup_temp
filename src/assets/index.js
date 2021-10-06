@@ -29,6 +29,8 @@ export const transfer = require('./images/transfer.png');
 export const seeMore = require('./images/seeMore.png');
 export const option = require('./images/more-vertical.png');
 export const share = require('./images/share.png');
+export const right = require('./images/right.png');
+export const left = require('./images/left.png');
 
 export const back = require('./images/back.png');
 export const next = require('./images/next.png');
