@@ -96,6 +96,16 @@ const joinGroup = props => {
             </TouchableOpacity>
           ) : null}
         </View>
+        <Text
+          style={{
+            fontFamily: Fonts.DMRegular,
+            fontSize: 14,
+            fontWeight: '400',
+            color: theme.colors.labelColor,
+            marginTop: 5,
+          }}>
+          This is a 9-character code like “AB1CD34HG”
+        </Text>
         {code !== '' ? (
           <View
             style={{
@@ -150,7 +160,7 @@ const joinGroup = props => {
         <View
           style={{
             width: '100%',
-            marginTop: responsiveScreenHeight(20),
+            marginTop: responsiveScreenHeight(18),
           }}>
           <LinearGradient
             colors={

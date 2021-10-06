@@ -3,6 +3,8 @@ export const icon = require('./images/Icon.png');
 export const cross = require('./images/close.png');
 export const fb = require('./images/fb.png');
 export const gb = require('./images/gb.png');
+export const lfb = require('./images/lfb.png');
+export const lgb = require('./images/lgb.png');
 
 //Bottom tab
 export const calender = require('./images/calendar.png');
