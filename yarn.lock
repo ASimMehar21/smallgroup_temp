@@ -5873,6 +5873,11 @@ react-native-gesture-handler@^1.10.3:
     invariant "^2.2.4"
     prop-types "^15.7.2"
 
+react-native-image-base64@^0.1.4:
+  version "0.1.4"
+  resolved "https://registry.yarnpkg.com/react-native-image-base64/-/react-native-image-base64-0.1.4.tgz#0a4687740de9b04df63e649c5946fc646bc0f4e9"
+  integrity sha512-WLdzwHdXFRLS9VStG1CG46+t+fcInjVWxKd1+AATElBhaAS3zwDHz7mYIZS1OX4VMuNClwl5G8dowuqUJ9aMGQ==
+
 react-native-image-picker@^4.1.1:
   version "4.1.1"
   resolved "https://registry.yarnpkg.com/react-native-image-picker/-/react-native-image-picker-4.1.1.tgz#f5b20c77b060e4a8cad4e76ae042e1e45b4743da"
