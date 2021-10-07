@@ -6,14 +6,10 @@ import {next} from '../assets';
 import theme from '../theme';
 import {Fonts} from '../utils/Fonts';
 
-const HeaderRight = ({onPress,image,style}) => {
+const HeaderRight = ({onPress, image, style}) => {
   return (
-      <TouchableOpacity style={{alignSelf:'flex-end'}} onPress={onPress}>
-      <Image
-        source={image}
-        resizeMode={'contain'}
-        style={style}
-      />
+    <TouchableOpacity style={{alignSelf: 'flex-end'}} onPress={onPress}>
+      <Image source={image} style={style} />
     </TouchableOpacity>
   );
 };

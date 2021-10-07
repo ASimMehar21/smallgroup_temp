@@ -28,7 +28,7 @@ import {
   responsiveScreenWidth,
 } from 'react-native-responsive-dimensions';
 import LinearGradient from 'react-native-linear-gradient';
-import {registerUser, GoogleSignup} from '../../redux/actions/auth';
+import {registerUser, Googlelogin} from '../../redux/actions/auth';
 import {connect} from 'react-redux';
 const SignupScreen = props => {
   const [loading, setLoading] = useState(false);
@@ -68,14 +68,14 @@ const SignupScreen = props => {
           lastName: userInfo.familyName,
           image: userInfo.photo,
         };
-        console.log(userInfo);
-        await props.GoogleSignup(params);
+        console.log(props.isSuccess);
+        await props.Googlelogin(params);
         if (props.isSuccess) {
           setLoading(false);
-          navigation.navigate('Root');
+          navigation.navigate('main');
           console.log('tokens', props.token);
           Snackbar.show({
-            text: JSON.stringify(props.message),
+            text: 'SignUp Succesfully',
             backgroundColor: theme.colors.primary,
             textColor: 'white',
           });
@@ -495,7 +495,7 @@ const mapStateToProps = state => {
   const {status, message, isLoading, errMsg, isSuccess, token} = state.auth;
   return {status, message, isLoading, errMsg, isSuccess, token};
 };
-export default connect(mapStateToProps, {registerUser, GoogleSignup})(
+export default connect(mapStateToProps, {registerUser, Googlelogin})(
   SignupScreen,
 );
 export function Errors({errors}) {

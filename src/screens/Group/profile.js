@@ -15,7 +15,7 @@ import theme from '../../theme';
 import {Fonts} from '../../utils/Fonts';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import styles from './styles';
-import {edit, background,next} from '../../assets';
+import {edit, background, next} from '../../assets';
 import {
   responsiveHeight,
   responsiveScreenHeight,
@@ -27,10 +27,17 @@ import HeaderRight from '../../components/HeaderRight';
 import * as ImagePicker from 'react-native-image-picker';
 import {requestPermission} from 'react-native-contacts';
 import DocumentPicker from 'react-native-document-picker';
+import {connect} from 'react-redux';
+import {CreateGroup} from '../../redux/actions/group';
+import ImgToBase64 from 'react-native-image-base64';
+import RNFS from 'react-native-fs';
+import AsyncStorage from '@react-native-community/async-storage';
+import Snackbar from 'react-native-snackbar';
 const profile = props => {
   const {height} = Dimensions.get('window');
   const [loading, setLoading] = useState(false);
   const [url, seturl] = useState();
+  const [baseurl, setbaseurl] = useState();
   const [contacts, setcontacts] = useState([
     {id: 0, name: 'Dianne Johnson', mail: 'dianne99@email.com'},
     {id: 0, name: 'Dianne Johnson', mail: 'dianne99@email.com'},
@@ -58,34 +65,59 @@ const profile = props => {
         const source = response.assets;
 
         console.log('response', source);
-        var mapped = source.map(item => seturl(item.uri));
-        // seturl(source.);
+        var mapped = source.map(item => {
+          seturl(item.uri),
+            RNFS.readFile(item.uri, 'base64').then(
+              res => setbaseurl(`data:image/png;base64,${res}`),
+              console.log('baseurl', baseurl),
+            );
+        });
+        console.log('uri', JSON.stringify(url));
       }
     });
   };
-  async function imgePicker() {
-    try {
-      const res = await DocumentPicker.pick({
-        type: [DocumentPicker.types.images],
-      });
-      //   this.setState({img: res.uri});
-
-      console.log(res.uri);
-    } catch (err) {
-      if (DocumentPicker.isCancel(err)) {
-        // User cancelled the picker, exit any dialogs or menus and move on
-      } else {
-        throw err;
-      }
-    }
+  async function groupCreation() {
+    console.log('User Data', props.userData);
+    const groupName = await AsyncStorage.getItem('code');
+    console.log(groupName);
+    const params = {
+      ownername: props.userData.firstName + props.userData.lastName,
+      groupname: groupName ? groupName : '',
+      groupdisplaypicture: baseurl,
+    };
+    const id = props.userData._id;
+    await props.CreateGroup(params, id);
+    // if (props.isSuccess) {
+    setLoading(false);
+    navigation.navigate('setup');
+    // Snackbar.show({
+    //   text: 'Group created succesfully',
+    //   backgroundColor: theme.colors.primary,
+    //   textColor: 'white',
+    // });
+    // } else {
+    //   setLoading(false);
+    //   Snackbar.show({
+    //     text: JSON.stringify(props.message),
+    //     backgroundColor: '#F14336',
+    //     textColor: 'white',
+    //   });
+    // }
   }
+
   return (
     <View style={{flex: 1, backgroundColor: 'white'}}>
       <Header
         backgroundColor="white"
         containerStyle={{borderBottomWidth: 0,alignSelf:'center'}}
         leftComponent={<HeaderLeftComponent navigation={navigation} />}
-        rightComponent={<HeaderRight image={next} style={{width:112,height:48,left:responsiveScreenWidth(2.4)}} />}
+        rightComponent={
+          <HeaderRight
+            onPress={() => groupCreation()}
+            image={next}
+            style={{height: 48, width: 118, left: responsiveScreenWidth(2.4)}}
+          />
+        }
       />
       <View style={{marginTop: responsiveScreenHeight(10)}}></View>
 
@@ -174,8 +206,11 @@ const profile = props => {
         ]}>
         <TouchableOpacity
           activeOpacity={0.7}
-          disabled={loading}
-          onPress={() => navigation.navigate('setup')}
+          disabled={baseurl ? false : true}
+          // onPress={() => navigation.navigate('setup')}
+          onPress={() => {
+            groupCreation(), setLoading(true);
+          }}
           // style={styles.nextButtonStyle}
         >
           {loading ? (
@@ -189,7 +224,7 @@ const profile = props => {
                 textAlign: 'center',
                 fontWeight: '500',
               }}>
-              Add Photo
+              {baseurl ? 'Continue' : 'Add Photo'}
             </Text>
           )}
         </TouchableOpacity>
@@ -197,4 +232,9 @@ const profile = props => {
     </View>
   );
 };
-export default profile;
+const mapStateToProps = state => {
+  const {userData} = state.auth;
+  const {status, message, isLoading, errMsg, isSuccess} = state.group;
+  return {status, message, isLoading, errMsg, isSuccess, userData};
+};
+export default connect(mapStateToProps, {CreateGroup})(profile);
