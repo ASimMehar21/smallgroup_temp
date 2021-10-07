@@ -103,14 +103,14 @@ export default function Chat({props}) {
 
             <Text style={[styles.tabtext,{color:theme.colors.textHeader,marginTop:36}]} >Legal Stuff</Text>
             <View style={{flexDirection:'row',marginTop:16}}>
-                <Text style={[styles.inputStyles,{fontSize:18,width:'95%'}]}>Terms of Service</Text>
+                <Text style={[styles.inputStyles,{fontSize:18,width:'93%'}]}>Terms of Service</Text>
                 <Image 
                     source={arrow}
                     style={{width:16,height:14}}
                 />
             </View>
             <View style={{flexDirection:'row',marginTop:16}}>
-                <Text style={[styles.inputStyles,{fontSize:18,width:'95%'}]}>Privacy Policy</Text>
+                <Text style={[styles.inputStyles,{fontSize:18,width:'93%'}]}>Privacy Policy</Text>
                 <Image 
                     source={arrow}
                     style={{width:16,height:14}}

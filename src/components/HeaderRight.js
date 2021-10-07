@@ -8,9 +8,10 @@ import {Fonts} from '../utils/Fonts';
 
 const HeaderRight = ({onPress,image,style}) => {
   return (
-      <TouchableOpacity style={{alignSelf:'flex-end',marginTop:12}} onPress={onPress}>
+      <TouchableOpacity style={{alignSelf:'flex-end'}} onPress={onPress}>
       <Image
         source={image}
+        resizeMode={'contain'}
         style={style}
       />
     </TouchableOpacity>

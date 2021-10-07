@@ -85,7 +85,7 @@ export default function Prayers(props) {
                 backgroundColor="white"
                 containerStyle={{borderBottomWidth: 0,alignSelf:'center',height:48,borderBottomWidth:0.3,borderBottomColor:'#E1E3E6'}}
                 centerComponent={<DropdownHead />}
-                rightComponent={<HeaderRight  image={create} style={{width:32,height:32,margib:12}} />}
+                rightComponent={<HeaderRight  image={create} style={{width:32,height:32,marginTop:12}} />}
             />
             <View style={{marginTop: responsiveScreenHeight(1.5)}}></View>
 

@@ -29,8 +29,8 @@ export default function Chat() {
         <KeyboardAwareScrollView>
             <View style={styles.tabcontainer}>
                 <Text style={[styles.tabtext,{color:theme.colors.textHeader}]} >Full name</Text>
-                <View style={{marginTop:12,flexDirection:'row'}}>
-                    <View style={styles.textInputStyle}>
+                <View style={{marginTop:12,flexDirection:'row',justifyContent:'space-evenly'}}>
+                    <View style={[styles.textInputStyle,{right:10}]}>
                         <FloatingLabelInput
                             label={'First Name'}
                             value={fname}
@@ -41,7 +41,7 @@ export default function Chat() {
                             inputStyles={styles.inputStyles}
                         />
                     </View>
-                    <View style={[styles.textInputStyle,{marginLeft:22}]}>
+                    <View style={[styles.textInputStyle,{left:12}]}>
                         <FloatingLabelInput
                         label={'Last name'}
                         value={lname}
@@ -71,7 +71,7 @@ export default function Chat() {
                     value={password}
                     onChangeText={value => setPassword(value)}
                     containerStyles={{padding: 5}}
-                    // labelStyles={styles.labelStyle}
+                    isPassword={true}
                     labelStyles={styles.labelStyles}
                     inputStyles={styles.inputStyles}
                 />
@@ -83,6 +83,7 @@ export default function Chat() {
                     value={number}
                     onChangeText={value => setNumber(value)}
                     containerStyles={{padding: 5}}
+                    keyboardType={'phone-pad'}
                     // labelStyles={styles.labelStyle}
                     labelStyles={styles.labelStyles}
                     inputStyles={styles.inputStyles}

@@ -1,3 +1,5 @@
+/* eslint-disable prettier/prettier */
+/* eslint-disable react-native/no-inline-styles */
 import React from 'react';
 import {View, StyleSheet, Text} from 'react-native';
 import {drawer} from '../assets';
@@ -6,7 +8,7 @@ import {Fonts} from '../utils/Fonts';
 
 const HeaderCenterComponent = ({name}) => {
   return (
-    <View style={{justifyContent:'center',alignSelf:'center',width:150,height:48}}>
+    <View style={{justifyContent:'center',alignItems:'center',alignSelf:'center',width:150,height:48}}>
       <Text style={styles.textStyle}>{name}</Text>
     </View>
   );

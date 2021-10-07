@@ -114,7 +114,7 @@ const Invite = props => {
         containerStyle={{borderBottomWidth: 0}}
         leftComponent={<HeaderLeftComponent navigation={navigation} />}
         rightComponent={
-          <HeaderRight onPress={() => navigation.navigate('profile')} />
+          <HeaderRight image={next} style={{width:112,height:48,left:responsiveScreenWidth(2.4)}} onPress={() => navigation.navigate('profile')} />
         }
       />
       <ScrollView

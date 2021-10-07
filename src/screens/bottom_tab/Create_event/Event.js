@@ -130,7 +130,7 @@ export default function Events(props) {
                 backgroundColor="white"
                 containerStyle={{borderBottomWidth: 0,alignSelf:'center',height:48,borderBottomWidth:0.3,borderBottomColor:'#E1E3E6'}}
                 centerComponent={<DropdownHead />}
-                rightComponent={<HeaderRight onPress={()=> setCreateEvent(true) } image={create} style={{width:32,height:32,margib:12}} />}
+                rightComponent={<HeaderRight onPress={()=> setCreateEvent(true) } image={create} style={{width:32,height:32,marginTop:12}} />}
             />
             <View style={{ paddingTop: 16 ,}}>
                 <Calendar

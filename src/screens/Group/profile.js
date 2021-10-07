@@ -15,7 +15,7 @@ import theme from '../../theme';
 import {Fonts} from '../../utils/Fonts';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import styles from './styles';
-import {edit, background} from '../../assets';
+import {edit, background,next} from '../../assets';
 import {
   responsiveHeight,
   responsiveScreenHeight,
@@ -83,9 +83,9 @@ const profile = props => {
     <View style={{flex: 1, backgroundColor: 'white'}}>
       <Header
         backgroundColor="white"
-        containerStyle={{borderBottomWidth: 0}}
+        containerStyle={{borderBottomWidth: 0,alignSelf:'center'}}
         leftComponent={<HeaderLeftComponent navigation={navigation} />}
-        rightComponent={<HeaderRight />}
+        rightComponent={<HeaderRight image={next} style={{width:112,height:48,left:responsiveScreenWidth(2.4)}} />}
       />
       <View style={{marginTop: responsiveScreenHeight(10)}}></View>
 
