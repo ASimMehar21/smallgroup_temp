@@ -107,7 +107,7 @@ const setup = props => {
         <TouchableOpacity
           activeOpacity={0.7}
           disabled={loading}
-          //   onPress={navigation.navigate('setup')}
+          onPress={() => navigation.navigate('Root')}
           // style={styles.nextButtonStyle}
         >
           {loading ? (

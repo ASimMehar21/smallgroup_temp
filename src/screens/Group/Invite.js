@@ -18,7 +18,7 @@ import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import Snackbar from 'react-native-snackbar';
 import styles from './styles';
 import {FloatingLabelInput} from 'react-native-floating-label-input';
-import {cross, invite, email_icon, close} from '../../assets';
+import {cross, invite, email_icon, close, next} from '../../assets';
 import {
   responsiveHeight,
   responsiveScreenHeight,
@@ -30,7 +30,7 @@ import HeaderRight from '../../components/HeaderRight';
 import Contacts from 'react-native-contacts';
 //redux
 import {connect} from 'react-redux';
-import {emailInvitation} from '../../redux/actions/auth';
+import {emailInvitation} from '../../redux/actions/group';
 const Invite = props => {
   const [createGroup, setcreateGroup] = useState(false);
   const [joinGroup, setjoinGroup] = useState(false);
@@ -80,28 +80,21 @@ const Invite = props => {
   };
   async function onInvitation() {
     const mails = email.split(',');
+    console.log('User Data', props.userData);
     console.log(mails);
     const params = {
       invitedMembers: mails,
     };
     try {
-      await props.emailInvitation(params);
-      if (props.isSuccess) {
-        setLoading(false);
-        navigation.navigate('profile');
-        Snackbar.show({
-          text: 'Invitation Send Succesfully',
-          backgroundColor: theme.colors.primary,
-          textColor: 'white',
-        });
-      } else {
-        setLoading(false);
-        Snackbar.show({
-          text: JSON.stringify(props.message),
-          backgroundColor: '#F14336',
-          textColor: 'white',
-        });
-      }
+      await props.emailInvitation(params, props.userData._id);
+
+      setLoading(false);
+      navigation.navigate('profile');
+      Snackbar.show({
+        text: 'Invitation Send Succesfully',
+        backgroundColor: theme.colors.primary,
+        textColor: 'white',
+      });
     } catch (err) {
       setLoading(false);
       console.log(err);
@@ -114,7 +107,11 @@ const Invite = props => {
         containerStyle={{borderBottomWidth: 0}}
         leftComponent={<HeaderLeftComponent navigation={navigation} />}
         rightComponent={
-          <HeaderRight onPress={() => navigation.navigate('profile')} />
+          <HeaderRight
+            onPress={() => navigation.navigate('profile')}
+            image={next}
+            style={{height: 48, width: 118, left: responsiveScreenWidth(2.4)}}
+          />
         }
       />
       <ScrollView
@@ -325,7 +322,8 @@ const Invite = props => {
   );
 };
 const mapStateToProps = state => {
-  const {status, message, isLoading, errMsg, isSuccess, token} = state.auth;
-  return {status, message, isLoading, errMsg, isSuccess, token};
+  const {userData} = state.auth;
+  const {status, message, isLoading, errMsg, isSuccess} = state.group;
+  return {status, message, isLoading, errMsg, isSuccess, userData};
 };
 export default connect(mapStateToProps, {emailInvitation})(Invite);

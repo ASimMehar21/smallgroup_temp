@@ -25,13 +25,44 @@ import {
 } from 'react-native-responsive-dimensions';
 import LinearGradient from 'react-native-linear-gradient';
 import HeaderLeftComponent from '../../components/HeaderLeftComponent';
+//redux
+import {connect} from 'react-redux';
+import {groupJoin} from '../../redux/actions/group';
 const joinGroup = props => {
   const [createGroup, setcreateGroup] = useState(false);
   const [joinGroup, setjoinGroup] = useState(false);
+  const [show, setshow] = useState(false);
   const {height} = Dimensions.get('window');
   const [code, setcode] = useState('');
+  const [groupName, setgroupName] = useState('');
+  const [groupMember, setgroupMember] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [err, seterr] = useState(false);
   const navigation = props.navigation;
+  async function onJoin() {
+    const params = {groupcode: code};
+    seterr(false);
+    await props.groupJoin(params);
+    console.log('isSuccess', props.isSuccess);
+    console.log('joinGroupData', props.joinGroupData);
+    if (props.isSuccess) {
+      seterr(false);
+      setLoading(false);
+      console.log('joinGroupData', props.joinGroupData);
+      setgroupName(props.joinGroupData.groupname);
+      setgroupName(props.joinGroupData.groupMembers);
+      setshow(true);
+    } else {
+      setLoading(false);
+      seterr(true);
+      setshow(false);
+    }
+  }
+  function oncontinue() {
+    console.log('here con');
+    setLoading(false);
+    props.navigation.navigate('setup');
+  }
   return (
     <View style={{flex: 1, backgroundColor: 'white'}}>
       <Header
@@ -76,7 +107,11 @@ const joinGroup = props => {
           </Text>
         </View>
         <View style={{marginTop: responsiveScreenHeight(5)}}></View>
-        <View style={styles.maincontainer}>
+        <View
+          style={[
+            styles.maincontainer,
+            {borderColor: err ? 'red' : theme.colors.borderColor},
+          ]}>
           <View style={styles.textInputStyle}>
             <FloatingLabelInput
               label={'Group Code'}
@@ -96,17 +131,30 @@ const joinGroup = props => {
             </TouchableOpacity>
           ) : null}
         </View>
-        <Text
-          style={{
-            fontFamily: Fonts.DMRegular,
-            fontSize: 14,
-            fontWeight: '400',
-            color: theme.colors.labelColor,
-            marginTop: 5,
-          }}>
-          This is a 9-character code like “AB1CD34HG”
-        </Text>
-        {code !== '' ? (
+        {err ? (
+          <Text
+            style={{
+              fontFamily: Fonts.DMRegular,
+              fontSize: 14,
+              fontWeight: '400',
+              color: 'red',
+              marginTop: 5,
+            }}>
+            Bummer. That doesn’t look right. Try another one.
+          </Text>
+        ) : (
+          <Text
+            style={{
+              fontFamily: Fonts.DMRegular,
+              fontSize: 14,
+              fontWeight: '400',
+              color: theme.colors.labelColor,
+              marginTop: 5,
+            }}>
+            This is a 9-character code like “AB1CD34HG”
+          </Text>
+        )}
+        {show ? (
           <View
             style={{
               borderWidth: 1,
@@ -123,7 +171,10 @@ const joinGroup = props => {
                 justifyContent: 'space-between',
                 marginTop: 15,
               }}>
-              <Text style={styles.mediumheaderText}>Camarillo Group</Text>
+              <Text
+                style={
+                  styles.mediumheaderText
+                }>{`${props.joinGroupData.groupname}`}</Text>
               <Image
                 source={check}
                 style={{
@@ -145,7 +196,7 @@ const joinGroup = props => {
                 fontWeight: '400',
                 color: theme.colors.labelColor,
               }}>
-              12 Members
+              {`${props.joinGroupData.groupMembers.length}`}
             </Text>
           </View>
         ) : (
@@ -171,7 +222,10 @@ const joinGroup = props => {
             <TouchableOpacity
               activeOpacity={0.7}
               disabled={code === '' ? true : false}
-              onPress={() => navigation.navigate('setup')}>
+              // onPress={() => navigation.navigate('setup')}
+              onPress={() => {
+                show ? oncontinue() : onJoin(), setLoading(true);
+              }}>
               {loading ? (
                 <ActivityIndicator animating color={'white'} size={25} />
               ) : (
@@ -193,4 +247,24 @@ const joinGroup = props => {
     </View>
   );
 };
-export default joinGroup;
+const mapStateToProps = state => {
+  const {
+    status,
+    message,
+    isLoading,
+    errMsg,
+    isSuccess,
+    joinGroupData,
+    isgroup,
+  } = state.group;
+  return {
+    status,
+    message,
+    isLoading,
+    errMsg,
+    isSuccess,
+    joinGroupData,
+    isgroup,
+  };
+};
+export default connect(mapStateToProps, {groupJoin})(joinGroup);
