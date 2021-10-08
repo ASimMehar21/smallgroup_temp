@@ -80,7 +80,11 @@ export const groupJoin = params => {
           },
         },
       );
+      if (res?.data?.message) {
+        dispatch(codefailed(res));
+      }
       dispatch(confirmCode(res));
+      return res;
     } catch (err) {
       dispatch(codefailed(err.response));
     }

@@ -37,7 +37,6 @@ import {
   loginUser,
   Googlelogin,
   logoOut,
-  loginSuccess,
   authFailed,
 } from '../../redux/actions/auth';
 import {useIsFocused} from '@react-navigation/native';

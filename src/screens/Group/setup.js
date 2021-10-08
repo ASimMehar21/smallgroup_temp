@@ -39,25 +39,10 @@ const setup = props => {
         backgroundColor="#4E73F8"
         containerStyle={{borderBottomWidth: 0}}
       />
-      {/* <Confetti
-        isEnabled={true}
-        imageComponent={ */}
-      {/* <ImageBackground
-        source={confetti}
-        // resizeMode="contain"
-        borderRadius={36}
-        style={{
-          //   justifyContent: 'center',
-          backgroundColor: '#4E73F8',
-          flex: 1,
-          //   opacity: 1,
-        }}> */}
       <View style={{marginTop: responsiveScreenHeight(30)}}></View>
       <LottieView
         source={require('../../utils/confetti.json')}
         style={{
-          //   height: 300,
-          //   width: responsiveScreenHeight(100),
           backgroundColor: '#4E73F8',
           alignSelf: 'center',
           flex: 1,
@@ -107,7 +92,7 @@ const setup = props => {
         <TouchableOpacity
           activeOpacity={0.7}
           disabled={loading}
-          onPress={() => navigation.navigate('Root')}
+          onPress={() => props.navigation.push('Auth', {screen: 'Signin'})}
           // style={styles.nextButtonStyle}
         >
           {loading ? (

@@ -4,8 +4,10 @@ import {combineReducers} from 'redux';
 import {authReducer} from './auth';
 import {calendarReducer} from './calendar';
 import {groupReducer} from './group';
+import {prayerReducer} from './prayer';
 export default combineReducers({
   auth: authReducer,
   group: groupReducer,
   events: calendarReducer,
+  prayer: prayerReducer,
 });
