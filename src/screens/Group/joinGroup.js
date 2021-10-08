@@ -42,10 +42,10 @@ const joinGroup = props => {
   async function onJoin() {
     const params = {groupcode: code};
     seterr(false);
-    await props.groupJoin(params);
-    console.log('isSuccess', props.isSuccess);
-    console.log('joinGroupData', props.joinGroupData);
-    if (props.isSuccess) {
+    const res = await props.groupJoin(params);
+    setLoading(false);
+    console.log('Api response', res?.status);
+    if (res?.status) {
       seterr(false);
       setLoading(false);
       console.log('joinGroupData', props.joinGroupData);
