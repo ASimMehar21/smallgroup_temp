@@ -161,13 +161,14 @@ export const groupReducer = (state = initialState, action) => {
         errMsg: null,
       };
     case CODE_FAILED:
-      console.log('action.payload.data.message,', action.payload.data.message);
+      console.log('action.payload', action.payload);
       return {
         ...state,
         message: action.payload.data.message,
         isSuccess: false,
       };
     case CONFIRM_CODE:
+      console.log('action.payload', action.payload);
       return {
         ...state,
         joinGroupData: action.payload.data,
