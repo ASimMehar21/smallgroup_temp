@@ -30,3 +30,9 @@ export const GET_ALL_GROUP = 'GET_ALL_GROUP';
 export const GET_ALL_INVITE_GROUP = 'GET_ALL_INVITE_GROUP';
 export const GET_ALL_MESSAGE_GROUP = 'GET_ALL_MESSAGE_GROUP';
 export const GET_ALL_CHAT_GROUP = 'GET_ALL_CHAT_GROUP';
+
+//prayer
+export const CREATE_PRAYER = 'CREATE_PRAYER';
+export const GET_PRAYER = 'GET_PRAYER';
+export const DELETE_PRAYER = 'DELETE_PRAYER';
+export const UPDATE_PRAYER = 'UPDATE_PRAYER';
