@@ -33,8 +33,15 @@ import {
 } from '@react-native-google-signin/google-signin';
 //redux
 import {connect} from 'react-redux';
-import {loginUser, Googlelogin, logoOut} from '../../redux/actions/auth';
+import {
+  loginUser,
+  Googlelogin,
+  logoOut,
+  loginSuccess,
+  authFailed,
+} from '../../redux/actions/auth';
 import {useIsFocused} from '@react-navigation/native';
+
 const Signin = props => {
   const isFocused = useIsFocused();
   const [loading, setLoading] = useState(false);
@@ -45,7 +52,7 @@ const Signin = props => {
   const [passwordMessage, setpasswordMessage] = useState('');
   const navigation = props.navigation;
   useEffect(async () => {
-    await props.logoOut();
+    // await props.logoOut();
     GoogleSignin.configure({
       webClientId:
         '237114661060-g9vl5km5n8juo3u8e80tin1rtpchm8v3.apps.googleusercontent.com',
@@ -54,7 +61,7 @@ const Signin = props => {
       // iosClientId:
       //   '664178336819-pfg0mvocbu3sml19e499di4145i0qmvv.apps.googleusercontent.com',
     });
-  }, [isFocused]);
+  }, []);
   async function onGoogleLoginPress() {
     try {
       await GoogleSignin.hasPlayServices();
@@ -117,10 +124,12 @@ const Signin = props => {
         const emailValid = re.test(email);
 
         if (emailValid) {
-          await props.loginUser(params);
+          const res = await props.loginUser(params);
           setemailMessage('');
           setpasswordMessage('');
-          if (props.isSuccess) {
+          console.log('api respone', res);
+          //res?.data?.logged
+          if (res?.payload?.data?.logged) {
             setLoading(false);
             navigation.navigate('Root');
             console.log('tokens', props.token);
@@ -130,6 +139,7 @@ const Signin = props => {
               textColor: 'white',
             });
           } else {
+            authFailed(res);
             setLoading(false);
             Snackbar.show({
               text: JSON.stringify(props.message),
@@ -402,8 +412,9 @@ const Signin = props => {
   );
 };
 const mapStateToProps = state => {
-  const {status, message, isLoading, errMsg, isSuccess, token} = state.auth;
-  return {status, message, isLoading, errMsg, isSuccess, token};
+  const {status, message, isLoading, errMsg, isSuccess, token, islogin} =
+    state.auth;
+  return {status, message, isLoading, errMsg, isSuccess, token, islogin};
 };
 export default connect(mapStateToProps, {loginUser, Googlelogin, logoOut})(
   Signin,

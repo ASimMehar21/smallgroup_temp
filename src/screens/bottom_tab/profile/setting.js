@@ -157,9 +157,7 @@ function Chat({props, navigation}) {
         </View>
         <View style={{flexDirection: 'row', marginTop: 28, marginBottom: 30}}>
           <TouchableOpacity
-            onPress={() =>
-              props.navigation.navigate('Auth', {screen: 'Signin'})
-            }
+            onPress={() => props.navigation.push('Auth', {screen: 'Signin'})}
             // onPress={() => {
             //   onlogout();
             // }}
