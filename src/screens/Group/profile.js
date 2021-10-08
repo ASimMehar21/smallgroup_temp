@@ -109,7 +109,7 @@ const profile = props => {
     <View style={{flex: 1, backgroundColor: 'white'}}>
       <Header
         backgroundColor="white"
-        containerStyle={{borderBottomWidth: 0}}
+        containerStyle={{borderBottomWidth: 0,alignSelf:'center'}}
         leftComponent={<HeaderLeftComponent navigation={navigation} />}
         rightComponent={
           <HeaderRight

@@ -31,6 +31,12 @@ import styles from './styles';
 import {FloatingLabelInput} from 'react-native-floating-label-input';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import { Scope } from '@babel/traverse';
+import HeaderCenterComponent from '../../../components/HeaderCenterComponent';
+import HeaderLeftComponent from '../../../components/HeaderLeftComponent';
+import HeaderRight from '../../../components/HeaderRight';
+import {Header} from 'react-native-elements';
+import LinearGradient from 'react-native-linear-gradient';
+
 const edit_details = (props) => {
     const [gname, setgname] = useState('')
     const [gcode, setgcode] = useState('')
@@ -44,7 +50,22 @@ const edit_details = (props) => {
 
     return (
         <View style={{flex:1,backgroundColor:'white'}}>
-            <View style={styles.container}>
+             <Header
+                backgroundColor="white"
+                containerStyle={{borderBottomWidth: 0,alignSelf:'center',borderBottomWidth:0.5,borderBottomColor:'#F1F2F3'}}
+                centerComponent={<HeaderCenterComponent name = {'Group Details'} />}
+                leftComponent={<HeaderLeftComponent navigation={props.navigation} />}
+                rightComponent={
+                <TouchableOpacity  style={{alignSelf:'flex-end',marginTop:12,right: responsiveScreenWidth(2.4),alignItems:'center'}} >
+                    <Text style={[styles.inputStyles,{
+                        width:'auto',fontSize:16,marginTop:5,textAlign:'center',color:theme.colors.txtblue
+                    }]}
+                    >Save
+                    </Text>
+                </TouchableOpacity>}
+            />
+            <ScrollView>
+                <View style={styles.container}>
             <View style={[styles.textInputStyle,{width:'100%',marginTop:24}]}>
                 <FloatingLabelInput
                     label={'Group Name'}
@@ -92,17 +113,25 @@ const edit_details = (props) => {
                     inputStyles={styles.inputStyles}
                 />
             </View>
-            <TouchableOpacity style={{marginTop:40}}>
+            {/* <TouchableOpacity style={{marginTop:40}}>
                 <Image
                     source={save_change}
                     style={{width:'100%',height:48}}
                 />
-            </TouchableOpacity>
+            </TouchableOpacity> */}
+            <LinearGradient
+                colors={['#6989FE', '#3C64F4']}
+                style={[styles.btn,{borderWidth:0,marginTop:40}]}
+            >
+                <TouchableOpacity onPress={()=> setmodalVisible(true)}  >
+                    <Text style={styles.email,{fontSize:18,color:'white'}}>Save Changes</Text>
+                </TouchableOpacity>
+            </LinearGradient>
             <TouchableOpacity onPress={()=> setmodalVisible(true)} style={[styles.btn,{marginTop:16}]} >
                 <Text style={styles.email,{fontSize:18,color:theme.colors.labelColor}}>Transfer Ownership</Text>
             </TouchableOpacity>
             </View>
-
+            </ScrollView>
             <Modal
                 animationType="slide"
                 transparent={true}
@@ -114,6 +143,7 @@ const edit_details = (props) => {
                 >
                   <View style={styles.centeredView}>
                     <View style={styles.modalView}>
+                    {/* <ScrollView style={{}}> */}
                         <View style={{width:'100%',height:48,flexDirection:'row',backgroundColor:'white',borderTopLeftRadius:15,borderTopRightRadius:5}}>
                             <TouchableOpacity style={{flex:0.2,alignItems:'center',alignSelf:'center'}} onPress={()=> setmodalVisible(!modalVisible)}>
                                 <Text style={[styles.tabtext,{height:'auto',fontFamily:Fonts.DMRegular,fontWeight:'400',color:theme.colors.txtblue}]}>Cancel</Text>
@@ -211,10 +241,11 @@ const edit_details = (props) => {
                             style={{width:372,height:48}}
                         />
                     </TouchableOpacity>
+                    {/* </ScrollView> */}
 
                     </View>
                 </View>
-              </Modal>
+            </Modal>
       
 
         </View>

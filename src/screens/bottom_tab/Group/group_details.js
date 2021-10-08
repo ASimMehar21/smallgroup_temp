@@ -22,7 +22,7 @@ import {
     userg,
     userg2,
     userm,
-    arrow
+    editdetail
 } from '../../../assets';
 import {Fonts} from '../../../utils/Fonts';
 import styles from './styles';
@@ -38,12 +38,20 @@ import {Header} from 'react-native-elements';
         <View style={{flex:1,backgroundColor:'white'}}>
              <Header
                 backgroundColor="white"
-                containerStyle={{borderBottomWidth: 0,alignSelf:'center'}}
+                containerStyle={{borderBottomWidth: 0,alignSelf:'center',borderBottomWidth:0.5,borderBottomColor:'#F1F2F3'}}
                 centerComponent={<HeaderCenterComponent name = {'Group Details'} />}
                 leftComponent={<HeaderLeftComponent navigation={props.navigation} />}
-                rightComponent={<HeaderRight navigation={props.navigation} />}
+                rightComponent={
+                <TouchableOpacity onPress={()=>props.navigation.navigate('EditDetails')} style={{alignSelf:'flex-end',marginTop:12,right: responsiveScreenWidth(2.4),alignItems:'center'}} >
+                    <Text style={[styles.inputStyles,{
+                        width:32,fontSize:16,marginTop:5,textAlign:'center',color:theme.colors.txtblue
+                    }]}
+                    >Edit
+                    </Text>
+                </TouchableOpacity>}
             />
-            <View style={styles.container}>
+            <ScrollView>
+                <View style={styles.container}>
                 <View style={[styles.divider,{marginTop:32}]} />
                     <View>
                         <Text style={[styles.labelStyle,{alignSelf:'flex-start',fontSize:12,color:theme.colors.labelColor,marginTop:6}]} >Group Name</Text>
@@ -59,10 +67,11 @@ import {Header} from 'react-native-elements';
                         <Text style={[styles.email,{color:theme.colors.gray}]}>briannalouise@email.com</Text>
                     </View>
                 <View style={[styles.divider,{marginTop:6}]} />
-                <TouchableOpacity onPress={()=>props.navigation.navigate('EditDetails')} style={styles.btn} >
+                {/* <TouchableOpacity  style={styles.btn} >
                     <Text style={styles.email,{fontSize:18,color:theme.colors.labelColor}}>Save</Text>
-                </TouchableOpacity>
+                </TouchableOpacity> */}
             </View>
+            </ScrollView>
         </View>
     )
 }
