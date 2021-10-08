@@ -235,7 +235,8 @@ const Signin = props => {
               label={'Password'}
               value={password}
               autoCapitalize="none"
-              secureTextEntry
+              secureTextEntry={'true'}
+              isPassword={true}
               onChangeText={value => setPassword(value.trim())}
               containerStyles={{
                 padding: 5,

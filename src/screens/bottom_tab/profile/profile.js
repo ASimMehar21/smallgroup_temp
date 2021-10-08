@@ -45,7 +45,7 @@ export default function Profile(props) {
       <Header
           backgroundColor="white"
           containerStyle={{borderBottomWidth: 0,alignSelf:'center',borderBottomWidth:0.5,borderBottomColor:'#F1F2F3'}}
-          centerComponent={<HeaderCenterComponent name = {'Group Details'} />}
+          centerComponent={<HeaderCenterComponent name = {'Profile'} />}
           // leftComponent={<HeaderLeftComponent navigation={props.navigation} />}
           rightComponent={
           <TouchableOpacity  style={{alignSelf:'flex-end',marginTop:12,right: responsiveScreenWidth(2.4),alignItems:'center'}} >
