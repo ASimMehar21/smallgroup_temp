@@ -26,9 +26,20 @@ import {FloatingLabelInput} from 'react-native-floating-label-input';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import {logoOut} from '../../../redux/actions/auth';
 function Chat({props, navigation}) {
-  const [isEnabled, setIsEnabled] = useState(false);
-  const toggleSwitch = () => setIsEnabled(previousState => !previousState);
+  const [newmsgs, setnewmsgs] = useState(false);
+  const [newevents, setnewevents] = useState(false);
+  const [eventrem, seteventrem] = useState(false);
+  const [newprayer, setnewprayer] = useState(false);
+  const [comment, setcomment] = useState(false);
+  const [syncal, setsyncal] = useState(false);
+  const toggleSwitch1 = () => setnewmsgs(previousState => !previousState);
+  const toggleSwitch2 = () => setnewevents(previousState => !previousState);
+  const toggleSwitch3 = () => seteventrem(previousState => !previousState);
+  const toggleSwitch4 = () => setnewprayer(previousState => !previousState);
+  const toggleSwitch5 = () => setcomment(previousState => !previousState);
+  const toggleSwitch6 = () => setsyncal(previousState => !previousState);
   const [loading, setLoading] = useState(false);
+
   async function onlogout() {
     await props.logoOut();
     props.navigation.navigate('Auth', {screen: 'Signin'});
@@ -45,10 +56,10 @@ function Chat({props, navigation}) {
           </Text>
           <Switch
             trackColor={{false: '#767577', true: '#4E73F8'}}
-            thumbColor={isEnabled ? '#ffff' : '#f4f3f4'}
+            thumbColor={newmsgs ? '#ffff' : '#f4f3f4'}
             ios_backgroundColor="#4E73F8"
-            onValueChange={toggleSwitch}
-            value={isEnabled}
+            onValueChange={toggleSwitch1}
+            value={newmsgs}
           />
         </View>
 
@@ -58,10 +69,10 @@ function Chat({props, navigation}) {
           </Text>
           <Switch
             trackColor={{false: '#767577', true: '#4E73F8'}}
-            thumbColor={isEnabled ? '#ffff' : '#f4f3f4'}
+            thumbColor={newevents ? '#ffff' : '#f4f3f4'}
             ios_backgroundColor="#4E73F8"
-            onValueChange={toggleSwitch}
-            value={isEnabled}
+            onValueChange={toggleSwitch2}
+            value={newevents}
           />
         </View>
 
@@ -71,10 +82,10 @@ function Chat({props, navigation}) {
           </Text>
           <Switch
             trackColor={{false: '#767577', true: '#4E73F8'}}
-            thumbColor={isEnabled ? '#ffff' : '#f4f3f4'}
+            thumbColor={eventrem ? '#ffff' : '#f4f3f4'}
             ios_backgroundColor="#4E73F8"
-            onValueChange={toggleSwitch}
-            value={isEnabled}
+            onValueChange={toggleSwitch3}
+            value={eventrem}
           />
         </View>
 
@@ -84,10 +95,10 @@ function Chat({props, navigation}) {
           </Text>
           <Switch
             trackColor={{false: '#767577', true: '#4E73F8'}}
-            thumbColor={isEnabled ? '#ffff' : '#f4f3f4'}
+            thumbColor={newprayer ? '#ffff' : '#f4f3f4'}
             ios_backgroundColor="#4E73F8"
-            onValueChange={toggleSwitch}
-            value={isEnabled}
+            onValueChange={toggleSwitch4}
+            value={newprayer}
           />
         </View>
 
@@ -97,10 +108,10 @@ function Chat({props, navigation}) {
           </Text>
           <Switch
             trackColor={{false: '#767577', true: '#4E73F8'}}
-            thumbColor={isEnabled ? '#ffff' : '#f4f3f4'}
+            thumbColor={comment ? '#ffff' : '#f4f3f4'}
             ios_backgroundColor="#4E73F8"
-            onValueChange={toggleSwitch}
-            value={isEnabled}
+            onValueChange={toggleSwitch5}
+            value={comment}
           />
         </View>
 
@@ -117,10 +128,10 @@ function Chat({props, navigation}) {
           </Text>
           <Switch
             trackColor={{false: '#767577', true: '#4E73F8'}}
-            thumbColor={isEnabled ? '#ffff' : '#f4f3f4'}
+            thumbColor={syncal ? '#ffff' : '#f4f3f4'}
             ios_backgroundColor="#4E73F8"
-            onValueChange={toggleSwitch}
-            value={isEnabled}
+            onValueChange={toggleSwitch6}
+            value={syncal}
           />
         </View>
 
