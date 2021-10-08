@@ -38,7 +38,7 @@ export const getEvent = uid => {
     dispatch(calendarLoading());
 
     try {
-      const res = await axios.get(`${BASE_URL}api/calender/${uid}`, {
+      const res = await axios.get(`${BASE_URL}api/calender/user/${uid}`, {
         headers: {
           Accept: 'application/json',
           'Content-Type': 'application/json',
@@ -51,17 +51,21 @@ export const getEvent = uid => {
     }
   };
 };
-export const updateEvent = uid => {
+export const updateEvent = (params, uid) => {
   return async dispatch => {
     dispatch(calendarLoading());
 
     try {
-      const res = await axios.get(`${BASE_URL}api/calender/${uid}`, {
-        headers: {
-          Accept: 'application/json',
-          'Content-Type': 'application/json',
+      const res = await axios.put(
+        `${BASE_URL}api/calender/${uid}`,
+        JSON.stringify(params),
+        {
+          headers: {
+            Accept: 'application/json',
+            'Content-Type': 'application/json',
+          },
         },
-      });
+      );
       dispatch(updateactivity(res));
     } catch (err) {
       console.log(err.response.data);
@@ -69,12 +73,12 @@ export const updateEvent = uid => {
     }
   };
 };
-export const deleteEvent = uid => {
+export const deleteEvent = eid => {
   return async dispatch => {
     dispatch(calendarLoading());
 
     try {
-      const res = await axios.get(`${BASE_URL}api/calender/${uid}`, {
+      const res = await axios.delete(`${BASE_URL}api/calender/${eid}`, {
         headers: {
           Accept: 'application/json',
           'Content-Type': 'application/json',

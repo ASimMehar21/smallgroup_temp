@@ -48,11 +48,17 @@ import {Calendar} from 'react-native-calendars';
 import moment from 'moment';
 //redux
 import {connect} from 'react-redux';
-import {createEvent, getEvent} from '../../../redux/actions/calendarAction';
+import {
+  createEvent,
+  getEvent,
+  updateEvent,
+  deleteEvent,
+} from '../../../redux/actions/calendarAction';
 const _today = moment().format(_format);
 const _format1 = 'YYYY-MM-DD';
 const _format = 'LL';
 import Snackbar from 'react-native-snackbar';
+import {useIsFocused} from '@react-navigation/native';
 const initialState = {
   [_today]: {disabled: false},
 };
@@ -73,6 +79,7 @@ const events = [
 ];
 
 function Events(props) {
+  const isFocused = useIsFocused();
   const [loading, setLoading] = useState(false);
   const [exsisting, setexsisting] = useState(false);
   const [location, setLocation] = useState('');
@@ -88,7 +95,8 @@ function Events(props) {
   const [fNameMessage, setfNameMessage] = useState('');
   const [lNameMessage, setlNameMessage] = useState('');
   const [events, setevents] = useState([]);
-
+  const [eventId, seteventId] = useState();
+  const [Id, setId] = useState();
   const [modalVisible, setmodalVisible] = useState(false);
   const [createEvent, setCreateEvent] = useState(false);
   const [markedDays, setmarkedDays] = useState([]);
@@ -102,7 +110,7 @@ function Events(props) {
     setEnd('');
     setStart('');
     getevent();
-  }, []);
+  }, [isFocused]);
   async function onDaySelect(day) {
     // console.log(day);
     // const _selectedDay2 = moment(day.dateString).format(_format);
@@ -132,7 +140,10 @@ function Events(props) {
     set_markedDates(updatedMarkedDates);
   }
   async function getevent() {
-    await props.getEvent(props.userData._id);
+    const uid = props.userData._id;
+    console.log(props.userData._id);
+    // return;
+    await props.getEvent(uid);
     console.log('Event_DATA \n', props.activityData);
     setevents(props.activityData);
   }
@@ -164,6 +175,74 @@ function Events(props) {
 
       setCreateEvent(false);
     } else {
+      setLoading(false);
+      Snackbar.show({
+        text: JSON.stringify(props.message),
+        backgroundColor: '#F14336',
+        textColor: 'white',
+      });
+    }
+  }
+  async function onUpdateevent() {
+    console.log('items');
+    const params = {
+      start: 'Wed Oct 06 2021 14:20:52 GMT+0500 (Pakistan Standard Time)',
+      end: 'Wed Oct 06 2021 14:20:52 GMT+0500 (Pakistan Standard Time)',
+      title: title,
+      location: location,
+      repeats: ['Every Tuesday', 'Every Thursday'],
+      description: description,
+      userID: props.userData._id,
+    };
+    await props.updateEvent(params, eventId._id);
+    if (props.isSuccess) {
+      setLoading(false);
+      setRepeats('');
+      setTitle('');
+      setLocation('');
+      setEnd('');
+      setStart('');
+      setmodalVisible(false);
+      setTimeout(() => {
+        Snackbar.show({
+          text: 'Event updated succesfully',
+          backgroundColor: theme.colors.primary,
+          textColor: 'white',
+        });
+      }, 1000);
+
+      setCreateEvent(false);
+    } else {
+      setmodalVisible(false);
+      setLoading(false);
+      Snackbar.show({
+        text: JSON.stringify(props.message),
+        backgroundColor: '#F14336',
+        textColor: 'white',
+      });
+    }
+  }
+  async function ondeleteEvent() {
+    await props.deleteEvent(eventId._id);
+    if (props.isSuccess) {
+      setLoading(false);
+      setRepeats('');
+      setTitle('');
+      setLocation('');
+      setEnd('');
+      setStart('');
+      setmodalVisible(false);
+      setTimeout(() => {
+        Snackbar.show({
+          text: 'Event deleted succesfully',
+          backgroundColor: theme.colors.primary,
+          textColor: 'white',
+        });
+      }, 1000);
+
+      setCreateEvent(false);
+    } else {
+      setmodalVisible(false);
       setLoading(false);
       Snackbar.show({
         text: JSON.stringify(props.message),
@@ -304,9 +383,13 @@ function Events(props) {
             }}>
             <View style={{flexDirection: 'row', alignItems: 'center'}}>
               <Text style={[styles.inputStyles, {fontSize: 12, width: '95%'}]}>
-                {item.start} - {item.ends}
+                {moment(item.start).format('h:mm')} -{' '}
+                {moment(item.ends).format('LT')}
               </Text>
-              <TouchableOpacity onPress={() => setmodalVisible(true)}>
+              <TouchableOpacity
+                onPress={() => {
+                  setmodalVisible(true), seteventId(item);
+                }}>
                 <Image source={option} style={{width: 24, height: 24}} />
               </TouchableOpacity>
             </View>
@@ -318,7 +401,7 @@ function Events(props) {
                 fontSize: 14,
                 fontWeight: '500',
               }}>
-              {item.Title}
+              {item.title}
             </Text>
             <View
               style={{
@@ -327,7 +410,7 @@ function Events(props) {
                 alignItems: 'flex-end',
               }}>
               <Text style={[styles.inputStyles, {fontSize: 12}]}>
-                {item.address}
+                {item.location}
               </Text>
             </View>
           </View>
@@ -399,8 +482,12 @@ function Events(props) {
               </TouchableOpacity>
               <TouchableOpacity
                 onPress={() => {
-                  setexsisting(true);
-                  setCreateEvent(true);
+                  setexsisting(true),
+                    setCreateEvent(true),
+                    setTitle(eventId._id),
+                    setLocation(eventId.location),
+                    setDescription(eventId.description),
+                    setTitle(eventId.title);
                 }}
                 style={[styles.btn, {width: '90%'}]}>
                 <Text
@@ -476,7 +563,7 @@ function Events(props) {
                 style={{flex: 0.2, alignItems: 'center', alignSelf: 'center'}}
                 // onPress={() => setCreateEvent(false)}
                 onPress={() => {
-                  onevent(), setLoading(true);
+                  exsisting ? onUpdateevent() : onevent(), setLoading(true);
                 }}>
                 {exsisting ? (
                   loading ? (
@@ -706,19 +793,22 @@ function Events(props) {
                 ) : null}
               </View>
               {exsisting ? (
-                <Text
-                  style={[
-                    styles.inputStyles,
-                    {
-                      marginTop: 32,
-                      textAlign: 'center',
-                      fontWeight: '700',
-                      fontFamily: Fonts.DMBold,
-                      color: '#FF5959',
-                    },
-                  ]}>
-                  Delete this Event
-                </Text>
+                <TouchableOpacity
+                  onPress={(() => ondeleteEvent(), setLoading(true))}>
+                  <Text
+                    style={[
+                      styles.inputStyles,
+                      {
+                        marginTop: 32,
+                        textAlign: 'center',
+                        fontWeight: '700',
+                        fontFamily: Fonts.DMBold,
+                        color: '#FF5959',
+                      },
+                    ]}>
+                    Delete this Event
+                  </Text>
+                </TouchableOpacity>
               ) : (
                 <></>
               )}
@@ -759,4 +849,9 @@ const mapStateToProps = state => {
     activityData,
   };
 };
-export default connect(mapStateToProps, {createEvent, getEvent})(Events);
+export default connect(mapStateToProps, {
+  createEvent,
+  getEvent,
+  updateEvent,
+  deleteEvent,
+})(Events);

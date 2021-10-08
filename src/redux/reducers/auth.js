@@ -43,29 +43,29 @@ export const authReducer = (state = initialState, action) => {
         isError: false,
         isSuccess: false,
         errMsg: null,
-        message: null,
       };
     case AUTH_FAILED:
+      // console.log('auth', action.payload.data.message);
       return {
         ...state,
         isLoading: false,
         isError: true,
         isSuccess: false,
+        errMsg: action.payload,
         isLoggedIn: false,
         message: action.payload.data.message,
       };
     case LOGIN_USER:
-      console.log('action.payload', action.payload.data.token);
+      console.log('here');
       return {
         ...state,
-        message: action.payload.data.message,
+        userData: action.payload.data.user,
         token: action.payload.data.token,
         isLoggedIn: true,
         isLoading: false,
         isSuccess: true,
         isError: false,
         errMsg: null,
-        userData: action.payload.data.user,
       };
     case GOOGLE_LOGIN:
       console.log('auth', action.payload.data.message);
@@ -86,17 +86,7 @@ export const authReducer = (state = initialState, action) => {
         isLoading: false,
         isSuccess: true,
         isError: false,
-        message: action.payload.message,
-        errMsg: null,
-        token: action.payload.token,
-      };
-    case CREATE_GROUP:
-      return {
-        ...state,
-        isLoading: false,
-        isSuccess: true,
-        isError: false,
-        message: 'Group Created Succesfully',
+        message: action.payload.data.message,
         errMsg: null,
       };
     case REG_FAILED:
@@ -123,7 +113,7 @@ export const authReducer = (state = initialState, action) => {
     case CONFIRM_EMAIL:
       return {
         ...state,
-        message: 'Invitation Send Succesfully',
+        message: action.payload.data.message,
         isSuccess: true,
         isError: false,
         errMsg: null,
@@ -136,16 +126,16 @@ export const authReducer = (state = initialState, action) => {
         isSuccess: false,
         isError: false,
         errMsg: null,
-        isLoggedIn: false,
       };
     case CONFIRM_CODE:
       return {
         ...state,
-        joinGroupData: action.payload.data,
+        message: action.payload.data.message,
         isError: false,
         errMsg: null,
         isLoading: false,
         isSuccess: true,
+        joinGroupData: action.payload.data,
       };
     case CODE_FAILED:
       return {
@@ -153,26 +143,7 @@ export const authReducer = (state = initialState, action) => {
         message: action.payload.data.message,
         isSuccess: false,
       };
-    case GROUP_FAIL:
-      return {
-        ...state,
-        message: '',
-        isSuccess: false,
-      };
-    case LOGOUT_USER:
-      return {
-        isLoggedIn: false,
-        token: '',
-        userId: '',
-        message: '',
-        isLoading: false,
-        isError: false,
-        isSuccess: true,
-        errMsg: null,
-        userData: null,
-        joinGroupData: null,
-        status: '',
-      };
+
     default:
       return state;
   }
