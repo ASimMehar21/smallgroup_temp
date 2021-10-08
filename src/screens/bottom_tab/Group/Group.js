@@ -52,116 +52,148 @@ export default function Group(props) {
                 backgroundColor="white"
                 containerStyle={{borderBottomWidth: 0,alignSelf:'center',height:48,borderBottomWidth:0.3,borderBottomColor:'#E1E3E6'}}
                 centerComponent={<DropdownHead />}
-                rightComponent={<HeaderRight  image={create} style={{width:32,height:32,margib:12}} />}
+                rightComponent={<HeaderRight  image={create} style={{width:32,height:32,marginTop:12}} />}
             />
             <View style={styles.container}>
-                <Text style={[styles.tabtext,{color:theme.colors.textHeader,marginTop:responsiveScreenHeight(5)}]} >People</Text>
-                <View style={{flexDirection:'row',marginTop:12}}>
-                <TouchableOpacity onPress={()=> props.navigation.navigate('Member')} style={{flexDirection:'row'}}>
-                    <Image 
-                        source={userg2}
-                        style={{width:40,height:40}}
+                <Text style={[styles.tabtext,{color:theme.colors.textHeader,marginTop:responsiveScreenHeight(3)}]} >People</Text>
+                <View style={{flexDirection:'row',marginTop:12,flex:1}}>
+                <TouchableOpacity onPress={()=> props.navigation.navigate('Member')} style={{flex:1,flexDirection:'row'}}>
+                    <View style={{flex:0.3}}>
+                        <Image 
+                            source={userg2}
+                            style={{width:40,height:40}}
+                        />
+                    </View>
+                    <View style={{flex:2,flexDirection:'row'}}>
+                        <Text style={[styles.tabtext,{color:theme.colors.gray,left:10,alignSelf:'center'}]}>Brianna Louise</Text>
+                    </View>
+                    <View style={{flex:0.18,justifyContent:'center'}}>
+                        <Image 
+                            source={arrow}
+                            style={{width:16,height:14,alignSelf:'center'}}
                     />
-                    <Text style={[styles.tabtext,{color:theme.colors.gray,marginLeft:16,width:'82%',alignSelf:'center'}]}>Brianna Louise</Text>
-                    <Image 
-                    source={arrow}
-                    style={{width:16,height:14,alignSelf:'center'}}
-                />
+                    </View>
                 </TouchableOpacity>
             
             </View>
                 <View style={styles.divider} />
-                <View style={{flexDirection:'row',marginTop:8}}>
-                <TouchableOpacity style={{flexDirection:'row'}}>
-                    <Image 
-                        source={userm}
-                        style={{width:40,height:40}}
-                    />
-                    <Text style={[styles.tabtext,{color:theme.colors.gray,marginLeft:16,width:'82%',alignSelf:'center'}]}>David C.</Text>
-                    <Image 
-                    source={arrow}
-                    style={{width:16,height:14,alignSelf:'center'}}
-                />
-                </TouchableOpacity>
-            
-            </View>
+                <View style={{flexDirection:'row',marginTop:8,flex:1}}>
+                    <TouchableOpacity onPress={()=> props.navigation.navigate('Member')} style={{flex:1,flexDirection:'row'}}>
+                        <View style={{flex:0.3}}>
+                            <Image 
+                                source={userg2}
+                                style={{width:40,height:40}}
+                            />
+                        </View>
+                        <View style={{flex:2,flexDirection:'row'}}>
+                            <Text style={[styles.tabtext,{color:theme.colors.gray,left:10,alignSelf:'center'}]}>Brianna Louise</Text>
+                        </View>
+                        <View style={{flex:0.18,justifyContent:'center'}}>
+                            <Image 
+                                source={arrow}
+                                style={{width:16,height:14,alignSelf:'center'}}
+                        />
+                        </View>
+                    </TouchableOpacity>
+                </View>
                 <View style={styles.divider} />
-                <View style={{flexDirection:'row',marginTop:8}}>
-                <TouchableOpacity style={{flexDirection:'row'}}>
-                    <Image 
-                        source={userg}
-                        style={{width:40,height:40}}
-                    />
-                    <Text style={[styles.tabtext,{color:theme.colors.gray,marginLeft:16,width:'82%',alignSelf:'center'}]}>Allison Davidson</Text>
-                    <Image 
-                    source={arrow}
-                    style={{width:16,height:14,alignSelf:'center'}}
-                />
-                </TouchableOpacity>
-            
-            </View>
+                <View style={{flexDirection:'row',marginTop:8,flex:1}}>
+                    <TouchableOpacity onPress={()=> props.navigation.navigate('Member')} style={{flex:1,flexDirection:'row'}}>
+                        <View style={{flex:0.3}}>
+                            <Image 
+                                source={userg2}
+                                style={{width:40,height:40}}
+                            />
+                        </View>
+                        <View style={{flex:2,flexDirection:'row'}}>
+                            <Text style={[styles.tabtext,{color:theme.colors.gray,left:10,alignSelf:'center'}]}>Brianna Louise</Text>
+                        </View>
+                        <View style={{flex:0.18,justifyContent:'center'}}>
+                            <Image 
+                                source={arrow}
+                                style={{width:16,height:14,alignSelf:'center'}}
+                        />
+                        </View>
+                    </TouchableOpacity>
+                </View>
                 <View style={styles.divider} />
-                <View style={{flexDirection:'row',marginTop:8}}>
-                <TouchableOpacity style={{flexDirection:'row'}}>
-                    <Image 
-                        source={userg}
-                        style={{width:40,height:40}}
-                    />
-                    <Text style={[styles.tabtext,{color:theme.colors.gray,marginLeft:16,width:'82%',alignSelf:'center'}]}>Brianna Louise</Text>
-                    <Image 
-                    source={arrow}
-                    style={{width:16,height:14,alignSelf:'center'}}
-                />
-                </TouchableOpacity>
-            
-            </View>
+                <View style={{flexDirection:'row',marginTop:8,flex:1}}>
+                    <TouchableOpacity onPress={()=> props.navigation.navigate('Member')} style={{flex:1,flexDirection:'row'}}>
+                        <View style={{flex:0.3}}>
+                            <Image 
+                                source={userg2}
+                                style={{width:40,height:40}}
+                            />
+                        </View>
+                        <View style={{flex:2,flexDirection:'row'}}>
+                            <Text style={[styles.tabtext,{color:theme.colors.gray,left:10,alignSelf:'center'}]}>Brianna Louise</Text>
+                        </View>
+                        <View style={{flex:0.18,justifyContent:'center'}}>
+                            <Image 
+                                source={arrow}
+                                style={{width:16,height:14,alignSelf:'center'}}
+                        />
+                        </View>
+                    </TouchableOpacity>
+                </View>
                 <View style={styles.divider} />
-                <View style={{flexDirection:'row',marginTop:8}}>
-                <TouchableOpacity style={{flexDirection:'row'}}>
-                    <Image 
-                        source={userg}
-                        style={{width:40,height:40}}
-                    />
-                    <Text style={[styles.tabtext,{color:theme.colors.gray,marginLeft:16,width:'82%',alignSelf:'center'}]}>Brianna Louise</Text>
-                    <Image 
-                    source={arrow}
-                    style={{width:16,height:14,alignSelf:'center'}}
-                />
-                </TouchableOpacity>
-            
-            </View>
-                <View style={styles.divider} />
-                <View style={{flexDirection:'row',marginTop:8}}>
-                <TouchableOpacity style={{flexDirection:'row'}}>
-                    <Image 
-                        source={userg}
-                        style={{width:40,height:40}}
-                    />
-                    <Text style={[styles.tabtext,{color:theme.colors.gray,marginLeft:16,width:'82%',alignSelf:'center'}]}>Brianna Louise</Text>
-                    <Image 
-                    source={arrow}
-                    style={{width:16,height:14,alignSelf:'center'}}
-                />
-                </TouchableOpacity>
-            
-            </View>
-                <View style={styles.divider} />
-                <Text style={[styles.tabtext,{color:theme.colors.textHeader,marginTop:40}]} >Settings</Text>
-                <TouchableOpacity onPress={()=> props.navigation.navigate('Details')}  style={{flexDirection:'row',marginTop:16}}>
-                    <Text style={[styles.inputStyles,{fontSize:18,width:'95%'}]}>Group Details</Text>
-                    <Image 
-                        source={arrow}
-                        style={{width:16,height:14}}
-                    />
-                </TouchableOpacity>
-                <TouchableOpacity  onPress={()=> setmodalVisible(true)} style={{flexDirection:'row',marginTop:28}}>
-                    <Text style={[styles.inputStyles,{fontSize:18,width:'95%'}]}>Create a New Group</Text>
-                    <Image 
-                        source={add}
-                        style={{width:16,height:16,alignSelf:'center'}}
-                    />
-                </TouchableOpacity>
+                <View style={{flexDirection:'row',marginTop:8,flex:1}}>
+                    <TouchableOpacity onPress={()=> props.navigation.navigate('Member')} style={{flex:1,flexDirection:'row'}}>
+                        <View style={{flex:0.3}}>
+                            <Image 
+                                source={userg2}
+                                style={{width:40,height:40}}
+                            />
+                        </View>
+                        <View style={{flex:2,flexDirection:'row'}}>
+                            <Text style={[styles.tabtext,{color:theme.colors.gray,left:10,alignSelf:'center'}]}>Brianna Louise</Text>
+                        </View>
+                        <View style={{flex:0.18,justifyContent:'center'}}>
+                            <Image 
+                                source={arrow}
+                                style={{width:16,height:14,alignSelf:'center'}}
+                        />
+                        </View>
+                    </TouchableOpacity>
                 
+                </View>
+                <View style={styles.divider} />
+                <View style={{flexDirection:'row',marginTop:8,flex:1}}>
+                <TouchableOpacity onPress={()=> props.navigation.navigate('Member')} style={{flex:1,flexDirection:'row'}}>
+                    <View style={{flex:0.3}}>
+                        <Image 
+                            source={userg2}
+                            style={{width:40,height:40}}
+                        />
+                    </View>
+                    <View style={{flex:2,flexDirection:'row'}}>
+                        <Text style={[styles.tabtext,{color:theme.colors.gray,left:10,alignSelf:'center'}]}>Brianna Louise</Text>
+                    </View>
+                    <View style={{flex:0.18,justifyContent:'center'}}>
+                        <Image 
+                            source={arrow}
+                            style={{width:16,height:14,alignSelf:'center'}}
+                    />
+                    </View>
+                </TouchableOpacity>
+            
+            </View>
+                <View style={styles.divider} />
+                    <Text style={[styles.tabtext,{color:theme.colors.textHeader,marginTop:40}]} >Settings</Text>
+                    <TouchableOpacity onPress={()=> props.navigation.navigate('Details')}  style={{flexDirection:'row',marginTop:16}}>
+                        <Text style={[styles.inputStyles,{fontSize:18,width:'95%'}]}>Group Details</Text>
+                        <Image 
+                            source={arrow}
+                            style={{width:16,height:14}}
+                        />
+                    </TouchableOpacity>
+                    <TouchableOpacity  onPress={()=> setmodalVisible(true)} style={{flexDirection:'row',marginTop:28}}>
+                        <Text style={[styles.inputStyles,{fontSize:18,width:'95%'}]}>Create a New Group</Text>
+                        <Image 
+                            source={add}
+                            style={{width:16,height:16,alignSelf:'center'}}
+                        />
+                    </TouchableOpacity>
             </View>
             <Modal
                 animationType="slide"

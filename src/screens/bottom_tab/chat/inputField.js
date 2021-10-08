@@ -37,8 +37,8 @@ import {
             position:'absolute',
             bottom:0,
             alignSelf:'flex-end',
-            justifyContent:'center',
-            alignItems:'center',
+            // justifyContent:'center',
+            // alignItems:'center',
             width:'100%',
             height:56,
             backgroundColor: 'rgba(255, 255, 255, 0.93)'
@@ -63,8 +63,10 @@ import {
                 </TouchableOpacity>
                 <View style={{
                     // marginLeft:11,
-                    marginTop:8,
-                    marginBottom:12,
+                    // marginTop:8,
+                    alignSelf:'center',
+                    // backgroundColor:'red',
+                    // marginBottom:12,
                     width:'77%',
                     // width:315,
                     height:40,
@@ -74,7 +76,8 @@ import {
                     // alignItems:'center'
                 }}>
                     <TextInput
-                        style={[styles.labelStyle,{marginLeft:16,width:'90%',color: theme.colors.labelColor,height:38}]}
+                        // placeholder={'Type your message'}
+                        style={[styles.labelStyle,{margin:10,width:'90%',color: theme.colors.labelColor,height:38}]}
                     />
                 </View>
                 <TouchableOpacity style={{

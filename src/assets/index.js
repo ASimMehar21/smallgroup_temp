@@ -35,6 +35,7 @@ export const right = require('./images/right.png');
 export const left = require('./images/left.png');
 export const down = require('./images/down.png');
 export const create = require('./images/create.png');
+export const editdetail = require('./images/editDetail.png');
 
 export const back = require('./images/back.png');
 export const next = require('./images/next.png');
