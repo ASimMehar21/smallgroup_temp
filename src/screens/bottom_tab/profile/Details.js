@@ -173,7 +173,6 @@ function Chat(props) {
                 value={password}
                 onChangeText={value => setPassword(value)}
                 isPassword={true}
-                
                 containerStyles={{padding: 5}}
                 // labelStyles={styles.labelStyle}
                 labelStyles={styles.labelStyles}

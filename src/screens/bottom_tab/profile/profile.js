@@ -29,15 +29,42 @@ import {createMaterialTopTabNavigator} from '@react-navigation/material-top-tabs
 import Detail from './Details';
 import Setting from './setting';
 import {LinearTextGradient} from 'react-native-text-gradient';
-
+import HeaderCenterComponent from '../../../components/HeaderCenterComponent';
+import HeaderLeftComponent from '../../../components/HeaderLeftComponent';
+import HeaderRight from '../../../components/HeaderRight';
+import {Header} from 'react-native-elements';
 const Tab = createMaterialTopTabNavigator();
 
 export default function Profile(props) {
   const [tog1, settog1] = useState(true);
   const [tog2, settog2] = useState(false);
+  const [existing, setExisting] = useState(false);
 
   return (
     <View style={[styles.container]}>
+      <Header
+          backgroundColor="white"
+          containerStyle={{borderBottomWidth: 0,alignSelf:'center',borderBottomWidth:0.5,borderBottomColor:'#F1F2F3'}}
+          centerComponent={<HeaderCenterComponent name = {'Profile'} />}
+          // leftComponent={<HeaderLeftComponent navigation={props.navigation} />}
+          rightComponent={
+          <TouchableOpacity  style={{alignSelf:'flex-end',marginTop:12,right: responsiveScreenWidth(2.4),alignItems:'center'}} >
+              {existing?
+                <Text style={[styles.inputStyles,{
+                    width:'auto',fontSize:16,marginTop:5,textAlign:'center',color:theme.colors.txtblue
+                }]}
+                >Save
+                </Text>
+              :
+                <Text style={[styles.inputStyles,{
+                    width:'auto',fontSize:16,marginTop:5,textAlign:'center',color:theme.colors.txtblue
+                }]}
+                >Edit
+                </Text>
+              }
+              
+          </TouchableOpacity>}
+      />
       <Image source={userg2} style={styles.img} />
       <View>
         <Text style={styles.labelStyle}>Brianna Louise</Text>

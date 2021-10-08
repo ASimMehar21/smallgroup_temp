@@ -262,9 +262,12 @@ function Events(props) {
         centerComponent={<DropdownHead />}
         rightComponent={
           <HeaderRight
-            onPress={() => setCreateEvent(true)}
+            onPress={() => {
+              setexsisting(false),
+              setCreateEvent(true)
+            }}
             image={create}
-            style={{width: 32, height: 32, margib: 12}}
+            style={{width: 32, height: 32, marginTop: 12}}
           />
         }
       />
@@ -479,8 +482,9 @@ function Events(props) {
               </TouchableOpacity>
               <TouchableOpacity
                 onPress={() => {
-                  setexsisting(true),
-                    setCreateEvent(true),
+                  setexsisting(true);
+                  setmodalVisible(false);
+                    setCreateEvent(true);
                     setTitle(eventId._id),
                     setLocation(eventId.location),
                     setDescription(eventId.description),
@@ -527,7 +531,10 @@ function Events(props) {
               }}>
               <TouchableOpacity
                 style={{flex: 0.2, alignItems: 'center', alignSelf: 'center'}}
-                onPress={() => setCreateEvent(false)}>
+                onPress={() => {
+                  setexsisting(false)
+                  setCreateEvent(false)
+                }}>
                 <Text
                   style={[
                     styles.tabtext,
@@ -561,7 +568,8 @@ function Events(props) {
                 // onPress={() => setCreateEvent(false)}
                 onPress={() => {
                   exsisting ? onUpdateevent() : onevent(), setLoading(true);
-                }}>
+                }}
+                >
                 {exsisting ? (
                   loading ? (
                     <ActivityIndicator
@@ -603,6 +611,7 @@ function Events(props) {
                     Add
                   </Text>
                 )}
+
               </TouchableOpacity>
             </View>
 
@@ -791,7 +800,9 @@ function Events(props) {
               </View>
               {exsisting ? (
                 <TouchableOpacity
-                  onPress={(() => ondeleteEvent(), setLoading(true))}>
+                  onPress={() => {
+                    ondeleteEvent(), 
+                    setLoading(true)}}>
                   <Text
                     style={[
                       styles.inputStyles,
