@@ -17,6 +17,7 @@ import {
   ActivityIndicator,
   ScrollView,
   KeyboardAvoidingView,
+  RefreshControl,
 } from 'react-native';
 import theme from '../../../theme';
 import {
@@ -59,22 +60,6 @@ import {useIsFocused} from '@react-navigation/native';
 const initialState = {
   [_today]: {disabled: false},
 };
-
-const events = [
-  {
-    start: '7:00 PM',
-    ends: '9:00 PM ',
-    Title: 'Weekly Community Group',
-    address: '1234 Street Name, City, ST 12345',
-  },
-  {
-    start: '7:00 PM',
-    ends: '9:00 PM ',
-    Title: 'Weekly Community Group',
-    address: '1234 Street Name, City, ST 12345',
-  },
-];
-
 function Events(props) {
   const isFocused = useIsFocused();
   const [loading, setLoading] = useState(false);
@@ -98,15 +83,15 @@ function Events(props) {
   const [createEvent, setCreateEvent] = useState(false);
   const [markedDays, setmarkedDays] = useState([]);
   const [_markedDates, set_markedDates] = useState(initialState);
+  const [refreshing, setRefreshing] = useState(false);
   const dot = {key: 'dot', color: '#4E73F8', selectedDotColor: '#4E73F8'};
-  useEffect(() => {
-    setLoading(false);
-    setRepeats('');
-    setTitle('');
-    setLocation('');
-    setEnd('');
-    setStart('');
-    getevent();
+  useEffect(async () => {
+    const uid = props.userData._id;
+    console.log(props.userData._id);
+    // return;
+    await props.getEvent(uid);
+    console.log('Event_DATA \n', props.activityData);
+    setevents(props.activityData);
   }, [isFocused]);
   async function onDaySelect(day) {
     // console.log(day);
@@ -137,12 +122,14 @@ function Events(props) {
     set_markedDates(updatedMarkedDates);
   }
   async function getevent() {
+    setRefreshing(true);
     const uid = props.userData._id;
     console.log(props.userData._id);
     // return;
     await props.getEvent(uid);
     console.log('Event_DATA \n', props.activityData);
     setevents(props.activityData);
+    setRefreshing(false);
   }
   async function onevent() {
     const params = {
@@ -171,6 +158,7 @@ function Events(props) {
       }, 2000);
 
       setCreateEvent(false);
+      getevent();
     } else {
       setLoading(false);
       Snackbar.show({
@@ -207,7 +195,7 @@ function Events(props) {
           textColor: 'white',
         });
       }, 1000);
-
+      getevent();
       setCreateEvent(false);
     } else {
       setmodalVisible(false);
@@ -236,7 +224,7 @@ function Events(props) {
           textColor: 'white',
         });
       }, 1000);
-
+      getevent();
       setCreateEvent(false);
     } else {
       setmodalVisible(false);
@@ -263,8 +251,7 @@ function Events(props) {
         rightComponent={
           <HeaderRight
             onPress={() => {
-              setexsisting(false),
-              setCreateEvent(true)
+              setexsisting(false), setCreateEvent(true);
             }}
             image={create}
             style={{width: 32, height: 32, marginTop: 12}}
@@ -365,6 +352,9 @@ function Events(props) {
         </TouchableOpacity>
       </View>
       <FlatList
+        refreshControl={
+          <RefreshControl refreshing={refreshing} onRefresh={getevent} />
+        }
         style={[styles.container, {marginTop: 18}]}
         showsVerticalScrollIndicator={false}
         data={events}
@@ -484,8 +474,8 @@ function Events(props) {
                 onPress={() => {
                   setexsisting(true);
                   setmodalVisible(false);
-                    setCreateEvent(true);
-                    setTitle(eventId._id),
+                  setCreateEvent(true);
+                  setTitle(eventId._id),
                     setLocation(eventId.location),
                     setDescription(eventId.description),
                     setTitle(eventId.title);
@@ -532,8 +522,8 @@ function Events(props) {
               <TouchableOpacity
                 style={{flex: 0.2, alignItems: 'center', alignSelf: 'center'}}
                 onPress={() => {
-                  setexsisting(false)
-                  setCreateEvent(false)
+                  setexsisting(false);
+                  setCreateEvent(false);
                 }}>
                 <Text
                   style={[
@@ -568,8 +558,7 @@ function Events(props) {
                 // onPress={() => setCreateEvent(false)}
                 onPress={() => {
                   exsisting ? onUpdateevent() : onevent(), setLoading(true);
-                }}
-                >
+                }}>
                 {exsisting ? (
                   loading ? (
                     <ActivityIndicator
@@ -611,7 +600,6 @@ function Events(props) {
                     Add
                   </Text>
                 )}
-
               </TouchableOpacity>
             </View>
 
@@ -801,8 +789,8 @@ function Events(props) {
               {exsisting ? (
                 <TouchableOpacity
                   onPress={() => {
-                    ondeleteEvent(), 
-                    setLoading(true)}}>
+                    ondeleteEvent(), setLoading(true);
+                  }}>
                   <Text
                     style={[
                       styles.inputStyles,

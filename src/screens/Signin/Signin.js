@@ -51,7 +51,7 @@ const Signin = props => {
   const [passwordMessage, setpasswordMessage] = useState('');
   const navigation = props.navigation;
   useEffect(async () => {
-    // await props.logoOut();
+    await props.logoOut();
     GoogleSignin.configure({
       webClientId:
         '237114661060-g9vl5km5n8juo3u8e80tin1rtpchm8v3.apps.googleusercontent.com',
@@ -76,13 +76,14 @@ const Signin = props => {
           image: userInfo.photo,
         };
         console.log(userInfo);
-        await props.Googlelogin(params);
-        if (props.isSuccess) {
+        const res = await props.Googlelogin(params);
+
+        if (res?.payload?.data?.logged) {
           setLoading(false);
           navigation.navigate('Root');
           console.log('tokens', props.token);
           Snackbar.show({
-            text: JSON.stringify(props.message),
+            text: 'Sign in succesfully',
             backgroundColor: theme.colors.primary,
             textColor: 'white',
           });

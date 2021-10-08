@@ -90,12 +90,11 @@ export const Googlelogin = params => {
           },
         },
       );
-      console.log(res);
-      if (res && res.data.status !== 200) {
+      if (res?.data?.logged) {
         console.log(res);
-        return dispatch(authFailed(res));
+        return dispatch(logingoogle(res));
       }
-      dispatch(logingoogle(res));
+      return dispatch(authFailed(res));
     } catch (err) {
       console.log(err.response.data);
       dispatch(authFailed(err.response));
