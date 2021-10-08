@@ -28,7 +28,6 @@ export const loginUser = params => {
   console.log(params);
   return async dispatch => {
     dispatch(authLoading());
-
     try {
       const res = await axios.post(
         `${BASE_URL}auth/login`,
@@ -40,14 +39,14 @@ export const loginUser = params => {
           },
         },
       );
-      console.log(res);
-      if (res && res.data.status !== 200) {
+      // return res;
+      if (res?.data?.logged) {
         console.log(res);
-        return dispatch(authFailed(res));
+        return dispatch(loginSuccess(res));
       }
-      dispatch(loginSuccess(res));
+      return dispatch(authFailed(res));
     } catch (err) {
-      console.log(err.response.data);
+      console.log('---> catch', err.response);
       dispatch(authFailed(err.response));
     }
   };
@@ -131,11 +130,11 @@ const googleFailed = err => ({
   type: GOOGLE_FAIL,
   payload: err,
 });
-const authFailed = err => ({
+export const authFailed = err => ({
   type: AUTH_FAILED,
   payload: err,
 });
-const loginSuccess = res => ({
+export const loginSuccess = res => ({
   type: LOGIN_USER,
   payload: res,
 });
