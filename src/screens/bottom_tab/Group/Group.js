@@ -1,3 +1,4 @@
+/* eslint-disable react-native/no-inline-styles */
 /* eslint-disable prettier/prettier */
 import React , {useState} from 'react'
 import { View,
@@ -11,6 +12,7 @@ import { View,
     ImageBackground,
     ActivityIndicator,
     ScrollView,
+    PermissionsAndroid,
     KeyboardAvoidingView} from 'react-native'
 import theme from '../../../theme';
 import {
@@ -19,6 +21,10 @@ import {
     responsiveScreenWidth,
   } from 'react-native-responsive-dimensions';
   import {
+    invite,
+    email_icon, 
+    close, 
+    next,
     add,
     userg,
     userg2,
@@ -39,12 +45,86 @@ import {Header} from 'react-native-elements';
 import DropdownHead from '../../../components/DropdownHeader';
 import { Calendar } from 'react-native-calendars'
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
+import Snackbar from 'react-native-snackbar';
+import AsyncStorage from '@react-native-community/async-storage';
+
+import Contacts from 'react-native-contacts';
+//redux
+import {connect} from 'react-redux';
+import {emailInvitation} from '../../redux/actions/group';
+
 export default function Group(props) {
 
-    const [modalVisible, setmodalVisible] = useState('')
+    const [modalVisible, setmodalVisible] = useState(false)
+    const [modalInvite, setmodalInvite] = useState(false)
     const [code, setcode] = useState('');
     const [loading, setLoading] = useState(false);
+    const [email, setEmail] = useState('');
+    const [contacts, setcontacts] = useState([]);
+    const [loadingContacts, setLoadingContacts] = useState(false);
 
+    // useEffect(() => {
+    //     const code = props.route.params.code;
+    //     console.log(code);
+    //     AsyncStorage.setItem('code', code);
+    //   }, []);
+
+
+      function cont() {
+        if (Platform.OS === 'android') {
+          PermissionsAndroid.request(PermissionsAndroid.PERMISSIONS.READ_CONTACTS, {
+            title: 'Contacts',
+            message: 'This app would like to view your contacts.',
+          }).then(() => {
+            loadContacts();
+          });
+        } else {
+          setLoadingContacts(false);
+          // loadContacts();
+        }
+      }
+      const loadContacts = () => {
+        var arr = [];
+        Contacts.getAll().then(contacts => {
+          contacts.map((item, index) => {
+            item.emailAddresses.map(items => {
+              if (items.email !== null) {
+                arr.push({
+                  id: index,
+                  mail: items.email,
+                  name: item.displayName,
+                });
+              }
+            });
+          });
+          setcontacts(arr);
+          console.log('contacts', arr);
+          setLoadingContacts(false);
+        });
+      };
+      async function onInvitation() {
+        const mails = email.split(',');
+        console.log('User Data', props.userData);
+        console.log(mails);
+        const params = {
+          invitedMembers: mails,
+        };
+        try {
+        //   await props.emailInvitation(params, props.userData._id);
+    
+          setLoading(false);
+          setmodalInvite(false)
+        //   navigation.navigate('profile');
+          Snackbar.show({
+            text: 'Invitation Send Succesfully',
+            backgroundColor: theme.colors.primary,
+            textColor: 'white',
+          });
+        } catch (err) {
+          setLoading(false);
+          console.log(err);
+        }
+      }
 
     return (
         <ScrollView style={{backgroundColor:'white'}}>
@@ -52,7 +132,10 @@ export default function Group(props) {
                 backgroundColor="white"
                 containerStyle={{borderBottomWidth: 0,alignSelf:'center',height:48,borderBottomWidth:0.3,borderBottomColor:'#E1E3E6'}}
                 centerComponent={<DropdownHead />}
-                rightComponent={<HeaderRight  image={create} style={{width:32,height:32,marginTop:12}} />}
+                rightComponent={<HeaderRight onPress={()=>{
+                    setmodalVisible(false),
+                    setmodalInvite(true)
+                }}  image={create} style={{width:32,height:32,marginTop:12}} />}
             />
             <View style={styles.container}>
                 <Text style={[styles.tabtext,{color:theme.colors.textHeader,marginTop:responsiveScreenHeight(3)}]} >People</Text>
@@ -310,7 +393,8 @@ export default function Group(props) {
                                 <TouchableOpacity
                                     activeOpacity={0.7}
                                     disabled={code === '' ? true : false}
-                                    onPress={() => props.navigation.navigate('Invite')}>
+                                    // onPress={() => props.navigation.navigate('Invite')}
+                                    >
                                     {loading ? (
                                     <ActivityIndicator animating color={'white'} size={25} />
                                     ) : (
@@ -345,6 +429,222 @@ export default function Group(props) {
                     </View>
                 </View>
             </Modal>
+        
+            <Modal
+                animationType="slide"
+                transparent={true}
+                visible={modalInvite}
+                // style={{ backgroundColor:'rgba(64, 77, 97, 1)' }}
+                onRequestClose={() => {
+                    setmodalInvite(!modalInvite)
+                }}
+                >
+                  <View style={styles.centeredView}>
+                    <View style={[styles.modalView,{height:436}]}>
+                        <View style={{width:'100%',height:48,flexDirection:'row',backgroundColor:'white',borderTopLeftRadius:15,borderTopRightRadius:5}}>
+                            <TouchableOpacity style={{flex:0.2,alignItems:'center',alignSelf:'center'}} onPress={()=> setmodalInvite(!modalInvite)}>
+                                <Text style={[styles.tabtext,{height:'auto',fontFamily:Fonts.DMRegular,fontWeight:'400',color:theme.colors.txtblue}]}>Cancel</Text>
+                            </TouchableOpacity>
+                            <View style={{flex:0.6,alignItems:'center',alignSelf:'center'}}>
+                                <Text style={[styles.tabtext,{height:'auto',fontSize:18,fontFamily:Fonts.DMBold,color:theme.colors.textHeader}]}>Invite Others</Text>
+                            </View>
+                            <TouchableOpacity style={{flex:0.2}} onPress={()=> setmodalInvite(!modalInvite)}>
+                                {/* <Text style={[styles.tabtext,{margin:12,fontFamily:Fonts.DMRegular,fontWeight:'400',color:theme.colors.txtblue}]}>Cancel</Text> */}
+                            </TouchableOpacity>
+                        </View>
+    
+                        <View style={[styles.divider,{marginTop:0}]} />
+                        <ScrollView>
+                        <View style={{width:'90%',alignItems:'center',alignSelf:'center',marginTop:24}}>
+                        <View style={stylesg.maincontainer}>
+                            <View style={stylesg.textInputStyle}>
+                                <FloatingLabelInput
+                                label={'Email(s)'}
+                                value={email}
+                                onChangeText={value => setEmail(value)}
+                                containerStyles={{padding: 5}}
+                                labelStyles={stylesg.labelStyle}
+                                inputStyles={{width: '100%'}}
+                                onSubmitEditing={() => console.log('here')}
+                                />
+                            </View>
+                            {email !== '' ? (
+                                <TouchableOpacity onPress={() => setEmail('')}>
+                                <Image
+                                    source={cross}
+                                    style={{height: 24, width: 24, marginRight: 10}}
+                                />
+                                </TouchableOpacity>
+                            ) : null}
+                            </View>
+                            <Text
+                            style={{
+                                fontFamily: Fonts.DMRegular,
+                                fontSize: 14,
+                                fontWeight: '400',
+                                color: theme.colors.labelColor,
+                                marginTop: 5,
+                            }}>
+                            Add multiple emails separated with a comma
+                            </Text>
+
+                            <TouchableOpacity
+                            style={[
+                                stylesg.nextButtonStyle,
+                                {
+                                    width:'100%',
+                                    borderWidth: 1,
+                                    borderColor: theme.colors.txtcolor,
+                                    marginTop: responsiveHeight(2),
+                                },
+                            ]}
+                            // activeOpacity={0.7}
+                            // disabled={email === '' ? true : false}
+                            onPress={cont}>
+                            {loading ? (
+                                <ActivityIndicator animating color={'white'} size={25} />
+                            ) : (
+                                <Text
+                                style={{
+                                    fontSize: 18,
+                                    fontFamily: Fonts.DMMedium,
+                                    color: theme.colors.txtcolor,
+                                    textAlign: 'center',
+                                    fontWeight: '500',
+                                }}>
+                                Or, add from contacts
+                                </Text>
+                            )}
+                            </TouchableOpacity>
+
+                            {contacts &&
+                            contacts.map((item, index) => (
+                                <View
+                                key={index}
+                                style={[
+                                    stylesg.nextButtonStyle,
+                                    {
+                                        width:'100%',
+                                        backgroundColor: '#dbe3fd',
+                                        borderRadius: 8,
+                                        flexDirection: 'row',
+                                        justifyContent: 'space-between',
+                                        alignItems: 'center',
+                                    },
+                                ]}>
+                                <View style={{flexDirection: 'row', alignItems: 'center'}}>
+                                    <Image
+                                    source={email_icon}
+                                    style={{width: 20, height: 16}}
+                                    resizeMode="contain"
+                                    />
+                                    <View style={{left: 10, alignContent: 'center'}}>
+                                    <Text style={[stylesg.namestyle, {marginBottom: 3}]}>
+                                        {item.name}
+                                    </Text>
+                                    <Text
+                                        style={{
+                                        fontFamily: Fonts.DMRegular,
+                                        fontSize: 14,
+                                        fontWeight: '400',
+                                        color: theme.colors.labelColor,
+                                        }}>
+                                        {item.mail}
+                                    </Text>
+                                    </View>
+                                </View>
+                                <TouchableOpacity>
+                                    <Image
+                                    source={close}
+                                    style={{width: 12, height: 12}}
+                                    resizeMode="contain"
+                                    />
+                                </TouchableOpacity>
+                                </View>
+                            ))}
+
+                            <LinearGradient
+                            colors={
+                                email === '' ? ['#6989FE', '#3C64F4'] : ['#6989FE', '#3C64F4']
+                            }
+                            locations={email !== '' ? [0, 1] : [1, 1]}
+                            style={[stylesg.nextButtonStyle, {width:'100%',opacity: email === '' ? 0.4 : 1}]}>
+                            <TouchableOpacity
+                                
+                                activeOpacity={0.7}
+                                disabled={email === '' ? true : false}
+                                // onPress={() => navigation.navigate('profile')}
+                                onPress={() => {
+                                setLoading(true), onInvitation();
+                                }}>
+                                {loading ? (
+                                <ActivityIndicator animating color={'white'} size={25} />
+                                ) : (
+                                <Text
+                                    style={{
+                                    fontSize: 18,
+                                    fontFamily: Fonts.DMMedium,
+                                    color: 'white',
+                                    textAlign: 'center',
+                                    fontWeight: '500',
+                                    }}>
+                                    Send Invitation and Continue
+                                </Text>
+                                )}
+                            </TouchableOpacity>
+                            </LinearGradient>
+                            <TouchableOpacity
+                            style={[
+                                stylesg.nextButtonStyle,
+                                {
+                                borderWidth: 1,
+                                borderColor: '#E1E3E6',
+                                backgroundColor: '#F8F8F8',
+                                width: '100%',
+                                marginBottom: contacts ? 8 : 0,
+                                },
+                            ]}
+                            activeOpacity={0.7}
+                            disabled={email === '' ? true : false}
+                            //   onPress={() => navigation.navigate('main')}
+                            >
+                            {loading ? (
+                                <ActivityIndicator animating color={'white'} size={25} />
+                            ) : (
+                                <View
+                                style={{
+                                    flexDirection: 'row',
+                                    width: responsiveScreenWidth(60),
+                                    alignSelf: 'center',
+                                    // backgroundColor: 'tomato',
+                                    justifyContent: 'center',
+                                    // left: 5,
+                                }}>
+                                <Image
+                                    source={invite}
+                                    style={{height: 18, width: 18, alignSelf: 'center'}}
+                                />
+                                <Text
+                                    style={{
+                                    fontSize: 18,
+                                    fontFamily: Fonts.DMMedium,
+                                    color: theme.colors.labelColor,
+                                    textAlign: 'center',
+                                    fontWeight: '500',
+                                    marginLeft: 7,
+                                    }}>
+                                    Or, copy invitation link
+                                </Text>
+                                </View>
+                            )}
+                            </TouchableOpacity>
+                        </View>
+                        </ScrollView>
+                    </View>
+                </View>
+            </Modal>
+        
+        
         </ScrollView>
     )
 }
