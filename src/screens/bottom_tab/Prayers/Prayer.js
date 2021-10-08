@@ -21,7 +21,7 @@ import {
     done,
     seeMore,
     option,
-    doc,
+    cross,
     create,
     userm} from '../../../assets';
 import {
@@ -39,6 +39,7 @@ import {
   import {Header} from 'react-native-elements';
   import DropdownHead from '../../../components/DropdownHeader';
   import { Calendar } from 'react-native-calendars'
+  import {FloatingLabelInput} from 'react-native-floating-label-input';
 
   const prayers = [
     {
@@ -78,6 +79,10 @@ import {
 export default function Prayers(props) {
     const [modalVisible, setmodalVisible] = useState(false)
     const [modalVisibleAuthor, setmodalVisibleAuthor] = useState(false)
+    const [modalCreate, setmodalCreate] = useState(false)
+    const [title, setTitle] = useState('')
+    const [description, setDescription] = useState('')
+    const [exsisting, setexsisting] = useState(false);
 
     return (
         <View style={{flex: 1, backgroundColor: 'white'}}>
@@ -85,7 +90,10 @@ export default function Prayers(props) {
                 backgroundColor="white"
                 containerStyle={{borderBottomWidth: 0,alignSelf:'center',height:48,borderBottomWidth:0.3,borderBottomColor:'#E1E3E6'}}
                 centerComponent={<DropdownHead />}
-                rightComponent={<HeaderRight  image={create} style={{width:32,height:32,marginTop:12}} />}
+                rightComponent={<HeaderRight onPress={()=>{
+                    setmodalCreate(true)
+                    setexsisting(false)
+                }}  image={create} style={{width:32,height:32,marginTop:12}} />}
             />
             <View style={{marginTop: responsiveScreenHeight(1.5)}}></View>
 
@@ -302,6 +310,7 @@ export default function Prayers(props) {
                 }
                 </View>
             }/>
+
             <Modal
                 animationType="slide"
                 transparent={true}
@@ -365,9 +374,124 @@ export default function Prayers(props) {
                                     style={{width:'100%',height:48}}
                                 />
                             </TouchableOpacity>
-                            <TouchableOpacity style={[stylesp.btn,{width:'90%'}]} >
+                            <TouchableOpacity onPress={()=>{
+                                setmodalVisibleAuthor(false)
+                                setexsisting(true)
+                                setmodalCreate(true)
+                            }} style={[stylesp.btn,{width:'90%'}]} >
                                 <Text style={stylesp.email,{fontSize:18,color:theme.colors.labelColor}}>Edit My Prayer</Text>
                             </TouchableOpacity>
+                        </View>
+                    </View>
+                </View>
+            </Modal>
+
+            <Modal
+                animationType="slide"
+                transparent={true}
+                visible={modalCreate}
+                // style={{ backgroundColor:'rgba(64, 77, 97, 1)' }}
+                onRequestClose={() => {
+                    setmodalCreate(!modalCreate)
+                }}
+                >
+                <View style={stylesp.centeredView}>
+                    <View style={[stylesp.modalView,{height: exsisting? 364 : 320}]}>
+                        <View style={{width:'100%',height:48,flexDirection:'row',backgroundColor:'white',borderTopLeftRadius:15,borderTopRightRadius:5}}>
+                            <TouchableOpacity style={{flex:0.2,alignItems:'center',alignSelf:'center'}} onPress={()=> setmodalCreate(!modalCreate)}>
+                                <Text style={[styles.tabtext,{height:'auto',fontFamily:Fonts.DMRegular,fontWeight:'400',color:theme.colors.txtblue}]}>Cancel</Text>
+                            </TouchableOpacity>
+                            <View style={{flex:0.6,alignItems:'center',alignSelf:'center'}}>
+                                <Text style={[styles.tabtext,{height:'auto',fontSize:18,fontFamily:Fonts.DMBold,color:theme.colors.textHeader}]}>Prayer Details</Text>
+                            </View>
+                            <TouchableOpacity style={{flex:0.2}} onPress={()=> setmodalVisible(!modalVisible)}>
+                                {exsisting ?
+                                <Text style={[styles.tabtext,{marginTop:12,marginLeft:24,fontFamily:Fonts.DMRegular,fontWeight:'400',color:theme.colors.txtblue}]}>Save</Text>
+                                :
+                                <Text style={[styles.tabtext,{marginTop:12,marginLeft:24,fontFamily:Fonts.DMRegular,fontWeight:'400',color:theme.colors.txtblue}]}>Add</Text>
+                                }
+                            </TouchableOpacity>
+                        </View>
+                        <View style={{alignSelf:'center',marginTop:24,width:'90%'}}>
+                        <View
+                            style={[
+                            styles.maincontainer,
+                            {
+                                alignItems:'center',
+                                borderColor:theme.colors.borderColor,
+                            },
+                            ]}>
+                            <View style={styles.textInputStyle}>
+                            <FloatingLabelInput
+                                label={'Title'}
+                                value={title}
+                                onChangeText={value => setTitle(value)}
+                                containerStyles={{padding: 5}}
+                                labelStyles={styles.labelStyle}
+                                inputStyles={{width: '100%'}}
+                            />
+                            </View>
+                            {title !== '' ? (
+                                <TouchableOpacity onPress={() => setTitle('')}>
+                                    <Image
+                                    source={cross}
+                                    style={{height: 24, width: 24, marginRight: 10}}
+                                    />
+                                </TouchableOpacity>
+                                ) : null}
+                        </View>
+
+                        <View style={{marginTop: responsiveScreenHeight(1)}}></View>
+                        <View
+                            style={[
+                            styles.maincontainer,
+                            {   
+                                height: 128,
+                                alignItems:'flex-start',
+                                borderColor:theme.colors.borderColor,
+                            },
+                            ]}>
+                            <View style={styles.textInputStyle}>
+                            <FloatingLabelInput
+                                label={'Description'}
+                                value={description}
+                                multiline={true}
+                                onChangeText={value => setDescription(value)}
+                                containerStyles={{padding: 5}}
+                                labelStyles={styles.labelStyle}
+                                inputStyles={{width: '100%'}}
+                            />
+                            </View>
+                            {description !== '' ? (
+                            <TouchableOpacity onPress={() => setDescription('')}>
+                                <Image
+                                source={cross}
+                                style={{height: 24, width: 24, marginRight: 10}}
+                                />
+                            </TouchableOpacity>
+                            ) : null}
+                        </View>
+                        {exsisting ? (
+                            <TouchableOpacity
+                            // onPress={() => }
+                            >
+                            <Text
+                                style={[
+                                styles.inputStyles,
+                                {
+                                    marginTop: 32,
+                                    textAlign: 'center',
+                                    fontWeight: '700',
+                                    fontFamily: Fonts.DMBold,
+                                    color: '#FF5959',
+                                },
+                                ]}>
+                                Delete this Event
+                            </Text>
+                            </TouchableOpacity>
+                        ) : (
+                            <></>
+                        )}
                         </View>
                     </View>
                 </View>
