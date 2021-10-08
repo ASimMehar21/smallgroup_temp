@@ -151,7 +151,7 @@ const edit_details = (props) => {
                             <View style={{flex:0.6,alignItems:'center',alignSelf:'center'}}>
                                 <Text style={[styles.tabtext,{height:'auto',fontSize:18,fontFamily:Fonts.DMBold,color:theme.colors.textHeader}]}>Transfer Ownership</Text>
                             </View>
-                            <TouchableOpacity style={{flex:0.2}} onPress={()=> setmodalVisible(!modalVisible)}>
+                            <TouchableOpacity style={{flex:0.2}} >
                                 {/* <Text style={[styles.tabtext,{margin:12,fontFamily:Fonts.DMRegular,fontWeight:'400',color:theme.colors.txtblue}]}>Cancel</Text> */}
                             </TouchableOpacity>
                         </View>
@@ -235,12 +235,21 @@ const edit_details = (props) => {
                         </View>
                     </ScrollView>
 
-                    <TouchableOpacity style={{alignItems:'center',marginBottom:50,marginTop:32}}>
+                    {/* <TouchableOpacity style={{alignItems:'center',marginBottom:50,marginTop:32}}>
                         <Image
                             source={transfer}
                             style={{width:372,height:48}}
                         />
-                    </TouchableOpacity>
+                    </TouchableOpacity> */}
+
+                    <LinearGradient
+                        colors={['#6989FE', '#3C64F4']}
+                        style={[styles.btn,{borderWidth:0,marginTop:32,marginBottom:50,width:372,alignSelf:'center'}]}
+                    >
+                        <TouchableOpacity onPress={()=> setmodalVisible(false)}  >
+                            <Text style={styles.email,{fontSize:18,color:'white'}}>Transfer Ownership</Text>
+                        </TouchableOpacity>
+                    </LinearGradient>
                     {/* </ScrollView> */}
 
                     </View>

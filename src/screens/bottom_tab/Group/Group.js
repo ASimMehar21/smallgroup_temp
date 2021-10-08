@@ -302,7 +302,7 @@ export default function Group(props) {
                         </View>
     
                         <View style={[styles.divider,{marginTop:0}]} />
-
+                    <KeyboardAwareScrollView>
                         <View style={{width:'90%',alignItems:'center',alignSelf:'center',marginTop:24}}>
                         <View style={stylesg.maincontainer}>
                             <View style={stylesg.textInputStyle}>
@@ -425,7 +425,7 @@ export default function Group(props) {
                             Redeem Code
                             </Text>
                         </View>
-
+                    </KeyboardAwareScrollView>
                     </View>
                 </View>
             </Modal>
