@@ -91,7 +91,7 @@ const Signin = props => {
           setLoading(false);
           // await GoogleSignin.revokeAccess();
           Snackbar.show({
-            text: JSON.stringify(props.message),
+            text: 'Email already in use',
             backgroundColor: '#F14336',
             textColor: 'white',
           });
@@ -142,7 +142,7 @@ const Signin = props => {
             authFailed(res);
             setLoading(false);
             Snackbar.show({
-              text: JSON.stringify(props.message),
+              text: 'Invalid Email and Password',
               backgroundColor: '#F14336',
               textColor: 'white',
             });
