@@ -42,7 +42,8 @@ function Chat({props,edit}) {
   }, []);
   return (
     <KeyboardAwareScrollView>
-      <View style={styles.tabcontainer}>
+      <ScrollView>
+        <View style={styles.tabcontainer}>
         <Text style={[styles.tabtext, {color: theme.colors.textHeader}]}>
           Full name
         </Text>
@@ -57,26 +58,47 @@ function Chat({props,edit}) {
                     fNameMessage !== '' ? 'tomato' : theme.colors.borderColor,
                 },
               ]}>
-              <View style={styleg.nametext}>
-                <FloatingLabelInput
-                  label={'First Name'}
-                  value={fname}
-                  // isFocused={true}
-                  onChangeText={value => {
-                    edit(true),
-                    setFname(value)}}
-                  containerStyles={{padding: 5}}
-                  labelStyles={styles.labelStyles}
-                  inputStyles={styles.inputStyles}
-                />
-              </View>
+                {edit?
+                    <View style={styleg.nametext}>
+                    <FloatingLabelInput
+                      label={'First Name'}
+                      value={fname}
+                      // isFocused={true}
+                      onChangeText={value => {
+                        setFname(value)}}
+                      containerStyles={{padding: 5}}
+                      labelStyles={styles.labelStyles}
+                      inputStyles={styles.inputStyles}
+                    />
+                  </View>
+                    :
+                    <View style={styleg.nametext}>
+                      <FloatingLabelInput
+                        label={'First Name'}
+                        value={fname}
+                        // isFocused={true}
+                        onChangeText={value => {
+                          setFname(value)}}
+                        containerStyles={{padding: 5}}
+                        editable={false}
+                        selectTextOnFocus={false}
+                        labelStyles={styles.labelStyles}
+                        inputStyles={styles.inputStyles}
+                      />
+                    </View>
+                }
+              
               {fname !== '' ? (
-                <TouchableOpacity onPress={() => setFname('')}>
-                  <Image
-                    source={cross}
-                    style={{height: 24, width: 24, marginRight: 10}}
-                  />
-                </TouchableOpacity>
+                <>
+                {edit?
+                    <TouchableOpacity onPress={() => setFname('')}>
+                      <Image
+                        source={cross}
+                        style={{height: 24, width: 24, marginRight: 10}}
+                      />
+                  </TouchableOpacity>
+                  :null}
+                </>
               ) : null}
             </View>
             {fNameMessage !== '' && <Errors errors={fNameMessage} />}
@@ -91,25 +113,47 @@ function Chat({props,edit}) {
                     lNameMessage !== '' ? 'tomato' : theme.colors.borderColor,
                 },
               ]}>
-              <View style={styleg.nametext}>
-                <FloatingLabelInput
-                  label={'Last Name'}
-                  value={lname}
-                  onChangeText={value => {
-                    edit(true),
-                    setLname(value)}}
-                  containerStyles={{padding: 5}}
-                  labelStyles={styles.labelStyles}
-                  inputStyles={styles.inputStyles}
-                />
-              </View>
-              {lname !== '' ? (
-                <TouchableOpacity onPress={() => setLname('')}>
-                  <Image
-                    source={cross}
-                    style={{height: 24, width: 24, marginRight: 10}}
+                {edit?
+                  <View style={styleg.nametext}>
+                  <FloatingLabelInput
+                    label={'Last Name'}
+                    value={lname}
+                    onChangeText={value => {
+                      setLname(value)}}
+                    containerStyles={{padding: 5}}
+                    labelStyles={styles.labelStyles}
+                    inputStyles={styles.inputStyles}
                   />
-                </TouchableOpacity>
+                </View>  
+                :
+                <View style={styleg.nametext}>
+                    <FloatingLabelInput
+                      label={'Last Name'}
+                      value={lname}
+                      editable={false}
+                      selectTextOnFocus={false}
+                      onChangeText={value => {
+                        setLname(value)}}
+                      containerStyles={{padding: 5}}
+                      labelStyles={styles.labelStyles}
+                      inputStyles={styles.inputStyles}
+                    />
+                  </View>
+                }
+              
+              {lname !== '' ? (
+                <>
+                  {edit?
+                  <TouchableOpacity onPress={() => setLname('')}>
+                        <Image
+                          source={cross}
+                          style={{height: 24, width: 24, marginRight: 10}}
+                        />
+                      </TouchableOpacity>
+                    : null
+                  }
+                </>
+               
               ) : null}
             </View>
             {lNameMessage !== '' && <Errors errors={lNameMessage} />}
@@ -133,28 +177,52 @@ function Chat({props,edit}) {
                 emailMessage !== '' ? 'tomato' : theme.colors.borderColor,
             },
           ]}>
-          <View style={[styleg.nametext, {}]}>
-            <FloatingLabelInput
-              label={'Email Address'}
-              value={email}
-              onChangeText={value => {
-                edit(true),
-                setEmail(value)
-              }}
-              containerStyles={{padding: 5}}
-              // labelStyles={styles.labelStyle}
-              labelStyles={styles.labelStyles}
-              inputStyles={styles.inputStyles}
-            />
-            
-          </View>
-            {email !== '' ? (
-              <TouchableOpacity onPress={() => setEmail('')}>
-                <Image
-                  source={cross}
-                  style={{height: 24, width: 24, marginRight: 10}}
+            {edit?
+              <View style={[styleg.nametext, {}]}>
+                <FloatingLabelInput
+                  label={'Email Address'}
+                  value={email}
+                  onChangeText={value => {
+                    setEmail(value)
+                  }}
+                  containerStyles={{padding: 5}}
+                  // labelStyles={styles.labelStyle}
+                  labelStyles={styles.labelStyles}
+                  inputStyles={styles.inputStyles}
                 />
-              </TouchableOpacity>
+                
+              </View>
+                :
+                <View style={[styleg.nametext, {}]}>
+                  <FloatingLabelInput
+                    label={'Email Address'}
+                    value={email}
+                    onChangeText={value => {
+                      setEmail(value)
+                    }}
+                    containerStyles={{padding: 5}}
+                    editable={false}
+                    selectTextOnFocus={false}
+                    // labelStyles={styles.labelStyle}
+                    labelStyles={styles.labelStyles}
+                    inputStyles={styles.inputStyles}
+                  />
+                  
+                </View>
+            }
+          
+            {email !== '' ? (
+              <>{edit?
+                  <TouchableOpacity onPress={() => setEmail('')}>
+                    <Image
+                      source={cross}
+                      style={{height: 24, width: 24, marginRight: 10}}
+                    />
+                  </TouchableOpacity>
+                :
+                null
+                }</>
+              
             ) : null}
         </View>
         {emailMessage !== '' && <Errors errors={emailMessage} />}
@@ -175,30 +243,52 @@ function Chat({props,edit}) {
               passwordMessage !== '' ? 'tomato' : theme.colors.borderColor,
             },
           ]}>
+            {edit?
+              <View style={[styleg.nametext, {}]}>
+                  <FloatingLabelInput
+                    label={'Password'}
+                    value={password}
+                    onChangeText={value => {
+                      setPassword(value)
+                    }}
+                    isPassword={true}
+                    containerStyles={{padding: 5}}
+                    
+                    // labelStyles={styles.labelStyle}
+                    labelStyles={styles.labelStyles}
+                    inputStyles={styles.inputStyles}
+                  />
+              </View>
+              :
+              <View style={[styleg.nametext, {}]}>
+                    <FloatingLabelInput
+                      label={'Password'}
+                      value={password}
+                      onChangeText={value => {
+                        setPassword(value)
+                      }}
+                      isPassword={true}
+                      containerStyles={{padding: 5}}
+                      editable={false}
+                      selectTextOnFocus={false}
+                      // labelStyles={styles.labelStyle}
+                      labelStyles={styles.labelStyles}
+                      inputStyles={styles.inputStyles}
+                    />
+                </View>
+            }
             
-            <View style={[styleg.nametext, {}]}>
-              <FloatingLabelInput
-                label={'Password'}
-                value={password}
-                onChangeText={value => {
-                  edit(true),
-                  setPassword(value)
-                }}
-                isPassword={true}
-                containerStyles={{padding: 5}}
-                
-                // labelStyles={styles.labelStyle}
-                labelStyles={styles.labelStyles}
-                inputStyles={styles.inputStyles}
-              />
-          </View>
             {password !== '' ? (
-              <TouchableOpacity onPress={() => setPassword('')}>
-                <Image
-                  source={cross}
-                  style={{height: 24, width: 24, marginRight: 10}}
-                />
-              </TouchableOpacity>
+              <>{edit?
+                  <TouchableOpacity onPress={() => setPassword('')}>
+                    <Image
+                      source={cross}
+                      style={{height: 24, width: 24, marginRight: 10}}
+                    />
+                  </TouchableOpacity>
+                :
+                null  }</>
+              
             ) : null}
         </View>
         {passwordMessage !== '' && <Errors errors={passwordMessage} />}
@@ -221,33 +311,59 @@ function Chat({props,edit}) {
               numberMessage !== '' ? 'tomato' : theme.colors.borderColor,
             },
           ]}>
-            <View style={[styleg.nametext, {}]}>
-              <FloatingLabelInput
-                label={'Phone Number'}
-                value={number}
-                onChangeText={value => {
-                  edit(true),
-                  setNumber(value)
-                }}
-                containerStyles={{padding: 5}}
-                keyboardType={'phone-pad'}
-                // labelStyles={styles.labelStyle}
-                labelStyles={styles.labelStyles}
-                inputStyles={styles.inputStyles}
-              />
-            </View>
-            {number !== '' ? (
-              <TouchableOpacity onPress={() => setNumber('')}>
-                <Image
-                  source={cross}
-                  style={{height: 24, width: 24, marginRight: 10}}
+            {edit?
+              <View style={[styleg.nametext, {}]}>
+                <FloatingLabelInput
+                  label={'Phone Number'}
+                  value={number}
+                  onChangeText={value => {
+                    setNumber(value)
+                  }}
+                  containerStyles={{padding: 5}}
+                  keyboardType={'phone-pad'}
+                  labelStyles={styles.labelStyles}
+                  inputStyles={styles.inputStyles}
                 />
-              </TouchableOpacity>
+              </View>
+              :
+              <View style={[styleg.nametext, {}]}>
+                  <FloatingLabelInput
+                    label={'Phone Number'}
+                    value={number}
+                    onChangeText={value => {
+                      setNumber(value)
+                    }}
+                    containerStyles={{padding: 5}}
+                    keyboardType={'phone-pad'}
+                    editable={false}
+                    selectTextOnFocus={false}
+                    // labelStyles={styles.labelStyle}
+                    labelStyles={styles.labelStyles}
+                    inputStyles={styles.inputStyles}
+                  />
+                </View>
+            }
+            
+            {number !== '' ? (
+              <>
+              {edit?
+                <TouchableOpacity onPress={() => setNumber('')}>
+                  <Image
+                    source={cross}
+                    style={{height: 24, width: 24, marginRight: 10}}
+                  />
+                </TouchableOpacity>
+              :
+              null
+              }
+              </>
+              
             ) : null}
         </View>
         {passwordMessage !== '' && <Errors errors={passwordMessage} />}
 
       </View>
+      </ScrollView>
     </KeyboardAwareScrollView>
   );
 }

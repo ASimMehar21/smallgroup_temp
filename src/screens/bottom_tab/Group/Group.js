@@ -53,6 +53,30 @@ import Contacts from 'react-native-contacts';
 import {connect} from 'react-redux';
 import {emailInvitation} from '../../redux/actions/group';
 
+
+const member = [
+    {
+        img:require('../../../assets/images/Userpicg.png'),
+        name:'Brianna Louse'
+    },
+    {
+        img:require('../../../assets/images/Userpicg.png'),
+        name:'Brianna Louse'
+    },
+    {
+        img:require('../../../assets/images/Userpicg.png'),
+        name:'Brianna Louse'
+    },
+    {
+        img:require('../../../assets/images/Userpicg.png'),
+        name:'Brianna Louse'
+    },
+    {
+        img:require('../../../assets/images/Userpicg.png'),
+        name:'Brianna Louse'
+    }
+]
+
 export default function Group(props) {
 
     const [modalVisible, setmodalVisible] = useState(false)
@@ -139,128 +163,35 @@ export default function Group(props) {
             />
             <View style={styles.container}>
                 <Text style={[styles.tabtext,{color:theme.colors.textHeader,marginTop:responsiveScreenHeight(3)}]} >People</Text>
-                <View style={{flexDirection:'row',marginTop:12,flex:1}}>
-                <TouchableOpacity onPress={()=> props.navigation.navigate('Member')} style={{flex:1,flexDirection:'row'}}>
-                    <View style={{flex:0.3}}>
-                        <Image 
-                            source={userg2}
-                            style={{width:40,height:40}}
-                        />
+                <FlatList
+                style={[styles.container,{width:'100%'}]}
+                showsVerticalScrollIndicator={false}
+                data={member}
+                renderItem={({ item, index }) =>
+                    <View>
+                        <View style={styles.divider} />
+                            <View style={{flexDirection:'row',marginTop:8,flex:1}}>
+                            <TouchableOpacity onPress={()=> props.navigation.navigate('Member')} style={{flex:1,flexDirection:'row'}}>
+                                <View style={{flex:0.3}}>
+                                    <Image 
+                                        source={item.img}
+                                        style={{width:40,height:40}}
+                                    />
+                                </View>
+                                <View style={{flex:2,flexDirection:'row'}}>
+                                    <Text style={[styles.tabtext,{color:theme.colors.gray,left:10,alignSelf:'center'}]}>{item.name}</Text>
+                                </View>
+                                <View style={{flex:0.18,justifyContent:'center'}}>
+                                    <Image 
+                                        source={arrow}
+                                        style={{width:16,height:14,alignSelf:'center'}}
+                                />
+                                </View>
+                            </TouchableOpacity>
+                        </View>
                     </View>
-                    <View style={{flex:2,flexDirection:'row'}}>
-                        <Text style={[styles.tabtext,{color:theme.colors.gray,left:10,alignSelf:'center'}]}>Brianna Louise</Text>
-                    </View>
-                    <View style={{flex:0.18,justifyContent:'center'}}>
-                        <Image 
-                            source={arrow}
-                            style={{width:16,height:14,alignSelf:'center'}}
-                    />
-                    </View>
-                </TouchableOpacity>
-            
-            </View>
-                <View style={styles.divider} />
-                <View style={{flexDirection:'row',marginTop:8,flex:1}}>
-                    <TouchableOpacity onPress={()=> props.navigation.navigate('Member')} style={{flex:1,flexDirection:'row'}}>
-                        <View style={{flex:0.3}}>
-                            <Image 
-                                source={userg2}
-                                style={{width:40,height:40}}
-                            />
-                        </View>
-                        <View style={{flex:2,flexDirection:'row'}}>
-                            <Text style={[styles.tabtext,{color:theme.colors.gray,left:10,alignSelf:'center'}]}>Brianna Louise</Text>
-                        </View>
-                        <View style={{flex:0.18,justifyContent:'center'}}>
-                            <Image 
-                                source={arrow}
-                                style={{width:16,height:14,alignSelf:'center'}}
-                        />
-                        </View>
-                    </TouchableOpacity>
-                </View>
-                <View style={styles.divider} />
-                <View style={{flexDirection:'row',marginTop:8,flex:1}}>
-                    <TouchableOpacity onPress={()=> props.navigation.navigate('Member')} style={{flex:1,flexDirection:'row'}}>
-                        <View style={{flex:0.3}}>
-                            <Image 
-                                source={userg2}
-                                style={{width:40,height:40}}
-                            />
-                        </View>
-                        <View style={{flex:2,flexDirection:'row'}}>
-                            <Text style={[styles.tabtext,{color:theme.colors.gray,left:10,alignSelf:'center'}]}>Brianna Louise</Text>
-                        </View>
-                        <View style={{flex:0.18,justifyContent:'center'}}>
-                            <Image 
-                                source={arrow}
-                                style={{width:16,height:14,alignSelf:'center'}}
-                        />
-                        </View>
-                    </TouchableOpacity>
-                </View>
-                <View style={styles.divider} />
-                <View style={{flexDirection:'row',marginTop:8,flex:1}}>
-                    <TouchableOpacity onPress={()=> props.navigation.navigate('Member')} style={{flex:1,flexDirection:'row'}}>
-                        <View style={{flex:0.3}}>
-                            <Image 
-                                source={userg2}
-                                style={{width:40,height:40}}
-                            />
-                        </View>
-                        <View style={{flex:2,flexDirection:'row'}}>
-                            <Text style={[styles.tabtext,{color:theme.colors.gray,left:10,alignSelf:'center'}]}>Brianna Louise</Text>
-                        </View>
-                        <View style={{flex:0.18,justifyContent:'center'}}>
-                            <Image 
-                                source={arrow}
-                                style={{width:16,height:14,alignSelf:'center'}}
-                        />
-                        </View>
-                    </TouchableOpacity>
-                </View>
-                <View style={styles.divider} />
-                <View style={{flexDirection:'row',marginTop:8,flex:1}}>
-                    <TouchableOpacity onPress={()=> props.navigation.navigate('Member')} style={{flex:1,flexDirection:'row'}}>
-                        <View style={{flex:0.3}}>
-                            <Image 
-                                source={userg2}
-                                style={{width:40,height:40}}
-                            />
-                        </View>
-                        <View style={{flex:2,flexDirection:'row'}}>
-                            <Text style={[styles.tabtext,{color:theme.colors.gray,left:10,alignSelf:'center'}]}>Brianna Louise</Text>
-                        </View>
-                        <View style={{flex:0.18,justifyContent:'center'}}>
-                            <Image 
-                                source={arrow}
-                                style={{width:16,height:14,alignSelf:'center'}}
-                        />
-                        </View>
-                    </TouchableOpacity>
+                }/>
                 
-                </View>
-                <View style={styles.divider} />
-                <View style={{flexDirection:'row',marginTop:8,flex:1}}>
-                <TouchableOpacity onPress={()=> props.navigation.navigate('Member')} style={{flex:1,flexDirection:'row'}}>
-                    <View style={{flex:0.3}}>
-                        <Image 
-                            source={userg2}
-                            style={{width:40,height:40}}
-                        />
-                    </View>
-                    <View style={{flex:2,flexDirection:'row'}}>
-                        <Text style={[styles.tabtext,{color:theme.colors.gray,left:10,alignSelf:'center'}]}>Brianna Louise</Text>
-                    </View>
-                    <View style={{flex:0.18,justifyContent:'center'}}>
-                        <Image 
-                            source={arrow}
-                            style={{width:16,height:14,alignSelf:'center'}}
-                    />
-                    </View>
-                </TouchableOpacity>
-            
-            </View>
                 <View style={styles.divider} />
                     <Text style={[styles.tabtext,{color:theme.colors.textHeader,marginTop:40}]} >Settings</Text>
                     <TouchableOpacity onPress={()=> props.navigation.navigate('Details')}  style={{flexDirection:'row',marginTop:16}}>
