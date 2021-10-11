@@ -270,7 +270,7 @@ export default function Group(props) {
                             style={{width:16,height:14}}
                         />
                     </TouchableOpacity>
-                    <TouchableOpacity  onPress={()=> setmodalVisible(true)} style={{flexDirection:'row',marginTop:28}}>
+                    <TouchableOpacity  onPress={()=> setmodalVisible(true)} style={{flexDirection:'row',marginTop:28,marginBottom:20}}>
                         <Text style={[styles.inputStyles,{fontSize:18,width:'95%'}]}>Create a New Group</Text>
                         <Image 
                             source={add}

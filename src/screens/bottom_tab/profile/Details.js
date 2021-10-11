@@ -216,6 +216,7 @@ function Chat({props,edit}) {
             {
               marginTop:12,
               height:48,
+              marginBottom:20,
               borderColor:
               numberMessage !== '' ? 'tomato' : theme.colors.borderColor,
             },

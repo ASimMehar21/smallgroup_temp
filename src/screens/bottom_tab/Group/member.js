@@ -43,7 +43,8 @@ function member  (props)  {
                 leftComponent={<HeaderLeftComponent navigation={props.navigation} />}
                 // rightComponent={<HeaderRight onPress={navigation} />}
             />
-            <View style={styles.container}>
+            <ScrollView style={{marginBottom:20}}>
+                <View style={styles.container}>
                 <Image
                     source={userg2}
                     style={styles.img}
@@ -69,6 +70,7 @@ function member  (props)  {
                     </TouchableOpacity>
                 }
                 </View>
+            </ScrollView>
         </View>
     )
 }
