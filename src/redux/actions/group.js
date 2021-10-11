@@ -144,6 +144,7 @@ export const leaveGroup = (token, params) => {
   };
 };
 export const getallGroup = id => {
+  console.log(id);
   return async dispatch => {
     try {
       const res = await axios.get(`${BASE_URL}api/group/user/${id}`, {
@@ -152,6 +153,7 @@ export const getallGroup = id => {
           'Content-Type': 'application/json',
         },
       });
+      console.log(res);
       dispatch(getalljoingroup(res));
     } catch (err) {
       dispatch(groupFAILED(err));

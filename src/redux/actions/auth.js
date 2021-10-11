@@ -65,8 +65,11 @@ export const registerUser = params => {
           },
         },
       );
-      if (res && res.data.status !== 200) return dispatch(registerFAILED(res));
-      dispatch(registerSuccess(res));
+      if (res?.data?.logged) {
+        console.log(res);
+        return dispatch(registerSuccess(res));
+      }
+      return dispatch(registerFAILED(err.response));
     } catch (err) {
       dispatch(registerFAILED(err.response));
     }
