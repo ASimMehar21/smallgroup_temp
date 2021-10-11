@@ -50,6 +50,7 @@ import {connect} from 'react-redux';
 import {createPrayer, getPrayer} from '../../../redux/actions/prayer';
 import Snackbar from 'react-native-snackbar';
 import moment from 'moment';
+import EmptyPrayer from '../chat/empty_chat'
 // const prayers = [
 //   {
 //     img: require('../../../assets/images/Userpic.png'),
@@ -150,7 +151,10 @@ function Prayers(props) {
       />
       <View style={{marginTop: responsiveScreenHeight(1.5)}}></View>
 
-      <FlatList
+      {prayers.length < 1?
+        <EmptyPrayer text={'What a nice place to share a prayer!'} />
+        :
+        <FlatList
         refreshControl={
           <RefreshControl refreshing={refreshing} onRefresh={getprayer} />
         }
@@ -423,6 +427,8 @@ function Prayers(props) {
           </View>
         )}
       />
+      }
+      
 
       <Modal
         animationType="slide"

@@ -16,6 +16,7 @@ const HeaderCenterComponent = ({data}) => {
       rowTextStyle={styles.dropdown2RowTxtStyle}
       dropdownStyle={{width: '200%', marginTop: 0, borderRadius: 8}}
       buttonStyle={{height: 32, margin: 12, backgroundColor: 'white'}}
+      buttonTextStyle={{fontSize:16,fontWeight:'700',color:theme.colors.gray,fontFamily:Fonts.DMBold}}
       renderDropdownIcon={() => {
         return <Image source={down} style={{width: 24, height: 24}} />;
       }}

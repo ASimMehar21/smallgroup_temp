@@ -1,17 +1,18 @@
 /* eslint-disable prettier/prettier */
 import React from 'react'
-import {View,Text,Image} from 'react-native'
+import {View,Text,Image,ScrollView} from 'react-native'
 import theme from '../../../theme';
 import {Fonts} from '../../../utils/Fonts';
 import {lilg} from '../../../assets';
 import styles from '../../Signin/styles';
 import { LinearTextGradient } from "react-native-text-gradient";
 
- function EmptyChat() {
+ function EmptyChat({text}) {
     return (
-        <View style={{flex:1,alignItems:'center',justifyContent:'center',alignSelf:'center'}}>
+        // <ScrollView>
+        <View style={{flex:1,alignItems:'center',backgroundColor:'white',justifyContent:'center',alignSelf:'center'}}>
                     
-            <View style={{width:273,height:120,top:247,alignItems:'center'}}> 
+            <View style={{width:273,height:120,alignItems:'center'}}> 
                 <LinearTextGradient
                     style={[styles.headerText,{textAlign:'center'}]}
                     locations={[0, 1]}
@@ -20,7 +21,7 @@ import { LinearTextGradient } from "react-native-text-gradient";
                     end={{ x: 1, y: 0 }}
                     >
                         <Text>
-                            What a nice place to start a conversation!
+                           {text}
                         </Text>
                 </LinearTextGradient>
                 <View>
@@ -35,6 +36,7 @@ import { LinearTextGradient } from "react-native-text-gradient";
                 </View>
             </View>
         </View>
+        // </ScrollView>
     )
 }
 
