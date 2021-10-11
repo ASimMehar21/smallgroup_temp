@@ -4,7 +4,7 @@ import {
   CREATE_GROUP,
   JOIN_GROUP,
   LEAVE_GROUP,
-  GET_GROUP,
+  UPDATE_GROUP,
   GET_ALL_GROUP,
   INVITE_GROUP,
   GET_ALL_CHAT_GROUP,
@@ -116,6 +116,7 @@ export const groupReducer = (state = initialState, action) => {
         errMsg: null,
       };
     case GET_ALL_GROUP:
+      console.log('Get all', action.payload);
       return {
         ...state,
         all_group_data: action.payload.data,
@@ -133,10 +134,10 @@ export const groupReducer = (state = initialState, action) => {
         isSuccess: true,
         errMsg: null,
       };
-    case GET_GROUP:
+    case UPDATE_GROUP:
       return {
         ...state,
-        group_data: action.payload.data,
+        message: 'Group data updated',
         isLoading: false,
         isError: false,
         isSuccess: true,

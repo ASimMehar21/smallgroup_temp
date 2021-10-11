@@ -2,7 +2,7 @@ import {
   CREATE_GROUP,
   JOIN_GROUP,
   LEAVE_GROUP,
-  GET_GROUP,
+  UPDATE_GROUP,
   GET_ALL_GROUP,
   INVITE_GROUP,
   GET_ALL_CHAT_GROUP,
@@ -90,27 +90,23 @@ export const groupJoin = params => {
     }
   };
 };
-///
-export const getGroupInfo = (token, params) => {
+
+export const updategroup = (params, id) => {
   return async dispatch => {
     try {
-      const res = await axios.post(
-        `${BASE_URL}user/chatgroup/info/code`,
-        params,
-        {
-          headers: {
-            Accept: 'application/json',
-            'Content-Type': 'application/json',
-            Authorization: `Bearer ${token}`,
-          },
+      const res = await axios.post(`${BASE_URL}api/group/${id}`, params, {
+        headers: {
+          Accept: 'application/json',
+          'Content-Type': 'application/json',
         },
-      );
+      });
       dispatch(group(res));
     } catch (err) {
       dispatch(groupFAILED(err));
     }
   };
 };
+//
 export const inviteGroup = (token, params) => {
   return async dispatch => {
     try {
@@ -147,18 +143,15 @@ export const leaveGroup = (token, params) => {
     }
   };
 };
-export const getallGroup = token => {
+export const getallGroup = id => {
   return async dispatch => {
     try {
-      const res = await axios.get(`${BASE_URL}user/chatgroup/joined`, {
+      const res = await axios.get(`${BASE_URL}api/group/user/${id}`, {
         headers: {
           Accept: 'application/json',
           'Content-Type': 'application/json',
-          Authorization: `Bearer ${token}`,
         },
       });
-      // if (res && res.data.status !== 200)
-      //   return dispatch(groupFAILED(res.data));
       dispatch(getalljoingroup(res));
     } catch (err) {
       dispatch(groupFAILED(err));
@@ -334,7 +327,7 @@ const sendgroup = res => ({
   payload: res,
 });
 const group = res => ({
-  type: GET_GROUP,
+  type: UPDATE_GROUP,
   payload: res,
 });
 const groupInvite = res => ({
