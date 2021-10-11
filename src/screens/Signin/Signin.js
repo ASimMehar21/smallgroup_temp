@@ -44,6 +44,7 @@ import {useIsFocused} from '@react-navigation/native';
 const Signin = props => {
   const isFocused = useIsFocused();
   const [loading, setLoading] = useState(false);
+  const [gloading, setgLoading] = useState(false);
   const [password, setPassword] = useState('');
   const [email, setEmail] = useState('');
   const {height} = Dimensions.get('window');
@@ -79,6 +80,7 @@ const Signin = props => {
         const res = await props.Googlelogin(params);
 
         if (res?.payload?.data?.logged) {
+          setgLoading(false);
           setLoading(false);
           navigation.navigate('Root');
           console.log('tokens', props.token);
@@ -89,6 +91,7 @@ const Signin = props => {
           });
         } else {
           setLoading(false);
+          setgLoading(false);
           // await GoogleSignin.revokeAccess();
           Snackbar.show({
             text: 'Email already in use',
@@ -292,7 +295,9 @@ const Signin = props => {
           <View style={styles.divider}></View>
         </View>
         <TouchableOpacity
-          onPress={onGoogleLoginPress}
+          onPress={() => {
+            onGoogleLoginPress(), setgLoading(true);
+          }}
           style={{
             width: '100%',
             marginTop: 5,
@@ -410,6 +415,18 @@ const Signin = props => {
           </Text>
         </TouchableOpacity>
       </ScrollView>
+      {gloading ? (
+        <ActivityIndicator
+          style={{
+            position: 'absolute',
+            top: Dimensions.get('window').height / 2,
+            alignSelf: 'center',
+          }}
+          animating
+          color={theme.colors.primary}
+          size={70}
+        />
+      ) : null}
     </View>
   );
 };

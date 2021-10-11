@@ -43,6 +43,7 @@ const SignupScreen = props => {
   const [confirmMessage, setconfirmMessage] = useState('');
   const [fNameMessage, setfNameMessage] = useState('');
   const [lNameMessage, setlNameMessage] = useState('');
+  const [gloading, setgLoading] = useState(false);
   const navigation = props.navigation;
   useEffect(() => {
     GoogleSignin.configure({
@@ -54,7 +55,7 @@ const SignupScreen = props => {
       //   '664178336819-pfg0mvocbu3sml19e499di4145i0qmvv.apps.googleusercontent.com',
     });
   }, []);
-  async function onGoogleSignupPress() {
+  async function onGoogleLoginPress() {
     try {
       await GoogleSignin.hasPlayServices();
       const googlePromise = await GoogleSignin.signIn();
@@ -68,22 +69,25 @@ const SignupScreen = props => {
           lastName: userInfo.familyName,
           image: userInfo.photo,
         };
-        console.log(props.isSuccess);
-        await props.Googlelogin(params);
-        if (props.isSuccess) {
+        console.log(userInfo);
+        const res = await props.Googlelogin(params);
+
+        if (res?.payload?.data?.logged) {
+          setgLoading(false);
           setLoading(false);
-          navigation.navigate('main');
+          navigation.navigate('Root');
           console.log('tokens', props.token);
           Snackbar.show({
-            text: 'SignUp Succesfully',
+            text: 'Sign in succesfully',
             backgroundColor: theme.colors.primary,
             textColor: 'white',
           });
         } else {
           setLoading(false);
-          // GoogleSignin.revokeAccess();
+          setgLoading(false);
+          // await GoogleSignin.revokeAccess();
           Snackbar.show({
-            text: JSON.stringify(props.message),
+            text: 'Email already in use',
             backgroundColor: '#F14336',
             textColor: 'white',
           });
@@ -139,8 +143,8 @@ const SignupScreen = props => {
           } else {
             setLoading(false);
             Snackbar.show({
-              text: JSON.stringify(props.message),
-              backgroundColor: '#F14336',
+              text: 'Signup succesfully',
+              backgroundColor: theme.colors.primary,
               textColor: 'white',
             });
           }
@@ -260,7 +264,7 @@ const SignupScreen = props => {
             <FloatingLabelInput
               label={'Your Email'}
               value={email}
-              onChangeText={value => setEmail(value)}
+              onChangeText={value => setEmail(value.trim())}
               containerStyles={{padding: 5}}
               labelStyles={styles.labelStyle}
               inputStyles={{width: '100%'}}
@@ -381,7 +385,9 @@ const SignupScreen = props => {
           <View style={styles.divider}></View>
         </View>
         <TouchableOpacity
-          onPress={onGoogleSignupPress}
+          onPress={() => {
+            onGoogleLoginPress(), setgLoading(true);
+          }}
           style={{
             width: '100%',
             marginTop: 5,
@@ -487,6 +493,18 @@ const SignupScreen = props => {
           </Text>
         </TouchableOpacity>
       </ScrollView>
+      {gloading ? (
+        <ActivityIndicator
+          style={{
+            position: 'absolute',
+            top: Dimensions.get('window').height / 2,
+            alignSelf: 'center',
+          }}
+          animating
+          color={theme.colors.primary}
+          size={70}
+        />
+      ) : null}
     </View>
   );
 };

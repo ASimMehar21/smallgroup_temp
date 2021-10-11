@@ -101,12 +101,13 @@ function Events(props) {
   ];
   
   useEffect(async () => {
-    const uid = props.userData._id;
-    console.log(props.userData._id);
-    // return;
-    await props.getEvent(uid);
-    console.log('Event_DATA \n', props.activityData);
-    setevents(props.activityData);
+    // const uid = props.userData._id;
+    // console.log(props.userData._id);
+    // // return;
+    // await props.getEvent(uid);
+    // console.log('Event_DATA \n', props.activityData);
+    // setevents(props.activityData);
+    getevent();
   }, [isFocused]);
 
 

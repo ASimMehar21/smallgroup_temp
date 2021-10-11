@@ -270,7 +270,9 @@ function Prayers(props) {
                     {item.prayerDate}
                   </Text>
                   <TouchableOpacity
-                    onPress={() => props.navigation.navigate('PrayerDetails')}>
+                    onPress={() =>
+                      props.navigation.navigate('PrayerDetails', {item})
+                    }>
                     <Image source={seeMore} style={{width: 95, height: 32}} />
                   </TouchableOpacity>
                 </View>
