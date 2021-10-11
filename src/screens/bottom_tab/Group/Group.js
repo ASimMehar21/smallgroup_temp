@@ -1,37 +1,40 @@
 /* eslint-disable react-native/no-inline-styles */
 /* eslint-disable prettier/prettier */
-import React , {useState} from 'react'
-import { View,
-    Text,
-    TextInput,
-    Dimensions,
-    TouchableOpacity,
-    Image,
-    Modal,
-    FlatList,
-    ImageBackground,
-    ActivityIndicator,
-    ScrollView,
-    PermissionsAndroid,
-    KeyboardAvoidingView} from 'react-native'
+import React, {useState, useEffect} from 'react';
+import {
+  View,
+  Text,
+  TextInput,
+  Dimensions,
+  TouchableOpacity,
+  Image,
+  Modal,
+  FlatList,
+  ImageBackground,
+  ActivityIndicator,
+  ScrollView,
+  PermissionsAndroid,
+  KeyboardAvoidingView,
+} from 'react-native';
 import theme from '../../../theme';
 import {
-    responsiveHeight,
-    responsiveScreenHeight,
-    responsiveScreenWidth,
-  } from 'react-native-responsive-dimensions';
-  import {
-    invite,
-    email_icon, 
-    close, 
-    next,
-    add,
-    userg,
-    userg2,
-    userm,
-    arrow,
-    cross,
-    create
+  responsiveHeight,
+  responsiveScreenHeight,
+  responsiveScreenWidth,
+} from 'react-native-responsive-dimensions';
+import {
+  invite,
+  email_icon,
+  close,
+  next,
+  add,
+  userg,
+  userg2,
+  userm,
+  arrow,
+  cross,
+  create,
+  down,
 } from '../../../assets';
 import {Fonts} from '../../../utils/Fonts';
 import styles from './styles';
@@ -43,15 +46,20 @@ import HeaderLeftComponent from '../../../components/HeaderLeftComponent';
 import HeaderRight from '../../../components/HeaderRight';
 import {Header} from 'react-native-elements';
 import DropdownHead from '../../../components/DropdownHeader';
-import { Calendar } from 'react-native-calendars'
+import {Calendar} from 'react-native-calendars';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import Snackbar from 'react-native-snackbar';
 import AsyncStorage from '@react-native-community/async-storage';
-
+import SelectDropdown from 'react-native-select-dropdown';
 import Contacts from 'react-native-contacts';
 //redux
 import {connect} from 'react-redux';
-import {emailInvitation} from '../../redux/actions/group';
+import {
+  emailInvitation,
+  CreateGroup,
+  getallGroup,
+} from '../../../redux/actions/group';
+import {useIsFocused} from '@react-navigation/native';
 
 
 const member = [
@@ -77,23 +85,31 @@ const member = [
     }
 ]
 
-export default function Group(props) {
+function Group(props) {
 
-    const [modalVisible, setmodalVisible] = useState(false)
-    const [modalInvite, setmodalInvite] = useState(false)
+    const [modalVisible, setmodalVisible] = useState(false);
+    const [modalInvite, setmodalInvite] = useState(false);
     const [code, setcode] = useState('');
     const [loading, setLoading] = useState(false);
     const [email, setEmail] = useState('');
     const [contacts, setcontacts] = useState([]);
+    const [countries, setcountries] = useState([]);
+    const [groupDetail, setgroupDetail] = useState([]);
     const [loadingContacts, setLoadingContacts] = useState(false);
+    const isFocused = useIsFocused();
 
-    // useEffect(() => {
-    //     const code = props.route.params.code;
-    //     console.log(code);
-    //     AsyncStorage.setItem('code', code);
-    //   }, []);
-
-
+    useEffect(() => {
+        getgroups();
+      }, [isFocused]);
+      async function getgroups() {
+        const id = props?.userData._id;
+        await props.getallGroup(id);
+        console.log('group_data', props?.all_group_data);
+        setcountries(props?.all_group_data);
+        if (props?.all_group_data) {
+          setgroupDetail(props?.all_group_data[0]);
+        }
+      }
       function cont() {
         if (Platform.OS === 'android') {
           PermissionsAndroid.request(PermissionsAndroid.PERMISSIONS.READ_CONTACTS, {
@@ -129,21 +145,30 @@ export default function Group(props) {
       async function onInvitation() {
         const mails = email.split(',');
         console.log('User Data', props.userData);
-        console.log(mails);
+        console.log(code);
         const params = {
           invitedMembers: mails,
         };
         try {
-        //   await props.emailInvitation(params, props.userData._id);
+          const id = props.userData._id;
+          await props.emailInvitation(params, id);
+          const param = {
+            ownername: props.userData.firstName + props.userData.lastName,
+            groupname: code,
+            groupdisplaypicture: '',
+          };
     
+          await props.CreateGroup(params, id);
           setLoading(false);
-          setmodalInvite(false)
-        //   navigation.navigate('profile');
-          Snackbar.show({
-            text: 'Invitation Send Succesfully',
-            backgroundColor: theme.colors.primary,
-            textColor: 'white',
-          });
+          setmodalInvite(false);
+          //   navigation.navigate('profile');
+          setTimeout(() => {
+            Snackbar.show({
+              text: 'Invitation send and group created succesfully',
+              backgroundColor: theme.colors.primary,
+              textColor: 'white',
+            });
+          }, 1000);
         } catch (err) {
           setLoading(false);
           console.log(err);
@@ -579,3 +604,22 @@ export default function Group(props) {
         </ScrollView>
     )
 }
+const mapStateToProps = state => {
+    const {userData} = state.auth;
+    const {status, message, isLoading, errMsg, isSuccess, all_group_data} =
+      state.group;
+    return {
+      status,
+      message,
+      isLoading,
+      errMsg,
+      isSuccess,
+      userData,
+      all_group_data,
+    };
+  };
+  export default connect(mapStateToProps, {
+    emailInvitation,
+    CreateGroup,
+    getallGroup,
+  })(Group);
