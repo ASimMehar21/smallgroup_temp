@@ -5821,6 +5821,11 @@ react-native-contacts@^7.0.2:
   resolved "https://registry.yarnpkg.com/react-native-contacts/-/react-native-contacts-7.0.2.tgz#de9a10f37fb3f7583dbcba7a9fa46d370725c47b"
   integrity sha512-LCDznIOkVpdTPk18Wp94sLLpbQNKw0Y0tvqbEi5ik610UoQxzteq6Plqdo3mGyccgGLIKD6VMNRgac4mk0Fz2w==
 
+react-native-date-picker@^4.1.0:
+  version "4.1.0"
+  resolved "https://registry.yarnpkg.com/react-native-date-picker/-/react-native-date-picker-4.1.0.tgz#60a27dba8ed10a09f127343425fd787c6a7689e6"
+  integrity sha512-XUaOUYoYpLRrq3OIUdbx4sntajbYk86MA0sBAQ+MSK1Ft0CdCgfQdyRaJ7D8o0S39uQlgyIMFFFtjC72WIecCQ==
+
 react-native-document-picker@^6.0.4:
   version "6.0.4"
   resolved "https://registry.yarnpkg.com/react-native-document-picker/-/react-native-document-picker-6.0.4.tgz#21cbe2b3e8a1aff4aafcb81e06f09494b45e62f8"
