@@ -21,7 +21,7 @@ import styleg from '../../Signin/styles';
 import {FloatingLabelInput} from 'react-native-floating-label-input';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import {connect} from 'react-redux';
-function Chat(props) {
+function Chat({props,edit}) {
   const [fname, setFname] = useState('');
   const [lname, setLname] = useState('');
   const [email, setEmail] = useState('');
@@ -61,7 +61,10 @@ function Chat(props) {
                 <FloatingLabelInput
                   label={'First Name'}
                   value={fname}
-                  onChangeText={value => setFname(value)}
+                  // isFocused={true}
+                  onChangeText={value => {
+                    edit(true),
+                    setFname(value)}}
                   containerStyles={{padding: 5}}
                   labelStyles={styles.labelStyles}
                   inputStyles={styles.inputStyles}
@@ -92,7 +95,9 @@ function Chat(props) {
                 <FloatingLabelInput
                   label={'Last Name'}
                   value={lname}
-                  onChangeText={value => setLname(value)}
+                  onChangeText={value => {
+                    edit(true),
+                    setLname(value)}}
                   containerStyles={{padding: 5}}
                   labelStyles={styles.labelStyles}
                   inputStyles={styles.inputStyles}
@@ -132,7 +137,10 @@ function Chat(props) {
             <FloatingLabelInput
               label={'Email Address'}
               value={email}
-              onChangeText={value => setEmail(value)}
+              onChangeText={value => {
+                edit(true),
+                setEmail(value)
+              }}
               containerStyles={{padding: 5}}
               // labelStyles={styles.labelStyle}
               labelStyles={styles.labelStyles}
@@ -167,13 +175,18 @@ function Chat(props) {
               passwordMessage !== '' ? 'tomato' : theme.colors.borderColor,
             },
           ]}>
+            
             <View style={[styleg.nametext, {}]}>
               <FloatingLabelInput
                 label={'Password'}
                 value={password}
-                onChangeText={value => setPassword(value)}
+                onChangeText={value => {
+                  edit(true),
+                  setPassword(value)
+                }}
                 isPassword={true}
                 containerStyles={{padding: 5}}
+                
                 // labelStyles={styles.labelStyle}
                 labelStyles={styles.labelStyles}
                 inputStyles={styles.inputStyles}
@@ -211,7 +224,10 @@ function Chat(props) {
               <FloatingLabelInput
                 label={'Phone Number'}
                 value={number}
-                onChangeText={value => setNumber(value)}
+                onChangeText={value => {
+                  edit(true),
+                  setNumber(value)
+                }}
                 containerStyles={{padding: 5}}
                 keyboardType={'phone-pad'}
                 // labelStyles={styles.labelStyle}
