@@ -281,7 +281,7 @@ const SignupScreen = props => {
             <FloatingLabelInput
               label={'Password'}
               value={password}
-              secureTextEntry
+              isPassword={true}
               onChangeText={value => setPassword(value)}
               containerStyles={{
                 padding: 5,
@@ -306,6 +306,7 @@ const SignupScreen = props => {
               label={'Confirm Password'}
               secureTextEntry={true}
               value={confirmpassword}
+              isPassword={true}
               onChangeText={value => setconfirmPassword(value)}
               containerStyles={{padding: 5}}
               labelStyles={styles.labelStyle}
