@@ -40,7 +40,7 @@ const group_details = props => {
     console.log('details', data);
     if (data) {
       setgroupname(data?.groupname);
-      //   setgroupCode()
+      setgroupCode(data?.groupcode);
       // setowneremail()
       setownername(data?.ownername);
       setgroupDetail(data);

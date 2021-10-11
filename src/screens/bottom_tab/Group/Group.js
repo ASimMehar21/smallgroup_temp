@@ -59,6 +59,7 @@ import {
   CreateGroup,
   getallGroup,
 } from '../../../redux/actions/group';
+import {useIsFocused} from '@react-navigation/native';
 
 function Group(props) {
   const [modalVisible, setmodalVisible] = useState(false);
@@ -70,13 +71,14 @@ function Group(props) {
   const [countries, setcountries] = useState([]);
   const [groupDetail, setgroupDetail] = useState([]);
   const [loadingContacts, setLoadingContacts] = useState(false);
+  const isFocused = useIsFocused();
   //   const countries = [
   //     {id: 0, name: 'Leaders'},
   //     {id: 0, name: 'Leaders'},
   //   ];
   useEffect(() => {
     getgroups();
-  }, []);
+  }, [isFocused]);
   async function getgroups() {
     const id = props?.userData._id;
     await props.getallGroup(id);

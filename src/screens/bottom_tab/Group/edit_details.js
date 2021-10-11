@@ -38,32 +38,48 @@ import HeaderLeftComponent from '../../../components/HeaderLeftComponent';
 import HeaderRight from '../../../components/HeaderRight';
 import {Header} from 'react-native-elements';
 import LinearGradient from 'react-native-linear-gradient';
-
+import Snackbar from 'react-native-snackbar';
+//redux
+import {connect} from 'react-redux';
+import {updategroup} from '../../../redux/actions/group';
 const edit_details = props => {
   const [gname, setgname] = useState('');
   const [gcode, setgcode] = useState('');
   const [owner, setowner] = useState('');
   const [contact, setcontact] = useState('');
   const [modalVisible, setmodalVisible] = useState('');
-  const [ownername, setownername] = useState('');
-  const [groupname, setgroupname] = useState('');
-  const [groupCode, setgroupCode] = useState('1234');
-  const [owneremail, setowneremail] = useState('dummy@gmail.com');
-  const [groupDetail, setgroupDetail] = useState([]);
+  const [loading, setloading] = useState(false);
+  const [groupid, setgroupid] = useState('');
   useEffect(() => {
     const data = props?.route?.params?.groupDetail;
-    console.log('details', data);
+    console.log('details edit', data);
     if (data) {
-      setgroupname(data?.groupname);
-      //   setgroupCode()
-      // setowneremail()
-      setownername(data?.ownername);
-      setgroupDetail(data);
+      setgname(data?.groupname);
+      setowner(data?.ownername);
+      setgcode(data?.groupcode);
+      setgroupid(data?._id);
     }
   }, []);
   // function modal_Visible (visible)  {
   //     this.setState({ModalVisible : visible });
   // }
+  async function onupdate() {
+    const param = {
+      ownername: owner,
+      groupname: gname,
+    };
+    await props.updategroup(param, groupid);
+
+    setTimeout(() => {
+      Snackbar.show({
+        text: 'Group updated succesfully',
+        backgroundColor: theme.colors.primary,
+        textColor: 'white',
+      });
+      setmodalVisible(true);
+      setloading(false);
+    }, 1000);
+  }
 
   return (
     <View style={{flex: 1, backgroundColor: 'white'}}>
@@ -159,10 +175,17 @@ const edit_details = props => {
           <LinearGradient
             colors={['#6989FE', '#3C64F4']}
             style={[styles.btn, {borderWidth: 0, marginTop: 40}]}>
-            <TouchableOpacity onPress={() => setmodalVisible(true)}>
-              <Text style={(styles.email, {fontSize: 18, color: 'white'})}>
-                Save Changes
-              </Text>
+            <TouchableOpacity
+              onPress={() => {
+                onupdate(), setloading(true);
+              }}>
+              {loading ? (
+                <ActivityIndicator animating color={'white'} size={25} />
+              ) : (
+                <Text style={(styles.email, {fontSize: 18, color: 'white'})}>
+                  Save Changes
+                </Text>
+              )}
             </TouchableOpacity>
           </LinearGradient>
           <TouchableOpacity
@@ -526,4 +549,20 @@ const edit_details = props => {
   );
 };
 
-export default edit_details;
+const mapStateToProps = state => {
+  const {userData} = state.auth;
+  const {status, message, isLoading, errMsg, isSuccess, all_group_data} =
+    state.group;
+  return {
+    status,
+    message,
+    isLoading,
+    errMsg,
+    isSuccess,
+    userData,
+    all_group_data,
+  };
+};
+export default connect(mapStateToProps, {
+  updategroup,
+})(edit_details);
