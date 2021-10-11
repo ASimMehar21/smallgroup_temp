@@ -481,9 +481,19 @@ function Prayers(props) {
               </TouchableOpacity>
             </View>
             <View style={{alignItems: 'center', marginTop: 24}}>
-              <TouchableOpacity style={{width: '90%', alignItems: 'center'}}>
-                <Image source={share} style={{width: '100%', height: 48}} />
-              </TouchableOpacity>
+            <LinearGradient
+                style={[stylesp.btn, {width: '90%',marginTop:0}]}
+                colors={['#6989FE', '#3C64F4']}>
+                <TouchableOpacity >
+                <Text
+                  style={
+                    (stylesp.email,
+                    {fontSize: 18, color: 'white'})
+                  }>
+                  Share in Chat
+                </Text>
+                </TouchableOpacity>
+              </LinearGradient>
             </View>
           </View>
         </View>
@@ -546,9 +556,19 @@ function Prayers(props) {
               </TouchableOpacity>
             </View>
             <View style={{alignItems: 'center', marginTop: 24}}>
-              <TouchableOpacity style={{width: '90%', alignItems: 'center'}}>
-                <Image source={share} style={{width: '100%', height: 48}} />
-              </TouchableOpacity>
+                <LinearGradient
+                  style={[stylesp.btn, {width: '90%',marginTop:0}]}
+                  colors={['#6989FE', '#3C64F4']}>
+                  <TouchableOpacity >
+                    <Text
+                      style={
+                        (stylesp.email,
+                        {fontSize: 18, color: 'white'})
+                      }>
+                      Share in Chat
+                    </Text>
+                  </TouchableOpacity>
+                </LinearGradient>
               <TouchableOpacity
                 onPress={() => {
                   setmodalVisibleAuthor(false);

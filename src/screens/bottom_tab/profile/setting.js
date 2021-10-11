@@ -25,19 +25,32 @@ import {loginUser} from '../../../redux/actions/auth';
 import {FloatingLabelInput} from 'react-native-floating-label-input';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import {logoOut} from '../../../redux/actions/auth';
-function Chat({props, navigation}) {
+function Chat({props, navigation,edit}) {
   const [newmsgs, setnewmsgs] = useState(false);
   const [newevents, setnewevents] = useState(false);
   const [eventrem, seteventrem] = useState(false);
   const [newprayer, setnewprayer] = useState(false);
   const [comment, setcomment] = useState(false);
   const [syncal, setsyncal] = useState(false);
-  const toggleSwitch1 = () => setnewmsgs(previousState => !previousState);
-  const toggleSwitch2 = () => setnewevents(previousState => !previousState);
-  const toggleSwitch3 = () => seteventrem(previousState => !previousState);
-  const toggleSwitch4 = () => setnewprayer(previousState => !previousState);
-  const toggleSwitch5 = () => setcomment(previousState => !previousState);
-  const toggleSwitch6 = () => setsyncal(previousState => !previousState);
+  const toggleSwitch1 = () => {
+    edit(true)
+    setnewmsgs(previousState => !previousState)
+  };
+  const toggleSwitch2 = () => {
+    edit(true)
+    setnewevents(previousState => !previousState)};
+  const toggleSwitch3 = () => {
+    edit(true)
+    seteventrem(previousState => !previousState)};
+  const toggleSwitch4 = () => {
+    edit(true)
+    setnewprayer(previousState => !previousState)};
+  const toggleSwitch5 = () => {
+    edit(true)
+    setcomment(previousState => !previousState)};
+  const toggleSwitch6 = () => {
+    edit(true)
+    setsyncal(previousState => !previousState)};
   const [loading, setLoading] = useState(false);
 
   async function onlogout() {

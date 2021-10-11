@@ -137,7 +137,7 @@ export default function Profile(props) {
             </Tab.Navigator> */}
       </View>
       <View style={{flex: 1}}>
-        {tog1 ? <Detail edit = {(edit)=>setExisting(edit)} props={props} /> : <Setting props={props} />}
+        {tog1 ? <Detail edit = {existing} props={props} /> : <Setting edit = {(edit)=>setExisting(edit)} props={props} />}
       </View>
     </View>
   );
