@@ -11,7 +11,7 @@ import HeaderRight from '../../../components/HeaderRight';
 import {add} from '../../../assets/index'
 export default function Chat(props) {
   return (
-    <View style={{flex: 1}}>
+    <View style={{flex: 1,backgroundColor:'white'}}>
       <Header 
         backgroundColor="white"
         containerStyle={{borderBottomWidth: 0,alignSelf:'center',height:48,borderBottomWidth:0.3,borderBottomColor:'#E1E3E6'}}
@@ -19,7 +19,7 @@ export default function Chat(props) {
         // rightComponent={<HeaderRight navigation={props.navigation} image={add} />}
        />
       <ChatList />
-      {/* <EmptyChat/> */}
+      {/* <EmptyChat text = { 'What a nice place to start a conversation!'}/> */}
       {/* <View style={styles.divider} /> */}
       <InputField />
     </View>

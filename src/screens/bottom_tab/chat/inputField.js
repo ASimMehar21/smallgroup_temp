@@ -15,6 +15,7 @@ import {
   ActivityIndicator,
   ScrollView,
 } from 'react-native';
+// import {TextInput} from 'react-native-paper';
 import theme from '../../../theme';
 import {Fonts} from '../../../utils/Fonts';
 import {button, verctor} from '../../../assets';
@@ -72,19 +73,21 @@ function InputField({onChangeText, onPress, disabled, loading}) {
             borderWidth: 0.5,
             borderColor: 'rgba(225, 227, 230, 1)',
             borderRadius: 8,
-            // alignItems:'center'
+            alignItems:'center'
           }}>
           <TextInput
             multiline
             onChangeText={onChangeText}
-            // placeholder={'Type your message'}
+            placeholder={'Type your message'}
+            placeholderTextColor={theme.colors.gray}
             style={[
               styles.labelStyle,
               {
-                margin: 10,
+                backgroundColor:'white',
+                // margin: 10,
                 width: '90%',
                 color: theme.colors.labelColor,
-                height: 38,
+                height: 'auto',
               },
             ]}
           />

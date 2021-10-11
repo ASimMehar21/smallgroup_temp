@@ -190,7 +190,7 @@ const edit_details = props => {
           </LinearGradient>
           <TouchableOpacity
             onPress={() => setmodalVisible(true)}
-            style={[styles.btn, {marginTop: 16}]}>
+            style={[styles.btn, {marginTop: 16,marginBottom:30}]}>
             <Text
               style={
                 (styles.email, {fontSize: 18, color: theme.colors.labelColor})

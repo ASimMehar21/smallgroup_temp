@@ -19,7 +19,7 @@ import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import Snackbar from 'react-native-snackbar';
 import styles from './styles';
 import {FloatingLabelInput} from 'react-native-floating-label-input';
-import {cross, lfb, lgb} from '../../assets';
+import {cross, lfb, lgb,apple,google} from '../../assets';
 import {
   responsiveHeight,
   responsiveScreenHeight,
@@ -301,55 +301,60 @@ const Signin = props => {
           style={{
             width: '100%',
             marginTop: 5,
-            // borderWidth: 1,
+            borderRadius:8,
+            borderWidth: 1,
             // borderRadius: 8,
-            // borderColor: theme.colors.borderColor,
+            borderColor: theme.colors.borderColor,
           }}>
-          {/* <View
+          <View
             style={{
               flexDirection: 'row',
               width: '50%',
               padding: 15,
+             
               justifyContent: 'space-between',
-            }}> */}
+            }}>
           <Image
-            source={lgb}
+            source={google}
             style={{
-              width: '100%',
-              height: 50,
+              width: 24,
+              height: 24,
             }}
-            resizeMode="stretch"
+            // resizeMode="stretch"
           />
-          {/* <Text style={styles.dividertxt}>Log in with Google</Text>
-          </View> */}
+          <Text style={[styles.dividertxt,{textAlign:'center',alignSelf:'center',left:100}]}>Log in with Google</Text>
+          </View>
         </TouchableOpacity>
 
-        <View
+        <TouchableOpacity
+         
           style={{
             width: '100%',
-            marginTop: 7,
-            // borderWidth: 1,
+            marginTop: 5,
+            borderRadius:8,
+            borderWidth: 1,
             // borderRadius: 8,
-            // borderColor: theme.colors.borderColor,
+            borderColor: theme.colors.borderColor,
           }}>
-          {/* <View
+          <View
             style={{
               flexDirection: 'row',
-              width: responsiveScreenWidth(65),
-              padding: 12,
+              width: '50%',
+              padding: 15,
+             
               justifyContent: 'space-between',
-            }}> */}
+            }}>
           <Image
-            source={lfb}
+            source={apple}
             style={{
-              width: '100%',
-              height: 50,
+              width: 24,
+              height: 24,
             }}
-            resizeMode="stretch"
+            // resizeMode="stretch"
           />
-          {/* <Text style={styles.dividertxt}>Log in with Apple</Text>
-          </View> */}
-        </View>
+          <Text style={[styles.dividertxt,{textAlign:'center',alignSelf:'center',left:100}]}>Log in with Apple</Text>
+          </View>
+        </TouchableOpacity>
         <View
           style={{alignSelf: 'center', marginTop: responsiveScreenHeight(1)}}>
           <TouchableOpacity>
@@ -391,7 +396,8 @@ const Signin = props => {
           style={{
             alignSelf: 'center',
             alignItems: 'center',
-            marginTop: responsiveScreenHeight(18),
+            marginTop: responsiveScreenHeight(14),
+            marginBottom:responsiveScreenHeight(2)
           }}>
           <Text
             style={{
