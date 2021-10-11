@@ -39,7 +39,7 @@ function Chat(props, {edit}) {
     setLname(props?.userData?.lastName);
     setFname(props?.userData?.firstName);
     setPassword('*****');
-    console.log(props.userData);
+    console.log(props?.userData);
     // setNumber(props?.userData?.phoneNumer);
   }, []);
   return (
