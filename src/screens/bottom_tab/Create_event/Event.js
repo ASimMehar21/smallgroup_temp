@@ -16,6 +16,7 @@ import {
   ImageBackground,
   ActivityIndicator,
   ScrollView,
+  StyleSheet,
   KeyboardAvoidingView,
   RefreshControl,
 } from 'react-native';
@@ -41,9 +42,12 @@ import stylem from '../../Signin/styles';
 import {FloatingLabelInput} from 'react-native-floating-label-input';
 import HeaderRight from '../../../components/HeaderRight';
 import {Header} from 'react-native-elements';
+import DatePicker from 'react-native-date-picker'
 import DropdownHead from '../../../components/DropdownHeader';
 import {Calendar} from 'react-native-calendars';
 import moment from 'moment';
+import SelectDropdown from 'react-native-select-dropdown';
+
 //redux
 import {connect} from 'react-redux';
 import {
@@ -85,6 +89,17 @@ function Events(props) {
   const [_markedDates, set_markedDates] = useState(initialState);
   const [refreshing, setRefreshing] = useState(false);
   const dot = {key: 'dot', color: '#4E73F8', selectedDotColor: '#4E73F8'};
+  const [dateS, setDateS] = useState(new Date())
+  const [dateE, setDateE] = useState(new Date())
+  const [openE, setOpenE] = useState(false)
+  const [openS, setOpenS] = useState(false)
+  
+   const countries = [
+    {id: 0, name: 'Every Week'},
+    {id: 1, name: 'Every Month'},
+    {id: 2, name: 'Every Day'},
+  ];
+  
   useEffect(async () => {
     // const uid = props.userData._id;
     // console.log(props.userData._id);
@@ -94,6 +109,8 @@ function Events(props) {
     // setevents(props.activityData);
     getevent();
   }, [isFocused]);
+
+
   async function onDaySelect(day) {
     // console.log(day);
     // const _selectedDay2 = moment(day.dateString).format(_format);
@@ -683,17 +700,29 @@ function Events(props) {
                             : theme.colors.borderColor,
                       },
                     ]}>
-                    <View style={stylem.nametext}>
-                      <FloatingLabelInput
-                        label={'Starts'}
-                        value={start}
-                        onChangeText={value => setStart(value)}
-                        containerStyles={{padding: 5}}
-                        labelStyles={stylem.labelStyle}
-                        inputStyles={{width: '100%'}}
-                      />
+                    <View style={stylem.nametext,{height:57,}}>
+                      <TouchableOpacity onPress={()=>setOpenS(true)} style={{
+                        width:'100%',padding:10
+                      }}>
+                        <Text style={[stylem.labelStyle,{textAlign:'center',color:'grey',fontSize:16,}]}>Start</Text>
+                      </TouchableOpacity>
+                      
                     </View>
                   </View>
+                    <DatePicker
+                      modal
+                      mode='date'
+                      open={openS}
+                      date={dateS}
+                      onConfirm={(date) => {
+                        console.log(date)
+                        setOpenS(false)
+                        setDateS(date)
+                      }}
+                      onCancel={() => {
+                        setOpenS(false)
+                      }}
+                    />
                   {/* {fNameMessage !== '' && <Errors errors={fNameMessage} />} */}
                 </View>
                 <View style={{width: '48%'}}>
@@ -707,17 +736,29 @@ function Events(props) {
                             : theme.colors.borderColor,
                       },
                     ]}>
-                    <View style={stylem.textInputStyle}>
-                      <FloatingLabelInput
-                        label={'Ends'}
-                        value={end}
-                        onChangeText={value => setEnd(value)}
-                        containerStyles={{padding: 5}}
-                        labelStyles={stylem.labelStyle}
-                        inputStyles={{width: '100%'}}
-                      />
+                   <View style={stylem.nametext,{height:57,}}>
+                      <TouchableOpacity onPress={()=>{setOpenE(true)}} style={{
+                        width:'100%',padding:10
+                      }}>
+                        <Text style={[stylem.labelStyle,{textAlign:'center',color:'grey',fontSize:16,alignSelf:'center'}]}>End</Text>
+                      </TouchableOpacity>
+                      
                     </View>
                   </View>
+                  <DatePicker
+                      modal
+                      mode='date'
+                      open={openE}
+                      date={dateE}
+                      onConfirm={(date) => {
+                        console.log(date)
+                        setOpenE(false)
+                        setDateE(date)
+                      }}
+                      onCancel={() => {
+                        setOpenE(false)
+                      }}
+                    />
                   {/* {lNameMessage !== '' && <Errors errors={lNameMessage} />} */}
                 </View>
               </View>
@@ -733,16 +774,35 @@ function Events(props) {
                   },
                 ]}>
                 <View style={stylem.textInputStyle}>
-                  <FloatingLabelInput
-                    label={'Repeats'}
-                    value={repeats}
-                    onChangeText={value => setRepeats(value)}
-                    containerStyles={{padding: 5}}
-                    labelStyles={stylem.labelStyle}
-                    inputStyles={{width: '100%'}}
-                  />
+                  <SelectDropdown
+                        rowStyle={stylesd.dropdown2RowStyle}
+                        rowTextStyle={stylesd.dropdown2RowTxtStyle}
+                        // dropdownStyle={{width: '200%', marginTop: 0}}
+                        buttonTextStyle={{color:'grey',fontSize:16,textAlign:'left'}}
+                        buttonStyle={{height: 32,width:'110%',alignSelf:'flex-start', marginTop: 12,marginBottom:12, backgroundColor: 'white'}}
+                        renderDropdownIcon={() => {
+                          return <Image source={down} style={{width: 24, height: 24}} />;
+                        }}
+                        dropdownIconPosition={'right'}
+                        data={countries.map(item => item.name)}
+                        defaultButtonText={'Repeat'}
+                        onSelect={(selectedItem, index) => {
+                          console.log(selectedItem, index);
+                        }}
+                        buttonTextAfterSelection={(selectedItem, index) => {
+                          // text represented after item is selected
+                          // if data array is an array of objects then return selectedItem.property to render after item is selected
+                          return selectedItem;
+                        }}
+                        rowTextForSelection={(item, index) => {
+                          // text represented for each item in dropdown
+                          // if data array is an array of objects then return item.property to represent item in dropdown
+                          return item;
+                        }}
+                      />
+                  
                 </View>
-                {repeats !== '' ? (
+                {/* {repeats !== '' ? (
                   <TouchableOpacity onPress={() => setRepeats('')}>
                     <Image
                       source={cross}
@@ -756,7 +816,7 @@ function Events(props) {
                       style={{height: 24, width: 24, marginRight: 10}}
                     />
                   </TouchableOpacity>
-                )}
+                )} */}
               </View>
 
               <View style={{marginTop: responsiveScreenHeight(1)}}></View>
@@ -853,3 +913,25 @@ export default connect(mapStateToProps, {
   updateEvent,
   deleteEvent,
 })(Events);
+
+export const stylesd = StyleSheet.create({
+  textStyle: {
+    fontSize: 18,
+    // backgroundColor:'red',
+    // alignSelf:'center',
+    fontFamily: Fonts.DMRegular,
+    color: theme.colors.gray,
+  },
+ 
+  dropdown2RowStyle: {
+    backgroundColor: '#ffffff',
+    borderBottomColor: 'white',
+  },
+  dropdown2RowTxtStyle: {
+    color: theme.colors.gray,
+    fontWeight: '700',
+    fontSize: 18,
+    fontFamily: Fonts.DMRegular,
+    textAlign: 'left',
+  },
+});
