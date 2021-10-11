@@ -44,13 +44,13 @@ const joinGroup = props => {
     seterr(false);
     const res = await props.groupJoin(params);
     setLoading(false);
-    console.log('Api response', res?.status);
+    console.log('Api response', res?.data);
     if (res?.status) {
       seterr(false);
       setLoading(false);
-      console.log('joinGroupData', props.joinGroupData);
-      setgroupName(props.joinGroupData.groupname);
-      setgroupName(props.joinGroupData.groupMembers);
+      console.log('joinGroupData', res?.data);
+      setgroupName(res?.data?.groupname);
+      setgroupName(res?.data?.groupMembers);
       setshow(true);
     } else {
       setLoading(false);

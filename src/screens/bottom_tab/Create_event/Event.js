@@ -86,12 +86,13 @@ function Events(props) {
   const [refreshing, setRefreshing] = useState(false);
   const dot = {key: 'dot', color: '#4E73F8', selectedDotColor: '#4E73F8'};
   useEffect(async () => {
-    const uid = props.userData._id;
-    console.log(props.userData._id);
-    // return;
-    await props.getEvent(uid);
-    console.log('Event_DATA \n', props.activityData);
-    setevents(props.activityData);
+    // const uid = props.userData._id;
+    // console.log(props.userData._id);
+    // // return;
+    // await props.getEvent(uid);
+    // console.log('Event_DATA \n', props.activityData);
+    // setevents(props.activityData);
+    getevent();
   }, [isFocused]);
   async function onDaySelect(day) {
     // console.log(day);
