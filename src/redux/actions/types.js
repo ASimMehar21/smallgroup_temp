@@ -30,9 +30,13 @@ export const GET_ALL_GROUP = 'GET_ALL_GROUP';
 export const GET_ALL_INVITE_GROUP = 'GET_ALL_INVITE_GROUP';
 export const GET_ALL_MESSAGE_GROUP = 'GET_ALL_MESSAGE_GROUP';
 export const GET_ALL_CHAT_GROUP = 'GET_ALL_CHAT_GROUP';
-
 //prayer
 export const CREATE_PRAYER = 'CREATE_PRAYER';
 export const GET_PRAYER = 'GET_PRAYER';
 export const DELETE_PRAYER = 'DELETE_PRAYER';
 export const UPDATE_PRAYER = 'UPDATE_PRAYER';
+//CHAT
+export const CREATE_CHAT = 'CREATE_CHAT';
+export const GET_CHAT = 'GET_CHAT';
+export const DELETE_CHAT = 'DELETE_CHAT';
+export const UPDATE_CHAT = 'UPDATE_CHAT';
