@@ -132,18 +132,19 @@ const SignupScreen = props => {
 
         if (emailValid) {
           const res = await props.registerUser(params);
+          console.log('Api response', res?.data);
           if (res?.payload?.data?.logged) {
             setLoading(false);
             navigation.navigate('main');
             Snackbar.show({
               text: 'Signup succesfully',
               backgroundColor: theme.colors.primary,
-              textColor: theme.colors.secondary,
+              textColor: 'white',
             });
           } else {
             setLoading(false);
             Snackbar.show({
-              text: props.message,
+              text: 'This email already exists',
               backgroundColor: theme.colors.primary,
               textColor: 'white',
             });
