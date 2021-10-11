@@ -43,27 +43,55 @@ export default function Profile(props) {
   return (
     <View style={[styles.container]}>
       <Header
-          backgroundColor="white"
-          containerStyle={{borderBottomWidth: 0,alignSelf:'center',borderBottomWidth:0.5,borderBottomColor:'#F1F2F3'}}
-          centerComponent={<HeaderCenterComponent name = {'Profile'} />}
-          // leftComponent={<HeaderLeftComponent navigation={props.navigation} />}
-          rightComponent={
-          <TouchableOpacity onPress={()=>setExisting(!existing)}  style={{alignSelf:'flex-end',marginTop:12,right: responsiveScreenWidth(2.4),alignItems:'center'}} >
-              {existing?
-                <Text style={[styles.inputStyles,{
-                    width:'auto',fontSize:16,marginTop:5,textAlign:'center',color:theme.colors.txtblue
-                }]}
-                >Save
-                </Text>
-              :
-                <Text style={[styles.inputStyles,{
-                    width:'auto',fontSize:16,marginTop:5,textAlign:'center',color:theme.colors.txtblue
-                }]}
-                >Edit
-                </Text>
-              }
-              
-          </TouchableOpacity>}
+        backgroundColor="white"
+        containerStyle={{
+          borderBottomWidth: 0,
+          alignSelf: 'center',
+          borderBottomWidth: 0.5,
+          borderBottomColor: '#F1F2F3',
+        }}
+        centerComponent={<HeaderCenterComponent name={'Profile'} />}
+        // leftComponent={<HeaderLeftComponent navigation={props.navigation} />}
+        rightComponent={
+          <TouchableOpacity
+            onPress={() => setExisting(!existing)}
+            style={{
+              alignSelf: 'flex-end',
+              marginTop: 12,
+              right: responsiveScreenWidth(2.4),
+              alignItems: 'center',
+            }}>
+            {existing ? (
+              <Text
+                style={[
+                  styles.inputStyles,
+                  {
+                    width: 'auto',
+                    fontSize: 16,
+                    marginTop: 5,
+                    textAlign: 'center',
+                    color: theme.colors.txtblue,
+                  },
+                ]}>
+                Save
+              </Text>
+            ) : (
+              <Text
+                style={[
+                  styles.inputStyles,
+                  {
+                    width: 'auto',
+                    fontSize: 16,
+                    marginTop: 5,
+                    textAlign: 'center',
+                    color: theme.colors.txtblue,
+                  },
+                ]}>
+                Edit
+              </Text>
+            )}
+          </TouchableOpacity>
+        }
       />
       <Image source={userg2} style={styles.img} />
       <View>
@@ -137,7 +165,11 @@ export default function Profile(props) {
             </Tab.Navigator> */}
       </View>
       <View style={{flex: 1}}>
-        {tog1 ? <Detail edit = {existing} props={props} /> : <Setting edit = {(edit)=>setExisting(edit)} props={props} />}
+        {tog1 ? (
+          <Detail edit={existing} props={props} />
+        ) : (
+          <Setting edit={edit => setExisting(edit)} props={props} />
+        )}
       </View>
     </View>
   );

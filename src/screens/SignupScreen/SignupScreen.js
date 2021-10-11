@@ -75,10 +75,10 @@ const SignupScreen = props => {
         if (res?.payload?.data?.logged) {
           setgLoading(false);
           setLoading(false);
-          navigation.navigate('Root');
+          navigation.navigate('main');
           console.log('tokens', props.token);
           Snackbar.show({
-            text: 'Sign in succesfully',
+            text: 'Signup succesfully',
             backgroundColor: theme.colors.primary,
             textColor: 'white',
           });
@@ -131,19 +131,19 @@ const SignupScreen = props => {
         const emailValid = re.test(email);
 
         if (emailValid) {
-          await props.registerUser(params);
-          if (props.isSuccess) {
+          const res = await props.registerUser(params);
+          if (res?.payload?.data?.logged) {
             setLoading(false);
             navigation.navigate('main');
             Snackbar.show({
-              text: props.message,
+              text: 'Signup succesfully',
               backgroundColor: theme.colors.primary,
               textColor: theme.colors.secondary,
             });
           } else {
             setLoading(false);
             Snackbar.show({
-              text: 'Signup succesfully',
+              text: props.message,
               backgroundColor: theme.colors.primary,
               textColor: 'white',
             });
