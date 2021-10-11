@@ -147,18 +147,15 @@ export const leaveGroup = (token, params) => {
     }
   };
 };
-export const getallGroup = token => {
+export const getallGroup = id => {
   return async dispatch => {
     try {
-      const res = await axios.get(`${BASE_URL}user/chatgroup/joined`, {
+      const res = await axios.get(`${BASE_URL}api/group/user/${id}`, {
         headers: {
           Accept: 'application/json',
           'Content-Type': 'application/json',
-          Authorization: `Bearer ${token}`,
         },
       });
-      // if (res && res.data.status !== 200)
-      //   return dispatch(groupFAILED(res.data));
       dispatch(getalljoingroup(res));
     } catch (err) {
       dispatch(groupFAILED(err));

@@ -116,6 +116,7 @@ export const groupReducer = (state = initialState, action) => {
         errMsg: null,
       };
     case GET_ALL_GROUP:
+      console.log('Get all', action.payload);
       return {
         ...state,
         all_group_data: action.payload.data,
