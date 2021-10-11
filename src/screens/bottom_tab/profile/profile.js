@@ -48,7 +48,7 @@ export default function Profile(props) {
           centerComponent={<HeaderCenterComponent name = {'Profile'} />}
           // leftComponent={<HeaderLeftComponent navigation={props.navigation} />}
           rightComponent={
-          <TouchableOpacity  style={{alignSelf:'flex-end',marginTop:12,right: responsiveScreenWidth(2.4),alignItems:'center'}} >
+          <TouchableOpacity onPress={()=>setExisting(!existing)}  style={{alignSelf:'flex-end',marginTop:12,right: responsiveScreenWidth(2.4),alignItems:'center'}} >
               {existing?
                 <Text style={[styles.inputStyles,{
                     width:'auto',fontSize:16,marginTop:5,textAlign:'center',color:theme.colors.txtblue
@@ -137,7 +137,7 @@ export default function Profile(props) {
             </Tab.Navigator> */}
       </View>
       <View style={{flex: 1}}>
-        {tog1 ? <Detail props={props} /> : <Setting props={props} />}
+        {tog1 ? <Detail edit = {(edit)=>setExisting(edit)} props={props} /> : <Setting props={props} />}
       </View>
     </View>
   );
