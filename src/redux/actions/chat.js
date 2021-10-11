@@ -1,18 +1,16 @@
 import axios from 'axios';
 import {BASE_URL} from '../base-url';
-import {CREATE_PRAYER, GET_PRAYER} from './types';
+import {SEND_MSG} from './types';
 //Local Types
 export const CHAT_FAILED = 'PRAYER_FAILED';
 export const LOADING_CHAT = 'LOADING_PRAYER';
-export const createPrayer = params => {
-  console.log('HERE');
-  console.log(params);
+export const sendMsg = (params, rid) => {
+  console.log(params, '\n', rid);
   return async dispatch => {
-    dispatch(prayerLoading());
-
+    // dispatch(chatLoading());
     try {
       const res = await axios.post(
-        `${BASE_URL}api/prayer`,
+        `${BASE_URL}api/prayer/response/${rid}`,
         JSON.stringify(params),
         {
           headers: {
@@ -21,46 +19,25 @@ export const createPrayer = params => {
           },
         },
       );
-      dispatch(createprayer(res));
+      dispatch(sendmsg(res));
     } catch (err) {
       console.log(err.response.data);
-      dispatch(prayerFailed(err.response));
+      dispatch(chatFailed(err.response));
     }
   };
 };
-export const getPrayer = uid => {
-  console.log('HERE');
-  return async dispatch => {
-    dispatch(prayerLoading());
 
-    try {
-      const res = await axios.get(`${BASE_URL}api/prayer/user/${uid}`, {
-        headers: {
-          Accept: 'application/json',
-          'Content-Type': 'application/json',
-        },
-      });
-      dispatch(getprayer(res));
-    } catch (err) {
-      console.log(err.response.data);
-      dispatch(prayerFailed(err.response));
-    }
-  };
-};
 //helper
-const getprayer = res => ({
-  type: GET_PRAYER,
+
+const sendmsg = res => ({
+  type: SEND_MSG,
   payload: res,
 });
-const createprayer = res => ({
-  type: CREATE_PRAYER,
-  payload: res,
-});
-const prayerLoading = () => ({
+const chatLoading = () => ({
   type: LOADING_PRAYER,
 });
 
-const prayerFailed = res => ({
-  type: PRAYER_FAILED,
+const chatFailed = res => ({
+  type: CHAT_FAILED,
   payload: res,
 });

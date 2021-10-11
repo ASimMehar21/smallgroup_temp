@@ -36,7 +36,7 @@ export const GET_PRAYER = 'GET_PRAYER';
 export const DELETE_PRAYER = 'DELETE_PRAYER';
 export const UPDATE_PRAYER = 'UPDATE_PRAYER';
 //CHAT
-export const CREATE_CHAT = 'CREATE_CHAT';
+export const SEND_MSG = 'SEND_MSG';
 export const GET_CHAT = 'GET_CHAT';
 export const DELETE_CHAT = 'DELETE_CHAT';
 export const UPDATE_CHAT = 'UPDATE_CHAT';

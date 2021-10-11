@@ -42,7 +42,11 @@ import HeaderCenterComponent from '../../../components/HeaderCenterComponent';
 import HeaderLeftComponent from '../../../components/HeaderLeftComponent';
 import {Header} from 'react-native-elements';
 import Input from '../chat/inputField';
+//redux
+import {connect} from 'react-redux';
+import {sendMsg} from '../../../redux/actions/chat';
 import {useIsFocused} from '@react-navigation/native';
+
 const chat = [
   {
     img: require('../../../assets/images/Userpic.png'),
@@ -157,16 +161,33 @@ const prayer_detail = props => {
   const [description, setDescription] = useState('');
   const [rid, setrid] = useState('');
   const [responses, setresponses] = useState([]);
+  const [msg, setmsg] = useState('');
+  const [uid, setuid] = useState('');
+  const [loading, setLoading] = useState(false);
   useEffect(() => {
     const data = props?.route?.params?.item;
-    console.log('See More==>', data);
+    console.log('See More==>', data?.responses);
     if (data) {
       setTitle(data?.title);
       setDescription(data?.description);
       setrid(data?.userID);
       setresponses(data?.responses);
+      setuid(props?.userData?._id);
     }
   }, [isFocused]);
+  async function onsend() {
+    const params = {
+      userID: rid,
+      text: msg,
+      firstName: props?.userData?.firstName,
+      lastName: props?.userData?.lastName,
+      date: 'Wed Oct 06 2021 14:20:52 GMT+0500 (Pakistan Standard Time)',
+      userImage: '',
+    };
+    await props.sendMsg(params, rid);
+    setLoading(false);
+    setmsg('');
+  }
   return (
     <View style={{flex: 1, backgroundColor: '#FFFF'}}>
       <Header
@@ -219,77 +240,22 @@ const prayer_detail = props => {
         <FlatList
           style={[styles.container, {marginBottom: 60}]}
           showsVerticalScrollIndicator={false}
-          data={chat}
+          data={responses}
           renderItem={({item, index}) => (
             <View>
-              {item.msgtype === 'sender' ? (
-                <View style={{width: '100%', marginTop: 16}}>
-                  <View style={{flexDirection: 'row'}}>
-                    <Image source={item.img} style={{width: 40, height: 40}} />
-                    <View>
-                      <View style={{flexDirection: 'row', marginLeft: 8}}>
-                        <Text
-                          style={{
-                            fontFamily: Fonts.DMMedium,
-                            color: theme.colors.gray,
-                            fontSize: 16,
-                            fontWeight: '700',
-                          }}>
-                          {item.name}
-                        </Text>
-                        <Text
-                          style={{
-                            marginLeft: 10,
-                            alignSelf: 'center',
-                            fontFamily: Fonts.DMMedium,
-                            color: theme.colors.labelColor,
-                            fontSize: 14,
-                            fontWeight: 'normal',
-                          }}>
-                          {item.time}
-                        </Text>
-                      </View>
-                      <View
-                        style={{
-                          maxWidth: '93%',
-                          borderRadius: 8,
-                          margin: 8,
-                          borderWidth: 1,
-                          borderColor: theme.colors.borderColor,
-                        }}>
-                        <Text
-                          style={{
-                            marginTop: 4,
-                            marginBottom: 4,
-                            marginLeft: 8,
-                            marginRight: 8,
-                            fontFamily: Fonts.DMMedium,
-                            color: theme.colors.gray,
-                            fontSize: 16,
-                            fontWeight: 'normal',
-                          }}>
-                          {item.textmsg}
-                        </Text>
-                      </View>
-                    </View>
-                  </View>
-                </View>
-              ) : (
-                <View
-                  style={{
-                    width: '100%',
-                    flexDirection: 'row',
-                    marginTop: 16,
-                    alignItems: 'flex-end',
-                    justifyContent: 'flex-end',
-                  }}>
+              {/* {item.msgtype === 'sender' ? ( */}
+              <View style={{width: '100%', marginTop: 16}}>
+                <View style={{flexDirection: 'row'}}>
+                  <Image
+                    source={
+                      item.userImage
+                        ? {uri: item.userImage}
+                        : require('../../../assets/images/Userpic.png')
+                    }
+                    style={{width: 40, height: 40, borderRadius: 20}}
+                  />
                   <View>
-                    <View
-                      style={{
-                        flexDirection: 'row',
-                        marginLeft: 8,
-                        justifyContent: 'flex-end',
-                      }}>
+                    <View style={{flexDirection: 'row', marginLeft: 8}}>
                       <Text
                         style={{
                           fontFamily: Fonts.DMMedium,
@@ -297,33 +263,24 @@ const prayer_detail = props => {
                           fontSize: 16,
                           fontWeight: '700',
                         }}>
-                        {item.name}
+                        {item.firstName + ' ' + item.lastName}
                       </Text>
                       <Text
                         style={{
                           marginLeft: 10,
-                          marginRight: 10,
                           alignSelf: 'center',
                           fontFamily: Fonts.DMMedium,
                           color: theme.colors.labelColor,
                           fontSize: 14,
                           fontWeight: 'normal',
                         }}>
-                        {item.time}
+                        {/* {item.time} */}
+                        23:25 PM
                       </Text>
-                      <Image
-                        source={done}
-                        style={{
-                          width: 16,
-                          height: 16,
-                          tintColor: '#0892d0',
-                          alignSelf: 'center',
-                        }}
-                      />
                     </View>
                     <View
                       style={{
-                        width: 'auto',
+                        maxWidth: '93%',
                         borderRadius: 8,
                         margin: 8,
                         borderWidth: 1,
@@ -340,17 +297,95 @@ const prayer_detail = props => {
                           fontSize: 16,
                           fontWeight: 'normal',
                         }}>
-                        {item.textmsg}
+                        {item.text}
                       </Text>
                     </View>
                   </View>
                 </View>
-              )}
+              </View>
+              {/* ) : (
+                <View
+            //       style={{
+            //         width: '100%',
+            //         flexDirection: 'row',
+            //         marginTop: 16,
+            //         alignItems: 'flex-end',
+            //         justifyContent: 'flex-end',
+            //       }}>
+            //       <View>
+            //         <View
+            //           style={{
+            //             flexDirection: 'row',
+            //             marginLeft: 8,
+            //             justifyContent: 'flex-end',
+            //           }}>
+            //           <Text
+            //             style={{
+            //               fontFamily: Fonts.DMMedium,
+            //               color: theme.colors.gray,
+            //               fontSize: 16,
+            //               fontWeight: '700',
+            //             }}>
+            //             {item.name}
+            //           </Text>
+            //           <Text
+            //             style={{
+            //               marginLeft: 10,
+            //               marginRight: 10,
+            //               alignSelf: 'center',
+            //               fontFamily: Fonts.DMMedium,
+            //               color: theme.colors.labelColor,
+            //               fontSize: 14,
+            //               fontWeight: 'normal',
+            //             }}>
+            //             {item.time}
+            //           </Text>
+            //           <Image
+            //             source={done}
+            //             style={{
+            //               width: 16,
+            //               height: 16,
+            //               tintColor: '#0892d0',
+            //               alignSelf: 'center',
+            //             }}
+            //           />
+            //         </View>
+            //         <View
+            //           style={{
+            //             width: 'auto',
+            //             borderRadius: 8,
+            //             margin: 8,
+            //             borderWidth: 1,
+            //             borderColor: theme.colors.borderColor,
+            //           }}>
+            //           <Text
+            //             style={{
+            //               marginTop: 4,
+            //               marginBottom: 4,
+            //               marginLeft: 8,
+            //               marginRight: 8,
+            //               fontFamily: Fonts.DMMedium,
+            //               color: theme.colors.gray,
+            //               fontSize: 16,
+            //               fontWeight: 'normal',
+            //             }}>
+            //             {item.textmsg}
+            //           </Text>
+            //         </View>
+            //       </View>
+            //     </View>
+            //   )} */}
             </View>
           )}
         />
       </View>
-      <Input />
+      <Input
+        onPress={() => {
+          onsend(), setLoading(true);
+        }}
+        onChangeText={txt => setmsg(txt)}
+        loading={loading}
+      />
       <Modal
         animationType="slide"
         transparent={true}
@@ -427,5 +462,20 @@ const prayer_detail = props => {
     </View>
   );
 };
-
-export default prayer_detail;
+const mapStateToProps = state => {
+  const {userData} = state.auth;
+  const {status, message, isLoading, errMsg, isSuccess, all_group_data} =
+    state.group;
+  return {
+    status,
+    message,
+    isLoading,
+    errMsg,
+    isSuccess,
+    userData,
+    all_group_data,
+  };
+};
+export default connect(mapStateToProps, {
+  sendMsg,
+})(prayer_detail);

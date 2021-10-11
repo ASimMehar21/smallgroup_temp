@@ -1,10 +1,5 @@
 import {LOADING_CHAT, CHAT_FAILED} from '../actions/chat';
-import {
-  CREATE_PRAYER,
-  UPDATE_PRAYER,
-  DELETE_PRAYER,
-  GET_PRAYER,
-} from '../actions/types';
+import {DELETE_CHAT, GET_CHAT, SEND_MSG} from '../actions/types';
 
 const initialState = {
   userId: '',
@@ -27,7 +22,7 @@ export const ChatReducer = (state = initialState, action) => {
         errMsg: null,
         message: null,
       };
-    case CREATE_CHAT:
+    case SEND_MSG:
       return {
         ...state,
         isLoading: false,
@@ -36,14 +31,7 @@ export const ChatReducer = (state = initialState, action) => {
         errMsg: null,
         message: 'Event created succesfully',
       };
-    case PRAYER_CHAT:
-      return {
-        ...state,
-        isSuccess: false,
-        errMsg: null,
-        message: action.payload.data.message,
-      };
-    case GET_PRAYER:
+    case GET_CHAT:
       return {
         ...state,
         isLoading: false,
@@ -53,7 +41,7 @@ export const ChatReducer = (state = initialState, action) => {
         message: '',
         prayerData: action.payload,
       };
-    case DELETE_PRAYER:
+    case DELETE_CHAT:
       return {
         ...state,
         isLoading: false,
@@ -62,15 +50,16 @@ export const ChatReducer = (state = initialState, action) => {
         errMsg: null,
         message: 'Prayer Deleted',
       };
-    case UPDATE_PRAYER:
+    case CHAT_FAILED:
       return {
         ...state,
         isLoading: false,
-        isError: false,
-        isSuccess: true,
+        isError: true,
+        isSuccess: false,
         errMsg: null,
-        message: 'Prayer Updated',
+        message: 'chat failed',
       };
+
     default:
       return state;
   }
