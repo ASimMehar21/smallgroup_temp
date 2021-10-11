@@ -14,6 +14,7 @@ import {
   ImageBackground,
   ActivityIndicator,
   ScrollView,
+  RefreshControl,
 } from 'react-native';
 import theme from '../../../theme';
 import {Fonts} from '../../../utils/Fonts';
@@ -95,6 +96,7 @@ function Prayers(props) {
   const [exsisting, setexsisting] = useState(false);
   const [loading, setLoading] = useState(false);
   const isFocused = useIsFocused();
+  const [refreshing, setRefreshing] = useState(false);
   useEffect(() => {
     getprayer();
   }, [isFocused]);
@@ -117,9 +119,11 @@ function Prayers(props) {
     setmodalCreate(!modalCreate);
   }
   async function getprayer() {
+    setRefreshing(true);
     await props.getPrayer(props.userData._id);
     console.log('prayerData==>', props?.prayerData?.data);
     setprayers(props?.prayerData?.data);
+    setRefreshing(false);
   }
   return (
     <View style={{flex: 1, backgroundColor: 'white'}}>
@@ -147,6 +151,9 @@ function Prayers(props) {
       <View style={{marginTop: responsiveScreenHeight(1.5)}}></View>
 
       <FlatList
+        refreshControl={
+          <RefreshControl refreshing={refreshing} onRefresh={getprayer} />
+        }
         style={styles.container}
         showsVerticalScrollIndicator={false}
         data={prayers}

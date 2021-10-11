@@ -19,7 +19,7 @@ export const DELETE_ACTIVITY = 'DELETE_ACTIVITY';
 export const UPDATE_ACTIVITY = 'UPDATE_ACTIVITY';
 //group
 export const CREATE_GROUP = 'CREATE_GROUP';
-export const GET_GROUP = 'GET_GROUP';
+export const UPDATE_GROUP = 'GET_GROUP';
 export const JOIN_GROUP = 'JOIN_GROUP';
 export const LEAVE_GROUP = 'LEAVE_GROUP';
 export const INVITE_GROUP = 'INVITE_GROUP';
